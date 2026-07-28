@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReAct Financial Agent</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #0f1117; color: #e2e8f0; }
+  header { background: #151925; border-bottom: 1px solid #263043; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  h1 { font-size: 18px; }
+  .subtitle { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+  .container { max-width: 960px; margin: 0 auto; padding: 20px 16px 32px; }
+  .panel { background: #151925; border: 1px solid #263043; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  .input-row { display: flex; gap: 10px; }
+  textarea { flex: 1; min-height: 80px; resize: vertical; border-radius: 10px; border: 1px solid #334155; background: #0b1020; color: #e2e8f0; padding: 12px 14px; font-size: 14px; }
+  textarea:focus { border-color: #7c3aed; outline: none; }
+  .send-btn, .ghost-btn { border: 0; border-radius: 10px; padding: 0 18px; font-size: 14px; cursor: pointer; }
+  .send-btn { background: #7c3aed; color: #fff; }
+  .send-btn:disabled { background: #475569; cursor: not-allowed; }
+  .ghost-btn { background: transparent; color: #cbd5e1; border: 1px solid #334155; padding: 8px 12px; }
+  .meta { margin-top: 12px; font-size: 12px; color: #94a3b8; }
+  .chips { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { border: 1px solid #334155; border-radius: 999px; padding: 4px 10px; font-size: 12px; color: #cbd5e1; cursor: pointer; background: #101726; }
+  .status { display: none; align-items: center; gap: 10px; color: #94a3b8; font-size: 13px; margin-bottom: 12px; }
+  .status.show { display: flex; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: #7c3aed; animation: pulse 1s infinite ease-in-out; }
+  @keyframes pulse { 0%,100%{opacity:.35;transform:scale(.85)} 50%{opacity:1;transform:scale(1)} }
+  .turn { background: #151925; border: 1px solid #263043; border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+  .turn-head { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px; color: #94a3b8; }
+  .bubble { border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; white-space: pre-wrap; line-height: 1.6; }
+  .user-bubble { background: #0b1020; border: 1px solid #334155; }
+  .answer-bubble { background: #1c1430; border: 1px solid #5b21b6; }
+  .step { border-left: 3px solid #334155; padding-left: 12px; margin: 10px 0; }
+  .step .title { font-size: 12px; color: #fbbf24; margin-bottom: 6px; }
+  .step pre { margin: 0; white-space: pre-wrap; word-break: break-word; color: #cbd5e1; font-size: 12px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>ReAct Financial Agent</h1>
+    <div class="subtitle">带工具调用的多轮对话</div>
+  </div>
+  <div style="text-align:right">
+    <div id="sessionLabel" style="font-size:12px;color:#94a3b8;">session: new</div>
+    <div style="margin-top:6px;"><button class="ghost-btn" onclick="resetSession()">重置会话</button></div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="panel">
+    <div class="input-row">
+      <textarea id="question" placeholder="输入问题，例如：茅台和五粮液2023年毛利率差多少？"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendQuery()">发送</button>
+    </div>
+    <div class="meta">同一个 session 会保留上下文，支持连续追问。</div>
+    <div class="chips">
+      <span class="chip" onclick="setQuestion(this.textContent)">茅台和五粮液2023年毛利率差多少？</span>
+      <span class="chip" onclick="setQuestion(this.textContent)">那差多少个百分点？</span>
+      <span class="chip" onclick="setQuestion(this.textContent)">宁德时代2021-2023年营收复合增长率是多少？</span>
+    </div>
+  </div>
+
+  <div id="status" class="status"><div class="dot"></div><span id="statusText">正在思考...</span></div>
+  <div id="thread"></div>
+</div>
+
+<script>
+  let sessionId = null;
+  let running = false;
+
+  function esc(v) {
+    return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function setQuestion(text) {
+    document.getElementById('question').value = text;
+  }
+
+  function setStatus(text, show) {
+    document.getElementById('statusText').textContent = text;
+    document.getElementById('status').classList.toggle('show', show);
+  }
+
+  function setRunning(value) {
+    running = value;
+    const btn = document.getElementById('sendBtn');
+    btn.disabled = value;
+    btn.textContent = value ? '运行中...' : '发送';
+  }
+
+  function addTurn(question) {
+    const thread = document.getElementById('thread');
+    const card = document.createElement('div');
+    card.className = 'turn';
+    card.innerHTML = `
+      <div class="turn-head">
+        <div>本轮对话</div>
+        <div>${sessionId ? `session: ${sessionId.slice(0, 8)}` : 'session: new'}</div>
+      </div>
+      <div class="bubble user-bubble">${esc(question)}</div>
+      <div class="steps"></div>
+    `;
+    thread.appendChild(card);
+    return card;
+  }
+
+  function appendStep(container, stepData) {
+    const step = document.createElement('div');
+    step.className = 'step';
+    step.innerHTML = `
+      <div class="title">Step ${stepData.step} · ${esc(stepData.action || stepData.type)}</div>
+      <pre>${esc(
+        `Thought: ${stepData.thought || ''}\n` +
+        `Action: ${stepData.action || ''}\n` +
+        `Input: ${JSON.stringify(stepData.action_input || {}, null, 2)}\n` +
+        `Observation: ${(stepData.observation || '').trim()}`
+      )}</pre>
+    `;
+    container.appendChild(step);
+  }
+
+  function appendAnswer(container, answer) {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble answer-bubble';
+    bubble.textContent = answer;
+    container.appendChild(bubble);
+  }
+
+  async function resetSession() {
+    sessionId = null;
+    document.getElementById('thread').innerHTML = '';
+    document.getElementById('sessionLabel').textContent = 'session: new';
+    try {
+      await fetch('/reset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: null }),
+      });
+    } catch (e) {}
+  }
+
+  async function sendQuery() {
+    if (running) return;
+    const question = document.getElementById('question').value.trim();
+    if (!question) return;
+
+    const turnCard = addTurn(question);
+    const stepsContainer = turnCard.querySelector('.steps');
+    setRunning(true);
+    setStatus('正在思考...', true);
+
+    try {
+      const resp = await fetch('/query', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question, session_id: sessionId, reset: false, max_steps: 10 }),
+      });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop();
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          let data;
+          try { data = JSON.parse(line.slice(6)); } catch { continue; }
+
+          if (data.type === 'start') {
+            sessionId = data.session_id;
+            document.getElementById('sessionLabel').textContent = `session: ${sessionId.slice(0, 8)}`;
+          } else if (data.type === 'action') {
+            appendStep(stepsContainer, data);
+            setStatus(`Step ${data.step}：调用 ${data.action}`, true);
+          } else if (data.type === 'final') {
+            appendAnswer(stepsContainer, data.answer);
+            setStatus('完成', false);
+          } else if (data.type === 'max_steps' || data.type === 'error') {
+            appendAnswer(stepsContainer, data.answer || data.observation || '发生错误');
+            setStatus('', false);
+          } else if (data.type === 'done') {
+            setStatus('', false);
+          }
+        }
+      }
+    } catch (err) {
+      appendAnswer(stepsContainer, `请求失败: ${err.message}`);
+      setStatus('', false);
+    } finally {
+      setRunning(false);
+    }
+  }
+
+  document.getElementById('question').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendQuery();
+    }
+  });
+</script>
+</body>
+</html>
