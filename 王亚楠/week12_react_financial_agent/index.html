@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReAct Financial Agent — 教学演示</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    min-height: 100vh;
+  }
+
+  /* ── 整体布局 ── */
+  .app-layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── 侧边栏（记忆面板） ── */
+  .sidebar {
+    width: 300px;
+    min-width: 300px;
+    background: #141720;
+    border-right: 1px solid #2d3148;
+    display: flex;
+    flex-direction: column;
+    transition: margin-left 0.3s ease, min-width 0.3s ease;
+    overflow: hidden;
+  }
+  .sidebar.collapsed {
+    margin-left: -300px;
+    min-width: 0;
+    width: 0;
+    border-right: none;
+  }
+  .sidebar-header {
+    padding: 16px;
+    border-bottom: 1px solid #2d3148;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sidebar-header h3 {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .sidebar-close {
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px;
+  }
+  .sidebar-close:hover { color: #e2e8f0; }
+  .sidebar-section {
+    padding: 14px 16px;
+    border-bottom: 1px solid #1e2235;
+  }
+  .sidebar-section h4 {
+    font-size: 11px;
+    color: #475569;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 12px;
+    color: #94a3b8;
+  }
+  .stat-value {
+    color: #a78bfa;
+    font-weight: 600;
+  }
+  .memory-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+  .memory-toggle-row span {
+    font-size: 12px;
+    color: #94a3b8;
+  }
+  .toggle-switch {
+    position: relative;
+    width: 38px;
+    height: 20px;
+  }
+  .toggle-switch input { display: none; }
+  .toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: #2d3148;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .toggle-slider::before {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 16px; height: 16px;
+    background: #64748b;
+    border-radius: 50%;
+    transition: transform 0.2s;
+  }
+  input:checked + .toggle-slider { background: #7c3aed; }
+  input:checked + .toggle-slider::before { transform: translateX(18px); background: #fff; }
+
+  .fact-item {
+    font-size: 11px;
+    color: #94a3b8;
+    padding: 3px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .fact-item .key { color: #a78bfa; }
+  .fact-item .val { color: #34d399; }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 12px 16px;
+    border-top: 1px solid #2d3148;
+  }
+  .clear-mem-btn {
+    width: 100%;
+    padding: 6px;
+    background: transparent;
+    border: 1px solid #7f1d1d;
+    border-radius: 6px;
+    color: #f87171;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .clear-mem-btn:hover { background: #7f1d1d20; }
+
+  .refresh-btn {
+    background: transparent;
+    border: 1px solid #3d4163;
+    border-radius: 4px;
+    color: #64748b;
+    font-size: 11px;
+    padding: 2px 8px;
+    cursor: pointer;
+  }
+  .refresh-btn:hover { border-color: #7c3aed; color: #a78bfa; }
+
+  /* ── 主内容区 ── */
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* ── 顶部 ── */
+  header {
+    background: #1a1d27;
+    border-bottom: 1px solid #2d3148;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  header h1 { font-size: 18px; font-weight: 600; color: #a78bfa; white-space: nowrap; }
+  header .subtitle { font-size: 12px; color: #64748b; }
+  .header-spacer { flex: 1; }
+  .mem-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #1e2235;
+    border: 1px solid #2d3148;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    white-space: nowrap;
+  }
+  .mem-badge:hover { border-color: #7c3aed; }
+  .mem-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #34d399;
+  }
+  .mem-badge.disabled .dot { background: #f87171; }
+
+  /* ── 主体区域 ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 20px 16px; width: 100%; flex: 1; }
+
+  /* ── 输入区 ── */
+  .input-card {
+    background: #1a1d27;
+    border: 1px solid #2d3148;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .mode-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .mode-btn {
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid #3d4163;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .mode-btn.active {
+    background: #7c3aed;
+    border-color: #7c3aed;
+    color: #fff;
+  }
+  .session-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .session-input-row label {
+    font-size: 11px;
+    color: #64748b;
+    white-space: nowrap;
+  }
+  .session-input-row input {
+    background: #0f1117;
+    border: 1px solid #2d3148;
+    border-radius: 4px;
+    color: #94a3b8;
+    padding: 4px 8px;
+    font-size: 12px;
+    width: 160px;
+    outline: none;
+  }
+  .session-input-row input:focus { border-color: #7c3aed; }
+  .input-row {
+    display: flex;
+    gap: 10px;
+  }
+  textarea {
+    flex: 1;
+    background: #0f1117;
+    border: 1px solid #2d3148;
+    border-radius: 8px;
+    color: #e2e8f0;
+    padding: 10px 14px;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 72px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  textarea:focus { border-color: #7c3aed; }
+  .send-btn {
+    padding: 0 24px;
+    background: #7c3aed;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .send-btn:hover:not(:disabled) { background: #6d28d9; }
+  .send-btn:disabled { background: #3d4163; cursor: not-allowed; }
+
+  /* ── 示例问题 ── */
+  .examples { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .example-chip {
+    background: #1e2235;
+    border: 1px solid #2d3148;
+    border-radius: 16px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .example-chip:hover { border-color: #7c3aed; color: #a78bfa; }
+
+  /* ── 状态栏 ── */
+  .status-bar {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: #1a1d27;
+    border: 1px solid #2d3148;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: #94a3b8;
+  }
+  .status-bar.visible { display: flex; }
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid #3d4163;
+    border-top-color: #7c3aed;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── 步骤卡片 ── */
+  .steps-container { display: flex; flex-direction: column; gap: 12px; }
+
+  .step-card {
+    background: #1a1d27;
+    border: 1px solid #2d3148;
+    border-radius: 10px;
+    overflow: hidden;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; } }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .step-badge {
+    background: #2d3148;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 600;
+  }
+  .step-title { font-size: 14px; font-weight: 500; flex: 1; }
+  .step-toggle { color: #64748b; font-size: 12px; }
+
+  .step-body { padding: 0 16px 14px; }
+
+  .thought-block  { border-left: 3px solid #38bdf8; padding-left: 12px; margin-bottom: 10px; }
+  .action-block   { border-left: 3px solid #fbbf24; padding-left: 12px; margin-bottom: 10px; }
+  .obs-block      { border-left: 3px solid #34d399; padding-left: 12px; }
+  .final-block    { border-left: 3px solid #a78bfa; padding-left: 12px; }
+
+  .block-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .thought-block  .block-label { color: #38bdf8; }
+  .action-block   .block-label { color: #fbbf24; }
+  .obs-block      .block-label { color: #34d399; }
+  .final-block    .block-label { color: #a78bfa; }
+
+  .block-content {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #cbd5e1;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .obs-block .block-content {
+    max-height: 220px;
+    overflow-y: auto;
+    background: #0d1017;
+    border-radius: 4px;
+    padding: 6px 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #3d4163 transparent;
+  }
+
+  .tool-pill {
+    display: inline-block;
+    background: #2d1f5e;
+    border: 1px solid #4c1d95;
+    border-radius: 4px;
+    padding: 1px 8px;
+    font-size: 12px;
+    color: #a78bfa;
+    font-family: monospace;
+    margin-bottom: 6px;
+  }
+  .args-code {
+    background: #0f1117;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 4px;
+  }
+
+  /* ── 最终答案卡 ── */
+  .final-card {
+    background: #1a1d27;
+    border: 1px solid #4c1d95;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 4px;
+    animation: fadeIn 0.3s ease;
+  }
+  .final-card h3 { color: #a78bfa; font-size: 14px; margin-bottom: 10px; }
+  .final-card .answer-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #e2e8f0;
+    white-space: pre-wrap;
+  }
+  .meta-row {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #475569;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* ── FC 版 Thought 提示 ── */
+  .fc-thought-note {
+    font-size: 12px;
+    color: #475569;
+    font-style: italic;
+  }
+
+  /* ── 折叠 ── */
+  .step-body.collapsed { display: none; }
+  .step-toggle.open::before { content: "▲"; }
+  .step-toggle:not(.open)::before { content: "▼"; }
+
+  /* ── 记忆上下文提示条 ── */
+  .mem-ctx-bar {
+    display: none;
+    background: #1a1d27;
+    border: 1px solid #4c1d95;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    font-size: 11px;
+    color: #a78bfa;
+    align-items: center;
+    gap: 6px;
+  }
+  .mem-ctx-bar.visible { display: flex; }
+
+  /* ── 对话模式（Chat）── */
+  .chat-turn {
+    margin-bottom: 20px;
+    animation: fadeIn 0.3s ease;
+  }
+  .chat-question {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+  }
+  .chat-question .bubble {
+    background: #7c3aed;
+    color: #fff;
+    border-radius: 16px 16px 4px 16px;
+    padding: 10px 16px;
+    max-width: 75%;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .chat-answer {
+    margin-bottom: 4px;
+  }
+  .chat-answer-header {
+    font-size: 12px;
+    color: #a78bfa;
+    margin-bottom: 4px;
+    padding-left: 4px;
+  }
+  .clear-chat-btn {
+    background: transparent;
+    border: 1px solid #3d4163;
+    border-radius: 16px;
+    padding: 3px 12px;
+    font-size: 11px;
+    color: #64748b;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  .clear-chat-btn:hover { border-color: #f87171; color: #f87171; }
+
+  /* ── 响应式 ── */
+  @media (max-width: 768px) {
+    .sidebar { width: 260px; min-width: 260px; }
+    .sidebar.collapsed { margin-left: -260px; min-width: 0; }
+    .container { padding: 12px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app-layout">
+  <!-- ═══ 侧边栏：记忆面板 ═══ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h3>🧠 记忆系统</h3>
+      <button class="sidebar-close" onclick="toggleSidebar()" title="关闭面板">✕</button>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>📊 概览 <button class="refresh-btn" onclick="refreshMemory()">刷新</button></h4>
+      <div class="stat-row"><span>事实数</span><span class="stat-value" id="statFacts">-</span></div>
+      <div class="stat-row"><span>会话数</span><span class="stat-value" id="statSessions">-</span></div>
+      <div class="stat-row"><span>总对话轮数</span><span class="stat-value" id="statTurns">-</span></div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>📝 已记住的事实</h4>
+      <div id="factsList" style="max-height:200px;overflow-y:auto;">
+        <span style="font-size:11px;color:#475569;">加载中...</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>💬 历史会话</h4>
+      <div id="sessionsList" style="max-height:150px;overflow-y:auto;">
+        <span style="font-size:11px;color:#475569;">加载中...</span>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="clear-mem-btn" onclick="clearMemory()">🗑 清空全部记忆</button>
+    </div>
+  </aside>
+
+  <!-- ═══ 主内容区 ═══ -->
+  <div class="main-content">
+
+  <header>
+    <div>
+      <h1>⚡ ReAct Financial Agent</h1>
+      <div class="subtitle">Thought → Action → Observation 循环演示 | 数据来源：A股年报 + AkShare</div>
+    </div>
+    <div class="header-spacer"></div>
+    <div class="mem-badge" id="memBadge" onclick="toggleSidebar()" title="打开/关闭记忆面板">
+      <span class="dot"></span>
+      <span id="memBadgeText">记忆就绪</span>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- 记忆上下文提示条 -->
+    <div class="mem-ctx-bar" id="memCtxBar">
+      <span>🧠</span>
+      <span id="memCtxText"></span>
+    </div>
+
+    <!-- 输入区 -->
+    <div class="input-card">
+      <div class="mode-toggle">
+        <span style="font-size:13px;color:#64748b;margin-right:4px;">实现方式：</span>
+        <button class="mode-btn active" data-mode="manual" onclick="setMode('manual',this)">
+          手写 Prompt 解析
+        </button>
+        <button class="mode-btn" data-mode="fc" onclick="setMode('fc',this)">
+          Function Calling
+        </button>
+        <span style="color:#64748b;margin:0 8px;">|</span>
+        <button class="mode-btn" id="chatModeBtn" data-chat="0" onclick="toggleChatMode()"
+                style="font-size:12px;">
+          💬 对话模式: 关
+        </button>
+        <span style="flex:1;"></span>
+        <button class="clear-chat-btn" id="clearChatBtn" onclick="clearChat()" style="display:none;">
+          /clear
+        </button>
+        <label style="font-size:11px;color:#64748b;">会话 ID:</label>
+        <input type="text" id="sessionIdInput" value="default"
+               style="background:#0f1117;border:1px solid #2d3148;border-radius:4px;
+                      color:#94a3b8;padding:3px 8px;font-size:12px;width:120px;outline:none;"
+               onchange="currentSessionId = this.value || 'default'">
+      </div>
+      <div class="input-row">
+        <textarea id="question" placeholder="输入问题，例如：贵州茅台和五粮液2023年的毛利率哪家更高？"></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendQuery()">发 送</button>
+      </div>
+      <div class="examples">
+        <span style="font-size:12px;color:#475569;margin-right:4px;">示例：</span>
+        <span class="example-chip" onclick="setQuestion(this.textContent)">茅台和五粮液2023年毛利率差多少个百分点？</span>
+        <span class="example-chip" onclick="setQuestion(this.textContent)">宁德时代2021-2023年营收复合增长率是多少？</span>
+        <span class="example-chip" onclick="setQuestion(this.textContent)">贵州茅台过去一年（2023年全年）股价涨跌幅？</span>
+        <span class="example-chip" onclick="setQuestion(this.textContent)">海康威视2023年年报提到了哪些主要风险？</span>
+        <span class="example-chip" onclick="setQuestion(this.textContent)">搜索记忆中关于茅台的信息</span>
+      </div>
+    </div>
+
+    <!-- 状态栏 -->
+    <div class="status-bar" id="statusBar">
+      <div class="spinner"></div>
+      <span id="statusText">正在思考...</span>
+    </div>
+
+    <!-- 步骤 + 结果 -->
+    <div class="steps-container" id="stepsContainer"></div>
+
+  </div>
+  </div>
+</div>
+
+<script>
+  let currentMode = 'manual';
+  let currentSessionId = 'default';
+  let isRunning   = false;
+  let chatMode    = false;  // 对话模式开关
+
+  // ── 对话模式切换 ────────────────────────────────────────────────────────
+  function toggleChatMode() {
+    chatMode = !chatMode;
+    const btn = document.getElementById('chatModeBtn');
+    const clearBtn = document.getElementById('clearChatBtn');
+    if (chatMode) {
+      btn.textContent = '💬 对话模式: 开';
+      btn.classList.add('active');
+      clearBtn.style.display = 'inline-block';
+    } else {
+      btn.textContent = '💬 对话模式: 关';
+      btn.classList.remove('active');
+      clearBtn.style.display = 'none';
+      // 切换回单次模式时清屏
+      document.getElementById('stepsContainer').innerHTML = '';
+    }
+  }
+
+  async function clearChat() {
+    currentSessionId = document.getElementById('sessionIdInput').value.trim() || 'default';
+    try {
+      await fetch(`/chat/session/${encodeURIComponent(currentSessionId)}`, { method: 'DELETE' });
+      document.getElementById('stepsContainer').innerHTML = '';
+      console.log('对话已重置');
+    } catch (e) {
+      console.error('重置对话失败:', e);
+    }
+  }
+
+  // ── 侧边栏 ──────────────────────────────────────────────────────────────
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+  }
+
+  // ── 模式切换 ────────────────────────────────────────────────────────────
+  function setMode(mode, btn) {
+    currentMode = mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function setQuestion(text) {
+    document.getElementById('question').value = text;
+  }
+
+  function setStatus(text, visible) {
+    const bar = document.getElementById('statusBar');
+    document.getElementById('statusText').textContent = text;
+    bar.classList.toggle('visible', visible);
+  }
+
+  function setSendEnabled(enabled) {
+    const btn = document.getElementById('sendBtn');
+    btn.disabled = !enabled;
+    btn.textContent = enabled ? '发 送' : '运行中...';
+    isRunning = !enabled;
+  }
+
+  // ── 记忆面板 ────────────────────────────────────────────────────────────
+  async function refreshMemory() {
+    try {
+      const [statsResp, sessionsResp] = await Promise.all([
+        fetch('/memory/stats'),
+        fetch('/memory/sessions'),
+      ]);
+      const stats = await statsResp.json();
+      const sessions = await sessionsResp.json();
+
+      document.getElementById('statFacts').textContent = stats.facts_count;
+      document.getElementById('statSessions').textContent = stats.sessions_count;
+      document.getElementById('statTurns').textContent = stats.total_turns;
+
+      // 渲染会话列表
+      const sl = document.getElementById('sessionsList');
+      if (sessions && sessions.length) {
+        sl.innerHTML = sessions.map(s =>
+          `<div class="fact-item" style="cursor:pointer;padding:4px 0;"
+                onclick="document.getElementById('sessionIdInput').value='${escAttr(s.session_id)}';
+                         currentSessionId='${escAttr(s.session_id)}'"
+                title="点击切换到此会话">
+             📁 <span class="key">${escHtml(s.session_id)}</span>
+             <span style="color:#475569;">(${s.turns}轮)</span>
+           </div>`
+        ).join('');
+      } else {
+        sl.innerHTML = '<span style="font-size:11px;color:#475569;">暂无历史会话</span>';
+      }
+
+      // 渲染事实列表
+      const fl = document.getElementById('factsList');
+      try {
+        const sessDetail = sessions && sessions.length
+          ? await fetch(`/memory/session/${sessions[0].session_id}`).then(r => r.json())
+          : null;
+      } catch(e) {}
+
+      // 用 stats 展示概要
+      if (stats.facts_count > 0) {
+        // 尝试从任意 session 推断事实
+        fl.innerHTML = `<span style="font-size:11px;color:#94a3b8;">
+          共 ${stats.facts_count} 条事实，分布在 ${stats.sessions_count} 个会话中
+        </span>`;
+      } else {
+        fl.innerHTML = '<span style="font-size:11px;color:#475569;">暂无事实。开始提问后自动提取。</span>';
+      }
+
+      // 更新 header 徽标
+      const badge = document.getElementById('memBadge');
+      const badgeText = document.getElementById('memBadgeText');
+      if (stats.facts_count > 0) {
+        badge.classList.remove('disabled');
+        badgeText.textContent = `${stats.facts_count} 条事实 · ${stats.total_turns} 轮对话`;
+      } else {
+        badge.classList.add('disabled');
+        badgeText.textContent = '记忆为空';
+      }
+
+    } catch (e) {
+      console.error('刷新记忆失败:', e);
+    }
+  }
+
+  async function clearMemory() {
+    if (!confirm('确认清空全部记忆？此操作不可恢复。')) return;
+    try {
+      await fetch('/memory', { method: 'DELETE' });
+      refreshMemory();
+    } catch (e) {
+      console.error('清空记忆失败:', e);
+    }
+  }
+
+  // ── 创建步骤卡片 ────────────────────────────────────────────────────────
+  function createStepCard(stepData) {
+    const card = document.createElement('div');
+    card.className = 'step-card';
+
+    const isManual = (currentMode === 'manual');
+
+    const header = document.createElement('div');
+    header.className = 'step-header';
+    header.innerHTML = `
+      <span class="step-badge">Step ${stepData.step}</span>
+      <span class="step-title">🔧 ${escHtml(stepData.action)}(${escHtml(JSON.stringify(stepData.action_input||{}))})</span>
+      <span class="step-toggle open"></span>
+    `;
+
+    const body = document.createElement('div');
+    body.className = 'step-body';
+
+    // Thought 块
+    if (isManual && stepData.thought) {
+      body.innerHTML += `
+        <div class="thought-block">
+          <div class="block-label">Thought</div>
+          <div class="block-content">${escHtml(stepData.thought)}</div>
+        </div>`;
+    } else if (!isManual) {
+      body.innerHTML += `
+        <div class="thought-block">
+          <div class="block-label">Thought</div>
+          <div class="fc-thought-note">Function Calling 版：模型内部推理，不可见</div>
+        </div>`;
+    }
+
+    // Action 块
+    body.innerHTML += `
+      <div class="action-block">
+        <div class="block-label">Action</div>
+        <span class="tool-pill">${escHtml(stepData.action)}</span>
+        <div class="args-code">${escHtml(JSON.stringify(stepData.action_input||{}, null, 2))}</div>
+      </div>`;
+
+    // Observation 块
+    body.innerHTML += `
+      <div class="obs-block">
+        <div class="block-label">Observation</div>
+        <div class="block-content">${escHtml((stepData.observation||'').replace(/\n{3,}/g, '\n\n').trim())}</div>
+      </div>`;
+
+    header.addEventListener('click', () => {
+      body.classList.toggle('collapsed');
+      header.querySelector('.step-toggle').classList.toggle('open');
+    });
+
+    card.appendChild(header);
+    card.appendChild(body);
+    return card;
+  }
+
+  function createFinalCard(stepData, totalSteps, elapsedS) {
+    const card = document.createElement('div');
+    card.className = 'final-card';
+    card.innerHTML = `
+      <h3>✅ Final Answer</h3>
+      <div class="answer-text">${escHtml(stepData.answer)}</div>
+      <div class="meta-row">
+        <span>共 ${totalSteps} 步</span>
+        <span>耗时 ~${elapsedS}s</span>
+        <span>实现：${ currentMode === 'manual' ? '手写Prompt解析' : 'Function Calling' }</span>
+        <span>会话：${escHtml(currentSessionId)}</span>
+      </div>`;
+    return card;
+  }
+
+  function createErrorCard(msg) {
+    const card = document.createElement('div');
+    card.className = 'final-card';
+    card.style.borderColor = '#7f1d1d';
+    card.innerHTML = `<h3 style="color:#f87171">⚠️ ${escHtml(msg)}</h3>`;
+    return card;
+  }
+
+  function escHtml(s) {
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function escAttr(s) {
+    return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  // ── 主发送逻辑 ──────────────────────────────────────────────────────────
+  async function sendQuery() {
+    if (isRunning) return;
+    const question = document.getElementById('question').value.trim();
+    if (!question) return;
+
+    currentSessionId = document.getElementById('sessionIdInput').value.trim() || 'default';
+
+    // 对话模式：不清屏，消息累积
+    if (!chatMode) {
+      document.getElementById('stepsContainer').innerHTML = '';
+    }
+
+    setSendEnabled(false);
+    setStatus('正在连接...', true);
+    document.getElementById('memCtxBar').classList.remove('visible');
+
+    // 对话模式使用 /chat 端点（共享上下文）
+    const prefix = chatMode ? 'chat' : 'query';
+    const endpoint = `/${prefix}/${currentMode}`;
+    const startTime = Date.now();
+    let actionStepCount = 0;
+
+    // 对话模式：创建本轮对话容器
+    let turnWrapper = null;
+    let stepsWrapper = null;
+    if (chatMode) {
+      turnWrapper = document.createElement('div');
+      turnWrapper.className = 'chat-turn';
+
+      const qBubble = document.createElement('div');
+      qBubble.className = 'chat-question';
+      qBubble.innerHTML = `<div class="bubble">${escHtml(question)}</div>`;
+      turnWrapper.appendChild(qBubble);
+
+      stepsWrapper = document.createElement('div');
+      stepsWrapper.className = 'chat-answer';
+      turnWrapper.appendChild(stepsWrapper);
+
+      document.getElementById('stepsContainer').appendChild(turnWrapper);
+    }
+
+    // 对话模式下清空输入框
+    if (chatMode) {
+      document.getElementById('question').value = '';
+    }
+
+    try {
+      const resp = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question, max_steps: 10, session_id: currentSessionId }),
+      });
+
+      if (!resp.ok) {
+        throw new Error(`HTTP ${resp.status}`);
+      }
+
+      const reader  = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let   buffer  = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop();
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          let data;
+          try { data = JSON.parse(line.slice(6)); } catch { continue; }
+
+          if (data.type === 'start') {
+            const label = currentMode === 'manual' ? '手写Prompt解析' : 'Function Calling';
+            setStatus(`🧠 思考中... (${label}${chatMode ? ' · 对话模式' : ''})`, true);
+
+          } else if (data.type === 'action') {
+            actionStepCount++;
+            setStatus(`Step ${data.step}：正在调用 ${data.action}...`, true);
+            const card = createStepCard(data);
+            const target = chatMode ? stepsWrapper : document.getElementById('stepsContainer');
+            target.appendChild(card);
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+          } else if (data.type === 'final') {
+            const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+            const card = createFinalCard(data, actionStepCount, elapsed);
+            const target = chatMode ? stepsWrapper : document.getElementById('stepsContainer');
+            target.appendChild(card);
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            setStatus('完成', false);
+            setTimeout(refreshMemory, 500);
+
+          } else if (data.type === 'max_steps' || data.type === 'error') {
+            const card = createErrorCard(data.answer || data.observation || '未知错误');
+            const target = chatMode ? stepsWrapper : document.getElementById('stepsContainer');
+            target.appendChild(card);
+            setStatus('', false);
+
+          } else if (data.type === 'done') {
+            setStatus('', false);
+          }
+        }
+      }
+    } catch (err) {
+      const card = createErrorCard(`请求失败: ${err.message}`);
+      const target = chatMode ? stepsWrapper : document.getElementById('stepsContainer');
+      if (target) target.appendChild(card);
+      setStatus('', false);
+    } finally {
+      setSendEnabled(true);
+      // 对话模式下聚焦回输入框
+      if (chatMode) {
+        document.getElementById('question').focus();
+      }
+    }
+  }
+
+  // ── 回车发送 ────────────────────────────────────────────────────────────
+  document.getElementById('question').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendQuery(); }
+  });
+
+  // ── 初始化 ──────────────────────────────────────────────────────────────
+  refreshMemory();
+</script>
+</body>
+</html>
