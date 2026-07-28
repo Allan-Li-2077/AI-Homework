@@ -1,0 +1,70 @@
+一、需求分析：给 ReAct Agent 增加多轮对话能力
+原有系统缺陷
+现有所有 Agent（manual 手写版、fc 函数调用版）单次问答无历史记忆：
+每次提问只会把「system + 当前 user 问题」传入 LLM，上一轮问答、工具返回结果全部丢失
+Web 服务serve.py每次请求独立上下文，无法追问（例：先问茅台毛利率，再追问 “同比变化多少” 会丢失茅台数据）
+evaluate.py评估逻辑仅支持单轮问题，无多轮测试用例
+多轮对话核心改造目标
+增加会话上下文存储：区分不同用户会话 ID，持久化每轮完整消息链
+修改react_manual.py/react_function_calling.py：不再每次新建空 messages，读取会话历史追加新问题
+修改serve.py接口：新增session_id参数，会话隔离；SSE 流式携带会话标识
+修改agent.py入口：支持传入会话 ID、加载历史对话
+补充evaluate.py多轮问答测试用例，支持连续追问评估
+工具层无改动，仅 Agent 推理层维护对话历史
+二、需修改文件清单 & 改动差异对比
+表格
+文件	原有逻辑	修改后新增能力	改动范围
+agent.py	单次问答，无会话参数	新增--session-id入参，传递会话标识给 run_and_print	少量参数解析、传参逻辑
+react_manual.py	每次 run () 新建 messages=[system, user]，无历史	run 新增 session_id，全局会话存储；读取历史消息，追加新 query	核心循环、入参、全局存储
+react_function_calling.py	同上，无会话记忆	同手写版，统一会话存储逻辑，保持双版本接口一致	核心循环、入参
+serve.py	接口无 session 区分，每次新建 agent 实例	请求体增加 session_id；全局会话缓存；多轮消息拼接	Pydantic 模型、流式函数、路由
+evaluate.py	仅单轮独立问题	新增多轮问答测试组；支持连续追问评估两种 agent	评估用例、循环执行逻辑
+tools.py	无对话相关逻辑	无需修改	无改动
+三、分文件完整修改代码
+1. agent.py（统一入口，新增 session_id 参数）
+改动点
+新增--session-id命令行参数，默认单会话
+run_and_print调用增加第三个入参args.session_id向下传递
+2. react_manual.py（手写 ReAct，新增全局会话缓存，多轮记忆）
+核心改动
+全局SESSION_CACHE字典存储所有会话完整消息链
+run()函数新增session_id入参，首次会话初始化 system 消息，后续直接复用历史
+每一步 assistant 输出、observation 工具结果、最终回答全部回写缓存，保留完整上下文
+CLI 入口新增--session-id参数，打印会话 ID 便于区分多轮对话
+3. react_function_calling.py（FC 版同步增加会话缓存，与手写版接口对齐）
+4. serve.py（FastAPI 服务，接口增加 session_id，会话隔离流式多轮）
+改动点
+QueryRequest 增加session_id字段，前端每次请求携带唯一会话标识
+_stream_react 新增 session_id 参数，透传给 agent run 函数
+SSE 起始、结束事件携带 session_id，前端可区分多对话窗口
+两个流式接口路由传入 req.session_id，实现服务端会话隔离
+5. evaluate.py（新增多轮问答评估用例，测试连续追问效果）
+改动点
+每条测试用例新增固定session_id，同一会话 ID 连续执行多轮追问
+_run_single新增 session_id 传参，打通 agent 会话缓存
+输出表格增加会话 ID 列，区分多轮测试组
+新增多轮追问测试用例（Q1_2/Q2_2/Q4_2），专门验证上下文记忆能力
+四、使用示例（多轮对话效果）
+1. 命令行多轮测试（手写版同一会话）
+# 第一轮：查询茅台五粮液毛利率
+python agent.py --mode manual --session-id chat001 --question "茅台和五粮液2023毛利率谁更高？差多少"
+# 第二轮同session_id，自动复用上文，直接追问
+python agent.py --mode manual --session-id chat001 --question "茅台2022年毛利率是多少，同比下降多少"
+2. HTTP 接口多轮调用（前端持久 session_id）
+第一次 POST /query/manual
+{
+  "question": "宁德时代2021-2023营收",
+  "max_steps":10,
+  "session_id":"user_123_chat1"
+}
+第二次同一 session_id 追问
+{
+  "question": "三年复合增长率计算一下",
+  "max_steps":10,
+  "session_id":"user_123_chat1"
+}
+五、扩展优化建议（可选）
+会话持久化：当前仅内存缓存，服务重启丢失；可增加 Redis 持久化 SESSION_CACHE，支持分布式多实例
+会话过期清理：增加定时任务清理超过 30 分钟无操作的 session，避免内存溢出
+上下文截断：长对话消息过长时自动裁剪早期无关 Observation，防止 LLM 上下文溢出
+前端页面适配：index.html 增加会话 ID 存储，刷新页面保留对话历史
