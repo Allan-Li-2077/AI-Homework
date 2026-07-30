@@ -1,0 +1,40 @@
+{
+  "id": "flash-card",
+  "name": "Flash Card Writer",
+  "description": "Creates concise study flash cards from a topic.",
+  "manifestVersion": 2,
+  "enabled": true,
+  "priority": 20,
+  "triggers": ["flash card", "flashcard", "study card", "学习卡片", "记忆卡片", "卡片"],
+  "capabilities": ["study.flashcard.create"],
+  "runtimeV2": {
+    "capabilities": ["study.flashcard.create"],
+    "tools": [
+      {
+        "name": "make_flashcard",
+        "capability": "study.flashcard.create",
+        "description": "Create one markdown flash card for a study topic.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "topic": {
+              "type": "string",
+              "description": "Topic to turn into a flash card."
+            }
+          },
+          "required": ["topic"],
+          "additionalProperties": false
+        },
+        "runner": {
+          "type": "python",
+          "script": "scripts/make_flashcard.py",
+          "args": ["--topic", "{{topic}}"],
+          "timeoutSeconds": 10
+        },
+        "permissions": {
+          "filesystem": "none"
+        }
+      }
+    ]
+  }
+}

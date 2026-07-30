@@ -1,0 +1,40 @@
+{
+  "id": "timeline",
+  "name": "Timeline Builder",
+  "description": "Turns a list of events into a compact timeline.",
+  "manifestVersion": 2,
+  "enabled": true,
+  "priority": 30,
+  "triggers": ["timeline", "time line", "时间线", "大事记", "历程"],
+  "capabilities": ["timeline.create"],
+  "runtimeV2": {
+    "capabilities": ["timeline.create"],
+    "tools": [
+      {
+        "name": "make_timeline",
+        "capability": "timeline.create",
+        "description": "Create a markdown timeline from newline-separated events.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "events": {
+              "type": "string",
+              "description": "Newline-separated event list."
+            }
+          },
+          "required": ["events"],
+          "additionalProperties": false
+        },
+        "runner": {
+          "type": "python",
+          "script": "scripts/make_timeline.py",
+          "args": ["--events", "{{events}}"],
+          "timeoutSeconds": 10
+        },
+        "permissions": {
+          "filesystem": "none"
+        }
+      }
+    ]
+  }
+}
