@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReAct AI Tech Agent — AI技术问答演示</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    min-height: 100vh;
+  }
+
+  header {
+    background: #1a1d27;
+    border-bottom: 1px solid #2d3148;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  header h1 { font-size: 18px; font-weight: 600; color: #a78bfa; }
+  header .subtitle { font-size: 12px; color: #64748b; }
+
+  .container { 
+    max-width: 960px; 
+    margin: 0 auto; 
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 65px);
+  }
+
+  .chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+    padding-bottom: 20px;
+  }
+
+  .mode-toggle-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #1a1d27;
+    border: 1px solid #2d3148;
+    border-radius: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .mode-toggle-bar span { font-size: 12px; color: #64748b; }
+  .mode-btn {
+    padding: 4px 14px;
+    border-radius: 16px;
+    border: 1px solid #3d4163;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .mode-btn.active {
+    background: #7c3aed;
+    border-color: #7c3aed;
+    color: #fff;
+  }
+  .history-info {
+    margin-left: auto;
+    font-size: 11px;
+    color: #475569;
+  }
+
+  .message-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .user-message {
+    align-self: flex-end;
+    max-width: 85%;
+  }
+  .user-message .bubble {
+    background: #7c3aed;
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 16px 16px 4px 16px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .agent-message {
+    align-self: flex-start;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .agent-message .bubble {
+    background: #1a1d27;
+    border: 1px solid #2d3148;
+    padding: 12px 16px;
+    border-radius: 4px 16px 16px 16px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .thinking-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    color: #64748b;
+    font-size: 13px;
+  }
+  .typing-dots {
+    display: flex;
+    gap: 4px;
+  }
+  .typing-dots span {
+    width: 6px;
+    height: 6px;
+    background: #64748b;
+    border-radius: 50%;
+    animation: typing 1.4s infinite ease-in-out both;
+  }
+  .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+  .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+  @keyframes typing {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+  }
+
+  .steps-card {
+    background: #0f1117;
+    border: 1px solid #2d3148;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .steps-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    cursor: pointer;
+    user-select: none;
+    background: #1a1d27;
+  }
+  .steps-header span {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+  }
+  .steps-header .toggle {
+    font-size: 10px;
+    color: #475569;
+  }
+  .steps-body {
+    padding: 12px 14px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .steps-body.collapsed { display: none; }
+
+  .step-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: flex-start;
+  }
+  .step-row:last-child { margin-bottom: 0; }
+  .step-badge {
+    background: #2d3148;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 10px;
+    color: #64748b;
+    flex-shrink: 0;
+  }
+  .step-content {
+    flex: 1;
+    color: #94a3b8;
+  }
+  .step-tool {
+    color: #a78bfa;
+    font-family: monospace;
+    font-size: 11px;
+  }
+  .step-obs {
+    background: #0d1017;
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin-top: 4px;
+    font-size: 11px;
+    color: #cbd5e1;
+    max-height: 120px;
+    overflow-y: auto;
+  }
+
+  .final-answer {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #e2e8f0;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .input-area {
+    background: #1a1d27;
+    border: 1px solid #2d3148;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+  }
+  textarea {
+    flex: 1;
+    background: #0f1117;
+    border: 1px solid #2d3148;
+    border-radius: 8px;
+    color: #e2e8f0;
+    padding: 10px 14px;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 60px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  textarea:focus { border-color: #7c3aed; }
+
+  .btn-group {
+    display: flex;
+    gap: 8px;
+  }
+  .send-btn {
+    padding: 0 20px;
+    background: #7c3aed;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .send-btn:hover:not(:disabled) { background: #6d28d9; }
+  .send-btn:disabled { background: #3d4163; cursor: not-allowed; }
+
+  .secondary-btn {
+    padding: 0 16px;
+    background: transparent;
+    border: 1px solid #3d4163;
+    border-radius: 8px;
+    color: #94a3b8;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .secondary-btn:hover { border-color: #7c3aed; color: #a78bfa; }
+
+  .examples-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .examples-row span { font-size: 11px; color: #475569; }
+  .example-chip {
+    background: #1e2235;
+    border: 1px solid #2d3148;
+    border-radius: 16px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .example-chip:hover { border-color: #7c3aed; color: #a78bfa; }
+
+  .divider {
+    height: 1px;
+    background: #2d3148;
+    margin: 20px 0;
+  }
+
+  .meta-info {
+    font-size: 11px;
+    color: #475569;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>⚡ ReAct AI Tech Agent</h1>
+    <div class="subtitle">Thought → Action → Observation 循环演示 | 数据来源：AI技术论文 + RAG检索</div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="chat-container" id="chatContainer">
+    <div class="mode-toggle-bar">
+      <span>实现方式：</span>
+      <button class="mode-btn active" data-mode="manual" onclick="setMode('manual', this)">手写 Prompt 解析</button>
+      <button class="mode-btn" data-mode="fc" onclick="setMode('fc', this)">Function Calling</button>
+      <span class="history-info" id="historyInfo">对话轮次: 0</span>
+    </div>
+
+    <div class="message-group" id="welcomeGroup">
+      <div class="agent-message">
+        <div class="bubble">
+          <p style="margin-bottom:8px;">👋 你好！我是 AI 技术问答助手，我可以帮你解答关于 AI 技术的问题。</p>
+          <p>你可以问我：</p>
+          <ul style="margin-left:20px;color:#94a3b8;">
+            <li>Transformer和RNN的主要区别是什么？</li>
+            <li>Attention Is All You Need论文的核心贡献是什么？</li>
+            <li>BERT模型的关键技术点有哪些？</li>
+            <li>Transformer中的多头注意力机制是如何工作的？</li>
+          </ul>
+          <p style="margin-top:8px;font-size:12px;color:#64748b;">提示：我支持多轮对话，可以基于之前的回答继续追问！</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <div class="input-row">
+      <textarea id="question" placeholder="输入你的问题..."></textarea>
+      <div class="btn-group">
+        <button class="secondary-btn" id="clearBtn" onclick="clearHistory()">清空对话</button>
+        <button class="send-btn" id="sendBtn" onclick="sendQuery()">发送</button>
+      </div>
+    </div>
+    <div class="examples-row">
+      <span>快速提问：</span>
+      <span class="example-chip" onclick="setQuestion(this.textContent)">Transformer和RNN的主要区别是什么？</span>
+      <span class="example-chip" onclick="setQuestion(this.textContent)">BERT和GPT有什么区别？</span>
+      <span class="example-chip" onclick="setQuestion(this.textContent)">注意力机制是如何工作的？</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentMode = 'manual';
+  let isRunning = false;
+  let conversationHistory = [];
+  let abortController = null;
+
+  function setMode(mode, btn) {
+    currentMode = mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function setQuestion(text) {
+    document.getElementById('question').value = text;
+    document.getElementById('question').focus();
+  }
+
+  function updateHistoryInfo() {
+    document.getElementById('historyInfo').textContent = `对话轮次: ${conversationHistory.length}`;
+  }
+
+  function clearHistory() {
+    if (abortController) {
+      abortController.abort();
+      abortController = null;
+    }
+    conversationHistory = [];
+    document.getElementById('chatContainer').innerHTML = `
+      <div class="mode-toggle-bar">
+        <span>实现方式：</span>
+        <button class="mode-btn ${currentMode === 'manual' ? 'active' : ''}" data-mode="manual" onclick="setMode('manual', this)">手写 Prompt 解析</button>
+        <button class="mode-btn ${currentMode === 'fc' ? 'active' : ''}" data-mode="fc" onclick="setMode('fc', this)">Function Calling</button>
+        <span class="history-info" id="historyInfo">对话轮次: 0</span>
+      </div>
+      <div class="message-group" id="welcomeGroup">
+        <div class="agent-message">
+          <div class="bubble">
+            <p style="margin-bottom:8px;">👋 你好！我是 AI 技术问答助手，我可以帮你解答关于 AI 技术的问题。</p>
+            <p>你可以问我：</p>
+            <ul style="margin-left:20px;color:#94a3b8;">
+              <li>Transformer和RNN的主要区别是什么？</li>
+              <li>Attention Is All You Need论文的核心贡献是什么？</li>
+              <li>BERT模型的关键技术点有哪些？</li>
+              <li>Transformer中的多头注意力机制是如何工作的？</li>
+            </ul>
+            <p style="margin-top:8px;font-size:12px;color:#64748b;">提示：我支持多轮对话，可以基于之前的回答继续追问！</p>
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById('question').value = '';
+    updateHistoryInfo();
+  }
+
+  function appendMessage(type, content, stepsData = null) {
+    const container = document.getElementById('chatContainer');
+    const welcomeGroup = document.getElementById('welcomeGroup');
+    if (welcomeGroup) welcomeGroup.remove();
+
+    const group = document.createElement('div');
+    group.className = 'message-group';
+
+    if (type === 'user') {
+      const msg = document.createElement('div');
+      msg.className = 'user-message';
+      msg.innerHTML = `<div class="bubble">${esc(content)}</div>`;
+      group.appendChild(msg);
+    } else if (type === 'agent') {
+      const msg = document.createElement('div');
+      msg.className = 'agent-message';
+      let html = `<div class="bubble"><div class="final-answer">${esc(content)}</div>`;
+      
+      if (stepsData && stepsData.length > 0) {
+        html += `
+          <div class="steps-card">
+            <div class="steps-header" onclick="toggleSteps(this)">
+              <span>🔧 ReAct 思考过程 (${stepsData.length} 步)</span>
+              <span class="toggle">▼</span>
+            </div>
+            <div class="steps-body">
+              ${stepsData.map((step, i) => `
+                <div class="step-row">
+                  <span class="step-badge">Step ${step.step}</span>
+                  <div class="step-content">
+                    ${step.thought ? `<div><strong style="color:#38bdf8;">思考:</strong> ${esc(step.thought)}</div>` : ''}
+                    <div><strong style="color:#fbbf24;">工具:</strong> <span class="step-tool">${esc(step.action)}</span></div>
+                    <div style="font-size:11px;color:#64748b;">参数: ${esc(JSON.stringify(step.action_input || {}))}</div>
+                    <div class="step-obs">${esc((step.observation || '').replace(/\n{3,}/g, '\n\n').trim())}</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      
+      html += '</div>';
+      msg.innerHTML = html;
+      group.appendChild(msg);
+    } else if (type === 'thinking') {
+      const msg = document.createElement('div');
+      msg.className = 'agent-message';
+      msg.innerHTML = `
+        <div class="bubble">
+          <div class="thinking-indicator">
+            <span>🤔 正在思考...</span>
+            <div class="typing-dots">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      `;
+      msg.id = 'thinkingIndicator';
+      group.appendChild(msg);
+    }
+
+    container.appendChild(group);
+    group.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return group;
+  }
+
+  function toggleSteps(header) {
+    const body = header.nextElementSibling;
+    const toggle = header.querySelector('.toggle');
+    body.classList.toggle('collapsed');
+    toggle.textContent = body.classList.contains('collapsed') ? '▼' : '▲';
+  }
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  async function sendQuery() {
+    if (isRunning) return;
+    const question = document.getElementById('question').value.trim();
+    if (!question) return;
+
+    document.getElementById('question').value = '';
+    isRunning = true;
+    document.getElementById('sendBtn').disabled = true;
+    document.getElementById('sendBtn').textContent = '发送中...';
+
+    abortController = new AbortController();
+    appendMessage('user', question);
+    const thinkingGroup = appendMessage('thinking', '');
+
+    const endpoint = `/query/${currentMode}`;
+    const startTime = Date.now();
+    const stepsData = [];
+    let finalAnswer = '';
+
+    try {
+      const resp = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          question, 
+          max_steps: 10,
+          conversation_history: conversationHistory
+        }),
+        signal: abortController.signal,
+      });
+
+      if (!resp.ok) {
+        throw new Error(`HTTP ${resp.status}`);
+      }
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop();
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          let data;
+          try { data = JSON.parse(line.slice(6)); } catch { continue; }
+
+          if (data.type === 'action') {
+            stepsData.push(data);
+          } else if (data.type === 'final') {
+            finalAnswer = data.answer;
+          }
+        }
+      }
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        console.log('请求已取消');
+        return;
+      }
+      finalAnswer = `请求失败: ${err.message}`;
+    } finally {
+      abortController = null;
+      isRunning = false;
+      document.getElementById('sendBtn').disabled = false;
+      document.getElementById('sendBtn').textContent = '发送';
+
+      if (thinkingGroup) thinkingGroup.remove();
+
+      if (finalAnswer) {
+        appendMessage('agent', finalAnswer, stepsData);
+        conversationHistory.push({ question, answer: finalAnswer });
+        updateHistoryInfo();
+      }
+    }
+  }
+
+  document.getElementById('question').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendQuery();
+    }
+  });
+</script>
+</body>
+</html>
