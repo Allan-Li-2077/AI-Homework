@@ -1,0 +1,24 @@
+# 基础cuda torch
+torch>=2.2.0
+torchvision
+torchaudio
+--index-url https://download.pytorch.org/whl/cu121
+
+# LLM推理核心
+transformers>=4.40.0
+vllm>=0.4.2
+accelerate
+
+# 压测绘图
+matplotlib
+numpy
+
+# OpenAI客户端调用vLLM服务
+openai>=1.0.0
+
+# JSON schema校验（function call约束解码）
+jsonschema
+
+# 工具依赖
+gc
+json
