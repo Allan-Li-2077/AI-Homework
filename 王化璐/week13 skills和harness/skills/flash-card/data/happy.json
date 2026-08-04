@@ -1,0 +1,21 @@
+{
+  "word": "happy",
+  "phonetic": "/ˈhæpi/",
+  "pos": "adj.",
+  "definition": "快乐的，高兴的；幸福的；幸运的",
+  "examples": [
+    {
+      "en": "She was so happy to see her old friends again.",
+      "zh": "再次见到老朋友，她非常高兴。"
+    },
+    {
+      "en": "I feel happy when I'm spending time with my family.",
+      "zh": "和家人在一起的时候我感到很幸福。"
+    },
+    {
+      "en": "Happy birthday to you, dear friend!",
+      "zh": "生日快乐，亲爱的朋友！"
+    }
+  ],
+  "synonyms": ["joyful", "cheerful", "glad", "delighted", "pleased", "content"]
+}
