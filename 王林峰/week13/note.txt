@@ -1,0 +1,76 @@
+一、需求拆解：渐进式记忆执行 Harness 整体设计
+核心目标
+现有系统记忆全量一次性加载、Flush 一次性全量提取，渐进式 Harness 实现：
+记忆分层懒加载、分片渐进载入（不一次性加载全部 MD）
+Memory Flush 增量分步执行（Pass1→Pass2→Pass3 分段可中断、可续跑）
+检索渐进召回（先关键词再向量，逐步扩充候选集）
+提供 Harness 调试接口：步骤断点、状态快照、单步回滚、执行日志
+兼容原有全部业务逻辑，最小侵入修改原有模块
+涉及原有文件清单（需修改）
+表格
+文件	修改原因	修改等级
+memory_loader.py	新增分片渐进加载、懒加载接口、分层状态缓存	核心修改
+memory_flush.py	拆分 Flush 为分步执行器，支持断点续跑、渐进提取记忆	核心修改
+retrieval.py	新增渐进混合检索迭代器，分批召回记忆	中度修改
+agent.py	CLI Harness 调试命令新增：/step /snapshot /rollback /trace	中度修改
+serve.py	新增 SSE 分步执行流式事件、渐进加载接口	中度修改
+reset.py	新增 Harness 中间状态快照 / 回滚工具	轻度修改
+session_db.py	新增 Flush 执行断点记录表，持久化分步进度	轻度修改
+vector_store.py/fts_store.py	新增分批增量写入、分页检索接口	轻度修改
+新增文件（Harness 核心执行器，不改动原有业务）
+src/harness/base_harness.py：基础渐进执行框架、状态上下文、断点管理
+src/harness/memory_harness.py：记忆加载渐进执行器
+src/harness/flush_harness.py：分步 Flush 渐进执行器
+src/harness/retrieval_harness.py：渐进检索迭代器
+src/harness/trace_logger.py：全链路分步执行日志持久化
+二、各文件修改对比 + 修改后完整代码
+1. 底层支撑修改：session_db.py（新增断点存储）
+修改点对比
+原有：仅会话、消息两张表
+新增：flush_checkpoint 表存储分步执行断点，记录每一步执行状态、已提取数据、中断位置
+2. 核心修改：memory_loader.py 渐进分片懒加载
+修改对比
+原有：一次性读取全部 MD 文件、一次性分割全部记忆条目
+新增：
+分片读取 MEMORY.md，支持 limit/offset 渐进加载记忆条目
+分层懒加载接口 load_layer_async，按需加载 SOUL/USER/ 日志 / 长期记忆
+缓存每层加载状态，避免重复 IO
+适配 Harness 分步加载回调钩子
+3. 核心修改：memory_flush.py 分步渐进 Flush 执行器
+修改对比
+原有 flush() 一次性执行 Pass1/Pass2/Pass3 / 压缩，不可中断
+新增：
+拆分独立分步函数：step_pass1_extract_user / step_pass2_extract_memory / step_pass3_vector_write / step_compact
+支持从 session_db 读取断点续跑、每一步写入断点
+提供迭代式 flush_progressive() 生成器，Harness 单步执行
+中间结果持久化，中断后可恢复上下文
+关键新增逻辑（完整文件过长，仅展示核心新增方法 + 修改入口）
+4. CLI 适配修改 agent.py：新增 Harness 调试命令
+新增交互指令
+/step flush：单步执行一次 Flush 步骤
+/step load：渐进式加载一层记忆分片
+/snapshot save [name]：保存当前记忆快照
+/rollback [name]：回滚快照
+/trace：打印全部渐进执行日志
+5. 新增 Harness 框架文件（src/harness/）
+src/harness/base_harness.py 通用渐进执行基类
+三、配套接口修改 serve.py
+/chat 新增查询参数 progressive=true，开启渐进式分层加载 SSE 事件
+/flush 新增 step 参数，支持单步执行、断点续跑
+/harness/snapshot / /harness/rollback 新增快照管理接口
+四、执行流程完整 Harness 调用示例
+examples/harness_progressive_demo.py（完整调用示例）
+五、修改总览总结
+1. 侵入型修改（原有业务文件）
+session_db.py：新增断点表，无逻辑破坏，向下兼容
+memory_loader.py：新增分页 / 异步渐进加载，原有全量加载完全保留
+memory_flush.py：拆分分步执行器，原有 flush() 入口不变
+agent.py/serve.py：新增 Harness 调试指令 / 接口，原有对话流程不受影响
+vector_store/fts_store：新增分页检索、分批写入辅助方法
+2. 无侵入新增（Harness 独立模块）
+src/harness/ 整套渐进执行框架，完全独立于原有业务，仅在调试 / 分步执行场景引入，生产环境不启用无性能损耗。
+3. 能力收益
+记忆加载不再一次性全量读取大 MD 文件，超大记忆库不会触发 OOM
+Flush 支持断点续跑，LLM 调用中断无需从头执行全部提取逻辑，节省 token 成本
+单步调试、状态快照、回滚，方便记忆系统迭代调试
+检索渐进召回，先少量关键词再扩充向量候选，平衡速度与召回精度

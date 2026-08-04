@@ -1,0 +1,108 @@
+VLLM 部署 + 吞吐量验证作业完整方案
+一、作业需求拆解
+核心目标：
+部署 vLLM OpenAI 兼容 API 服务；
+对比原生 Transformers 串行 / 固定 Batch、vLLM Continuous Batching 三者吞吐（QPS、token/s、总耗时）；
+验证 vLLM PagedAttention + 动态批处理带来 5~10 倍加速；
+配套约束解码 demo（guided_json/choice/regex/response_format）验证生产结构化输出可靠性。
+现有文件清单：
+bench_throughput.py：离线吞吐压测脚本（不依赖 vLLM 服务，本地加载 vLLM 库）
+demo_function_call.py：Function Call 三种输出模式对比（依赖 vLLM HTTP 服务）
+demo_guided_choice.py：枚举约束解码 demo（依赖 vLLM HTTP 服务）
+demo_guided_json.py：JSON Schema 约束 demo（依赖 vLLM HTTP 服务）
+demo_guided_regex.py：正则格式约束 demo（依赖 vLLM HTTP 服务）
+demo_response_format.py：标准 OpenAI JSON 输出 demo（依赖 vLLM HTTP 服务）
+需新增 / 修改文件梳理
+表格
+文件	操作	修改原因
+start_server.sh	新增	vLLM 服务一键启动脚本，统一端口、模型、显存配置
+env_requirements.txt	新增	环境依赖清单（transformers/vllm/torch/matplotlib/jsonschema/openai）
+bench_throughput.py	少量修改	修复显存释放、增加注释、适配通用模型路径、补充异常捕获
+README.md	新增	作业部署 + 运行完整流程文档
+outputs/.gitignore	新增	忽略图表、json 结果文件
+调整差异总览
+新增启动脚本，标准化 vLLM 服务部署；
+新增依赖清单，一键安装环境；
+压测脚本优化稳定性、可复用性；
+新增操作文档，完整复现作业流程；
+约束解码脚本无需改动，完全兼容标准 vLLM OpenAI 服务。
+二、各文件完整内容（调整后）
+1. 新增：env_requirements.txt
+2. 新增：start_server.sh（vLLM 服务部署脚本）
+赋予执行权限：chmod +x start_server.sh
+3. 修改：bench_throughput.py（优化版，差异点标注）
+本文件修改差异点
+新增clear_gpu_memory统一显存清理函数，推理前后强制释放；
+MODEL_PATH 支持环境变量传入，适配不同设备模型存放路径；
+串行 / Batch/vLLM 推理增加 try-except 异常捕获，防止显存泄漏中断程序；
+除零保护，避免推理失败时分母为 0 报错；
+JSON 输出增加 model_path 字段，方便归档复现；
+头部注释补充完整部署、安装步骤。
+4. 新增：README.md（作业完整操作文档）
+下载 Qwen2-0.5B-Instruct 模型，修改 start_server.sh、bench_throughput.py 内 MODEL_PATH 路径
+任务 1：部署 vLLM OpenAI API 服务
+启动服务
+bash start_server.sh
+服务地址：http://localhost:8000/v1
+验证服务连通（新开终端）
+from openai import OpenAI
+client = OpenAI(api_key="EMPTY", base_url="http://localhost:8000/v1")
+resp = client.chat.completions.create(model="qwen2-0.5b", messages=[{"role":"user","content":"什么是股票"}])
+print(resp.choices[0].message.content)
+任务 2：离线吞吐对比验证速度提升（必须关闭 vLLM 服务）
+停止 vLLM 服务
+pkill -f vllm.entrypoints
+运行压测脚本
+python bench_throughput.py
+输出产物：
+outputs/throughput_comparison.png：三模式耗时、QPS、token/s 柱状图
+outputs/throughput_results.json：详细数值日志
+预期结果：
+vLLM 吞吐相比原生 transformers 串行提升 5~10 倍，相比固定 batch 提升 3~6 倍。
+任务 3：约束解码生产场景验证（保持 vLLM 服务运行）
+3.1 Function Call 全量测试
+# 同时跑股票+订单工具
+python demo_function_call.py --tool both
+# 仅股票
+python demo_function_call.py --tool stock
+3.2 枚举分类 guided_choice
+python demo_guided_choice.py
+3.3 JSON Schema 严格输出 guided_json
+python demo_guided_json.py
+3.4 正则格式约束 guided_regex
+python demo_guided_regex.py
+3.5 OpenAI 标准 response_format 对比
+python demo_response_format.py
+核心原理总结
+transformers 原生缺陷：
+串行推理无法并发；
+固定 Batch 必须等待 batch 内最长请求完成；
+KV Cache 连续内存分配，显存碎片严重，batch 上限低。
+vLLM 两大核心优化：
+PagedAttention：KV Cache 分页存储，消除碎片，提升显存利用率；
+Continuous Batching（动态批处理）：请求完成即填充新请求，无等待浪费。
+约束解码分层选型：
+裸 prompt：弱约束，小模型极易格式报错；
+response_format：仅保证 JSON 语法，字段、枚举、数值范围不校验；
+guided_json/guided_choice/guided_regex：vLLM 底层 FSM 强制约束，100% 符合格式规范，生产 Agent 必备。
+
+### 5. 新增：outputs/.gitignore
+```txt
+# 压测图表
+*.png
+# 压测日志json
+*.json
+三、原有约束解码 demo 文件说明
+demo_function_call.py/demo_guided_choice.py/demo_guided_json.py/demo_guided_regex.py/demo_response_format.py无需修改：
+内置标准 OpenAI 客户端，base_url 固定http://localhost:8000/v1，与start_server.sh端口完全匹配；
+model 名称qwen2-0.5b与 vLLM 服务自动识别模型名兼容；
+guided 系列参数为 vLLM 原生扩展，服务启动后可直接调用验证结构化输出可靠性。
+四、作业完整执行流程
+配置模型路径，安装依赖pip install -r env_requirements.txt；
+执行离线吞吐压测（关闭 vLLM 服务）：python bench_throughput.py，记录加速倍数，查看生成柱状图；
+启动 vLLM 服务：bash start_server.sh；
+依次运行约束解码 demo，对比「裸 prompt /response_format/guided 约束」输出合法率差异；
+整理图表、JSON 日志、各 demo 输出报告作为作业交付材料。
+五、预期实验结论
+吞吐层面：vLLM Continuous Batching + PagedAttention 大幅提升并发，QPS、token/s 远高于原生 Transformers；
+结构化输出层面：小模型裸 prompt 输出格式错误率极高，response_format 仅改善 JSON 语法，guided 系列约束解码实现 100% 合规输出，是生产级 Agent、Function Call 刚需。
