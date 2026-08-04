@@ -1,0 +1,8 @@
+# Skill Harness 依赖
+
+# 核心
+pydantic>=2.0.0          # 数据验证
+pyyaml>=6.0              # YAML 序列化
+
+# 可选（演示中用到）
+numpy>=1.24.0            # 数据处理
