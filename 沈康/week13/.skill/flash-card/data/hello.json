@@ -1,0 +1,12 @@
+{
+  "word": "hello",
+  "phonetic": "/həˈloʊ/",
+  "pos": "int.",
+  "definition": "（用于打招呼或引起注意）喂；你好；哈喽；表示问候或唤起注意时的喊声",
+  "examples": [
+    {"en": "Hello, how are you today?", "zh": "你好，你今天怎么样？"},
+    {"en": "I heard someone shout 'hello' from the other side of the street.", "zh": "我听到有人从街对面喊'你好'。"},
+    {"en": "She picked up the phone and said, 'Hello, who's calling?'", "zh": "她拿起电话说：'喂，谁打来的？'"}
+  ],
+  "synonyms": ["hi", "hey", "greetings", "salutations"]
+}
