@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>广东各地市人口柱状图</title>
+<style>
+  :root {
+    --bg: #0b1220;
+    --panel: #121a2b;
+    --text: #e8eefc;
+    --muted: #93a4c3;
+    --line: #243047;
+    --accent: #7dd3fc;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh;
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #1e3a5f 0%, transparent 55%),
+      radial-gradient(900px 500px at 100% 0%, #3b1d4a 0%, transparent 50%),
+      var(--bg);
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 20px 48px; }
+  header h1 {
+    margin: 0 0 8px; font-size: 28px; letter-spacing: .02em;
+    background: linear-gradient(90deg, #fff, var(--accent));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  header p { margin: 0; color: var(--muted); font-size: 14px; }
+  .stats {
+    display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0 16px;
+  }
+  .stat {
+    background: color-mix(in srgb, var(--panel) 90%, white 4%);
+    border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; min-width: 140px;
+  }
+  .stat b { display: block; font-size: 22px; }
+  .stat span { color: var(--muted); font-size: 12px; }
+  .panel {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+    padding: 16px 12px 8px; overflow-x: auto;
+    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+  }
+  svg { display: block; min-width: 100%; }
+  .grid { stroke: var(--line); stroke-width: 1; stroke-dasharray: 4 4; }
+  .tick { fill: var(--muted); font-size: 11px; }
+  .val { fill: #dbeafe; font-size: 11px; font-weight: 600; }
+  .label { fill: #cbd5e1; font-size: 12px; }
+  .bar { transition: opacity .15s, filter .15s; cursor: default; }
+  .bar:hover { filter: brightness(1.15); }
+  .axis { stroke: #334155; stroke-width: 1.5; }
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 18px;
+  }
+  .lg { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; }
+  .lg i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  footer { margin-top: 18px; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>广东 · 各地市人口柱状图</h1>
+      <p>单位：万人 · 按人口降序 · 数据来自技能包内置普查汇总（约数）</p>
+    </header>
+    <div class="stats">
+      <div class="stat"><b>20</b><span>地市/区划数</span></div>
+      <div class="stat"><b>12191</b><span>合计（万人）</span></div>
+      <div class="stat"><b>广州</b><span>人口最多 · 1868万人</span></div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 1104 552" width="100%" height="552" role="img"
+           aria-label="广东各地市人口柱状图">
+        <line x1="58" y1="432.0" x2="1064" y2="432.0" class="grid"/><text x="54" y="436.0" text-anchor="end" class="tick">0</text><line x1="58" y1="361.6" x2="1064" y2="361.6" class="grid"/><text x="54" y="365.6" text-anchor="end" class="tick">374</text><line x1="58" y1="291.2" x2="1064" y2="291.2" class="grid"/><text x="54" y="295.2" text-anchor="end" class="tick">747</text><line x1="58" y1="220.8" x2="1064" y2="220.8" class="grid"/><text x="54" y="224.8" text-anchor="end" class="tick">1121</text><line x1="58" y1="150.4" x2="1064" y2="150.4" class="grid"/><text x="54" y="154.4" text-anchor="end" class="tick">1494</text><line x1="58" y1="80.0" x2="1064" y2="80.0" class="grid"/><text x="54" y="84.0" text-anchor="end" class="tick">1868</text>
+        <line x1="64" y1="72" x2="64" y2="432" class="axis"/>
+        <line x1="64" y1="432" x2="1064" y2="432" class="axis"/>
+        <rect class="bar" x="71.0" y="80.0" width="36" height="352.0" rx="6" fill="#2563eb" data-name="广州" data-value="1868"><title>广州：1868万人</title></rect><rect class="bar" x="121.0" y="101.1" width="36" height="330.9" rx="6" fill="#db2777" data-name="深圳" data-value="1756"><title>深圳：1756万人</title></rect><rect class="bar" x="171.0" y="234.7" width="36" height="197.3" rx="6" fill="#059669" data-name="东莞" data-value="1047"><title>东莞：1047万人</title></rect><rect class="bar" x="221.0" y="253.0" width="36" height="179.0" rx="6" fill="#d97706" data-name="佛山" data-value="950"><title>佛山：950万人</title></rect><rect class="bar" x="271.0" y="300.5" width="36" height="131.5" rx="6" fill="#7c3aed" data-name="湛江" data-value="698"><title>湛江：698万人</title></rect><rect class="bar" x="321.0" y="315.5" width="36" height="116.5" rx="6" fill="#0891b2" data-name="茂名" data-value="618"><title>茂名：618万人</title></rect><rect class="bar" x="371.0" y="318.2" width="36" height="113.8" rx="6" fill="#dc2626" data-name="惠州" data-value="604"><title>惠州：604万人</title></rect><rect class="bar" x="421.0" y="327.0" width="36" height="105.0" rx="6" fill="#65a30d" data-name="揭阳" data-value="557"><title>揭阳：557万人</title></rect><rect class="bar" x="471.0" y="328.4" width="36" height="103.6" rx="6" fill="#c026d3" data-name="汕头" data-value="550"><title>汕头：550万人</title></rect><rect class="bar" x="521.0" y="341.6" width="36" height="90.4" rx="6" fill="#0d9488" data-name="江门" data-value="480"><title>江门：480万人</title></rect><rect class="bar" x="571.0" y="348.9" width="36" height="83.1" rx="6" fill="#ea580c" data-name="中山" data-value="441"><title>中山：441万人</title></rect><rect class="bar" x="621.0" y="357.2" width="36" height="74.8" rx="6" fill="#4f46e5" data-name="清远" data-value="397"><title>清远：397万人</title></rect><rect class="bar" x="671.0" y="359.1" width="36" height="72.9" rx="6" fill="#ca8a04" data-name="梅州" data-value="387"><title>梅州：387万人</title></rect><rect class="bar" x="721.0" y="378.1" width="36" height="53.9" rx="6" fill="#e11d48" data-name="韶关" data-value="286"><title>韶关：286万人</title></rect><rect class="bar" x="771.0" y="378.5" width="36" height="53.5" rx="6" fill="#0284c7" data-name="河源" data-value="284"><title>河源：284万人</title></rect><rect class="bar" x="821.0" y="381.5" width="36" height="50.5" rx="6" fill="#16a34a" data-name="汕尾" data-value="268"><title>汕尾：268万人</title></rect><rect class="bar" x="871.0" y="383.0" width="36" height="49.0" rx="6" fill="#9333ea" data-name="阳江" data-value="260"><title>阳江：260万人</title></rect><rect class="bar" x="921.0" y="383.6" width="36" height="48.4" rx="6" fill="#b45309" data-name="潮州" data-value="257"><title>潮州：257万人</title></rect><rect class="bar" x="971.0" y="386.0" width="36" height="46.0" rx="6" fill="#be123c" data-name="珠海" data-value="244"><title>珠海：244万人</title></rect><rect class="bar" x="1021.0" y="387.0" width="36" height="45.0" rx="6" fill="#0f766e" data-name="云浮" data-value="239"><title>云浮：239万人</title></rect>
+        <text x="89.0" y="72.0" text-anchor="middle" class="val">1868</text><text x="139.0" y="93.1" text-anchor="middle" class="val">1756</text><text x="189.0" y="226.7" text-anchor="middle" class="val">1047</text><text x="239.0" y="245.0" text-anchor="middle" class="val">950</text><text x="289.0" y="292.5" text-anchor="middle" class="val">698</text><text x="339.0" y="307.5" text-anchor="middle" class="val">618</text><text x="389.0" y="310.2" text-anchor="middle" class="val">604</text><text x="439.0" y="319.0" text-anchor="middle" class="val">557</text><text x="489.0" y="320.4" text-anchor="middle" class="val">550</text><text x="539.0" y="333.6" text-anchor="middle" class="val">480</text><text x="589.0" y="340.9" text-anchor="middle" class="val">441</text><text x="639.0" y="349.2" text-anchor="middle" class="val">397</text><text x="689.0" y="351.1" text-anchor="middle" class="val">387</text><text x="739.0" y="370.1" text-anchor="middle" class="val">286</text><text x="789.0" y="370.5" text-anchor="middle" class="val">284</text><text x="839.0" y="373.5" text-anchor="middle" class="val">268</text><text x="889.0" y="375.0" text-anchor="middle" class="val">260</text><text x="939.0" y="375.6" text-anchor="middle" class="val">257</text><text x="989.0" y="378.0" text-anchor="middle" class="val">244</text><text x="1039.0" y="379.0" text-anchor="middle" class="val">239</text>
+        <text x="89.0" y="448" text-anchor="end" class="label" transform="rotate(-42 89.0 448)">广州</text><text x="139.0" y="448" text-anchor="end" class="label" transform="rotate(-42 139.0 448)">深圳</text><text x="189.0" y="448" text-anchor="end" class="label" transform="rotate(-42 189.0 448)">东莞</text><text x="239.0" y="448" text-anchor="end" class="label" transform="rotate(-42 239.0 448)">佛山</text><text x="289.0" y="448" text-anchor="end" class="label" transform="rotate(-42 289.0 448)">湛江</text><text x="339.0" y="448" text-anchor="end" class="label" transform="rotate(-42 339.0 448)">茂名</text><text x="389.0" y="448" text-anchor="end" class="label" transform="rotate(-42 389.0 448)">惠州</text><text x="439.0" y="448" text-anchor="end" class="label" transform="rotate(-42 439.0 448)">揭阳</text><text x="489.0" y="448" text-anchor="end" class="label" transform="rotate(-42 489.0 448)">汕头</text><text x="539.0" y="448" text-anchor="end" class="label" transform="rotate(-42 539.0 448)">江门</text><text x="589.0" y="448" text-anchor="end" class="label" transform="rotate(-42 589.0 448)">中山</text><text x="639.0" y="448" text-anchor="end" class="label" transform="rotate(-42 639.0 448)">清远</text><text x="689.0" y="448" text-anchor="end" class="label" transform="rotate(-42 689.0 448)">梅州</text><text x="739.0" y="448" text-anchor="end" class="label" transform="rotate(-42 739.0 448)">韶关</text><text x="789.0" y="448" text-anchor="end" class="label" transform="rotate(-42 789.0 448)">河源</text><text x="839.0" y="448" text-anchor="end" class="label" transform="rotate(-42 839.0 448)">汕尾</text><text x="889.0" y="448" text-anchor="end" class="label" transform="rotate(-42 889.0 448)">阳江</text><text x="939.0" y="448" text-anchor="end" class="label" transform="rotate(-42 939.0 448)">潮州</text><text x="989.0" y="448" text-anchor="end" class="label" transform="rotate(-42 989.0 448)">珠海</text><text x="1039.0" y="448" text-anchor="end" class="label" transform="rotate(-42 1039.0 448)">云浮</text>
+        <text x="64" y="28" fill="#94a3b8" font-size="12">人口（万人）</text>
+      </svg>
+    </div>
+    <div class="legend"><span class="lg"><i style="background:#2563eb"></i>广州</span><span class="lg"><i style="background:#db2777"></i>深圳</span><span class="lg"><i style="background:#059669"></i>东莞</span><span class="lg"><i style="background:#d97706"></i>佛山</span><span class="lg"><i style="background:#7c3aed"></i>湛江</span><span class="lg"><i style="background:#0891b2"></i>茂名</span><span class="lg"><i style="background:#dc2626"></i>惠州</span><span class="lg"><i style="background:#65a30d"></i>揭阳</span><span class="lg"><i style="background:#c026d3"></i>汕头</span><span class="lg"><i style="background:#0d9488"></i>江门</span><span class="lg"><i style="background:#ea580c"></i>中山</span><span class="lg"><i style="background:#4f46e5"></i>清远</span><span class="lg"><i style="background:#ca8a04"></i>梅州</span><span class="lg"><i style="background:#e11d48"></i>韶关</span><span class="lg"><i style="background:#0284c7"></i>河源</span><span class="lg"><i style="background:#16a34a"></i>汕尾</span><span class="lg"><i style="background:#9333ea"></i>阳江</span><span class="lg"><i style="background:#b45309"></i>潮州</span><span class="lg"><i style="background:#be123c"></i>珠海</span><span class="lg"><i style="background:#0f766e"></i>云浮</span></div>
+    <footer>文件由 province-population-chart 技能自动生成 · 柱体颜色区分各地市</footer>
+  </div>
+</body>
+</html>
