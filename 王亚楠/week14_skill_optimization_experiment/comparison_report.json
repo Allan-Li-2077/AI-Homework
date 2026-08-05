@@ -1,0 +1,83 @@
+{
+  "timestamp": "2026-08-05T18:43:56.198759",
+  "skill_topic": "promotions",
+  "original": {
+    "total_chars": 4377,
+    "chinese_chars": 2264,
+    "non_chinese_chars": 2113,
+    "estimated_tokens": 2038,
+    "lines": 243,
+    "sections": 9,
+    "table_rows": 42,
+    "info_completeness": {
+      "total_key_points": 19,
+      "found": 16,
+      "missing": 3,
+      "found_list": [
+        "新人券名称",
+        "新人券退款不补",
+        "新人券门槛",
+        "新人券面值",
+        "新人券首单限制",
+        "满减不叠加",
+        "满减档次-299",
+        "满减档次-599",
+        "满减档次-999",
+        "积分倍率",
+        "退货补差价",
+        "部分退货规则",
+        "限时特惠不叠加",
+        "限时特惠最低价",
+        "限时特惠概念"
+      ],
+      "missing_list": [
+        "白卡积分",
+        "金卡积分",
+        "银卡积分"
+      ]
+    }
+  },
+  "optimized": {
+    "total_chars": 2694,
+    "chinese_chars": 1331,
+    "non_chinese_chars": 1363,
+    "estimated_tokens": 1228,
+    "lines": 134,
+    "sections": 8,
+    "table_rows": 33,
+    "info_completeness": {
+      "total_key_points": 19,
+      "found": 14,
+      "missing": 5,
+      "found_list": [
+        "新人券名称",
+        "新人券退款不补",
+        "新人券门槛",
+        "新人券面值",
+        "新人券首单限制",
+        "满减不叠加",
+        "满减档次-299",
+        "积分倍率",
+        "退货补差价",
+        "部分退货规则",
+        "限时特惠不叠加",
+        "限时特惠最低价",
+        "限时特惠概念"
+      ],
+      "missing_list": [
+        "满减档次-599",
+        "满减档次-999",
+        "白卡积分",
+        "金卡积分",
+        "银卡积分"
+      ]
+    }
+  },
+  "improvement": {
+    "char_reduction": 1683,
+    "char_reduction_pct": 38.5,
+    "token_reduction": 810,
+    "token_reduction_pct": 39.7,
+    "info_preserved": false
+  }
+}
