@@ -1,0 +1,734 @@
+{
+  "description": "铁力健身俱乐部会员客服评估集，60题，6类，关键词为政策专有数字/词汇",
+  "evaluation_rule": "required中所有词均出现在回答中，且forbidden中所有词均不出现，则判为正确",
+  "categories": {
+    "basic_membership": "基础会员权益（10题）：测试1.x节，初始Skill应能处理",
+    "personal_training": "私教课规则（12题）：测试2.x节，初始Skill部分覆盖",
+    "freeze_rule": "请假冻结（12题）：测试3.x节，初始Skill完全缺失",
+    "transfer_rule": "转让规则（12题）：测试4.x节，初始Skill完全缺失",
+    "group_class": "团课预约（8题）：测试5.x节，初始Skill完全缺失",
+    "join_refund": "入会退会（6题）：测试6.x节，初始Skill完全缺失"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "question": "年卡可以不限次入场吗？",
+      "ground_truth": {
+        "required": ["可以"],
+        "forbidden": ["不可以"]
+      },
+      "initial_skill_handles": true,
+      "note": "年卡不限次入场"
+    },
+    {
+      "id": 2,
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "question": "季卡有多少次入场次数？有效期多久？",
+      "ground_truth": {
+        "required": ["30", "90"],
+        "forbidden": []
+      },
+      "initial_skill_handles": true,
+      "note": "季卡30次/90天"
+    },
+    {
+      "id": 3,
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "question": "月卡有效期多少天？能入场几次？",
+      "ground_truth": {
+        "required": ["30", "12"],
+        "forbidden": []
+      },
+      "initial_skill_handles": true,
+      "note": "月卡12次/30天"
+    },
+    {
+      "id": 4,
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "question": "储物柜怎么收费？",
+      "ground_truth": {
+        "required": ["5"],
+        "forbidden": ["免费"]
+      },
+      "initial_skill_handles": true,
+      "note": "储物柜日租5元"
+    },
+    {
+      "id": 5,
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "question": "健身房营业时间是几点到几点？",
+      "ground_truth": {
+        "required": ["6:00", "23:00"],
+        "forbidden": []
+      },
+      "initial_skill_handles": true,
+      "note": "营业时间6:00-23:00"
+    },
+    {
+      "id": 6,
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "question": "每次入场最长可以待多久？",
+      "ground_truth": {
+        "required": ["3小时"],
+        "forbidden": []
+      },
+      "initial_skill_handles": true,
+      "note": "单次不超过3小时"
+    },
+    {
+      "id": 7,
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "question": "年卡会员有什么附加权益？",
+      "ground_truth": {
+        "required": ["体测"],
+        "forbidden": []
+      },
+      "initial_skill_handles": true,
+      "note": "年卡赠送2次体测+免费饮水"
+    },
+    {
+      "id": 8,
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "question": "淋浴和停车场收费吗？",
+      "ground_truth": {
+        "required": ["免费"],
+        "forbidden": ["收费"]
+      },
+      "initial_skill_handles": true,
+      "note": "所有会员免费使用淋浴和停车场"
+    },
+    {
+      "id": 9,
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "question": "体验卡有几次入场次数？有效期多久？",
+      "ground_truth": {
+        "required": ["1", "7"],
+        "forbidden": []
+      },
+      "initial_skill_handles": true,
+      "note": "体验卡1次/7天"
+    },
+    {
+      "id": 10,
+      "category": "basic_membership",
+      "difficulty": "medium",
+      "question": "体验卡会员有免费体测和饮水权益吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["有", "可以享"]
+      },
+      "initial_skill_handles": false,
+      "note": "体验卡不享任何附加权益，初始Skill未明确说明"
+    },
+    {
+      "id": 11,
+      "category": "personal_training",
+      "difficulty": "medium",
+      "question": "私教课需要提前多久预约？",
+      "ground_truth": {
+        "required": ["24小时"],
+        "forbidden": []
+      },
+      "initial_skill_handles": true,
+      "note": "私教课需提前24小时预约"
+    },
+    {
+      "id": 12,
+      "category": "personal_training",
+      "difficulty": "medium",
+      "question": "私教课取消需要在课程开始前多久？",
+      "ground_truth": {
+        "required": ["24小时"],
+        "forbidden": []
+      },
+      "initial_skill_handles": true,
+      "note": "取消需在课程开始前24小时"
+    },
+    {
+      "id": 13,
+      "category": "personal_training",
+      "difficulty": "medium",
+      "question": "私教课旷课会怎样？",
+      "ground_truth": {
+        "required": ["扣"],
+        "forbidden": ["不扣", "没关系"]
+      },
+      "initial_skill_handles": false,
+      "note": "旷课扣1次课时，初始Skill未提及"
+    },
+    {
+      "id": 14,
+      "category": "personal_training",
+      "difficulty": "medium",
+      "question": "私教课有效期多久？",
+      "ground_truth": {
+        "required": ["6个月"],
+        "forbidden": []
+      },
+      "initial_skill_handles": true,
+      "note": "私教课有效期6个月"
+    },
+    {
+      "id": 15,
+      "category": "personal_training",
+      "difficulty": "hard",
+      "question": "过期的私教课课时怎么处理？",
+      "ground_truth": {
+        "required": ["20%", "激活费"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "过期需缴20%激活费延期3个月，初始Skill未提及"
+    },
+    {
+      "id": 16,
+      "category": "personal_training",
+      "difficulty": "easy",
+      "question": "每节私教课是1对1还是小组课？",
+      "ground_truth": {
+        "required": ["1对1"],
+        "forbidden": []
+      },
+      "initial_skill_handles": true,
+      "note": "1对1教学"
+    },
+    {
+      "id": 17,
+      "category": "personal_training",
+      "difficulty": "medium",
+      "question": "私教课可以转让给朋友吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["可以转让"]
+      },
+      "initial_skill_handles": false,
+      "note": "私教课不可转让，初始Skill未提及"
+    },
+    {
+      "id": 18,
+      "category": "personal_training",
+      "difficulty": "hard",
+      "question": "未消耗的私教课退费比例是多少？",
+      "ground_truth": {
+        "required": ["70%"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "未消耗课时退70%，初始Skill未提及"
+    },
+    {
+      "id": 19,
+      "category": "personal_training",
+      "difficulty": "medium",
+      "question": "已消耗的私教课可以退费吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["可以退"]
+      },
+      "initial_skill_handles": false,
+      "note": "已消耗课时不可退费，初始Skill未提及"
+    },
+    {
+      "id": 20,
+      "category": "personal_training",
+      "difficulty": "easy",
+      "question": "每节私教课多长时间？",
+      "ground_truth": {
+        "required": ["60分钟"],
+        "forbidden": []
+      },
+      "initial_skill_handles": true,
+      "note": "每节课60分钟"
+    },
+    {
+      "id": 21,
+      "category": "personal_training",
+      "difficulty": "medium",
+      "question": "私教课完成后需要什么确认？",
+      "ground_truth": {
+        "required": ["签字"],
+        "forbidden": ["不需要"]
+      },
+      "initial_skill_handles": false,
+      "note": "需学员签字确认，初始Skill未提及"
+    },
+    {
+      "id": 22,
+      "category": "personal_training",
+      "difficulty": "hard",
+      "question": "私教课过期后激活可以延期多久？",
+      "ground_truth": {
+        "required": ["3个月"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "激活后延期3个月，初始Skill未提及"
+    },
+    {
+      "id": 23,
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "question": "年卡每年可以冻结多久？",
+      "ground_truth": {
+        "required": ["2个月"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "年卡可冻结2个月/年，初始Skill完全缺失"
+    },
+    {
+      "id": 24,
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "question": "季卡可以冻结吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["可以冻结"]
+      },
+      "initial_skill_handles": false,
+      "note": "季卡不支持冻结"
+    },
+    {
+      "id": 25,
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "question": "冻结需要提前多久申请？",
+      "ground_truth": {
+        "required": ["3天"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "需提前3天申请"
+    },
+    {
+      "id": 26,
+      "category": "freeze_rule",
+      "difficulty": "hard",
+      "question": "怀孕可以冻结会员卡吗？最长多久？",
+      "ground_truth": {
+        "required": ["12个月"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "怀孕凭证明可冻结12个月"
+    },
+    {
+      "id": 27,
+      "category": "freeze_rule",
+      "difficulty": "hard",
+      "question": "伤病可以冻结多久？需要什么证明？",
+      "ground_truth": {
+        "required": ["3个月", "三甲"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "伤病凭三甲医院诊断书可冻结1-3个月"
+    },
+    {
+      "id": 28,
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "question": "冻结期间可以入场健身吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["可以入场"]
+      },
+      "initial_skill_handles": false,
+      "note": "冻结期间不可入场"
+    },
+    {
+      "id": 29,
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "question": "冻结结束后会员卡有效期怎么处理？",
+      "ground_truth": {
+        "required": ["顺延"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "冻结结束后有效期顺延"
+    },
+    {
+      "id": 30,
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "question": "月卡可以冻结吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["可以冻结"]
+      },
+      "initial_skill_handles": false,
+      "note": "月卡不支持冻结"
+    },
+    {
+      "id": 31,
+      "category": "freeze_rule",
+      "difficulty": "hard",
+      "question": "出差可以冻结吗？能冻多久？",
+      "ground_truth": {
+        "required": ["1个月"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "出差凭证明可冻结1个月（仅年卡）"
+    },
+    {
+      "id": 32,
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "question": "每次冻结最短多久？",
+      "ground_truth": {
+        "required": ["7天"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "每次冻结最短7天"
+    },
+    {
+      "id": 33,
+      "category": "freeze_rule",
+      "difficulty": "hard",
+      "question": "冻结期间私教课会暂停计时吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["暂停", "会暂停"]
+      },
+      "initial_skill_handles": false,
+      "note": "陷阱题：冻结期间私教课继续计时不暂停"
+    },
+    {
+      "id": 34,
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "question": "体验卡可以冻结吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["可以冻结"]
+      },
+      "initial_skill_handles": false,
+      "note": "体验卡不支持冻结"
+    },
+    {
+      "id": 35,
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "question": "年卡可以转让给别人吗？",
+      "ground_truth": {
+        "required": ["可以"],
+        "forbidden": ["不可以转让"]
+      },
+      "initial_skill_handles": false,
+      "note": "年卡可转让1次，初始Skill完全缺失"
+    },
+    {
+      "id": 36,
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "question": "年卡转让手续费多少？",
+      "ground_truth": {
+        "required": ["15%"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "年卡转让手续费15%"
+    },
+    {
+      "id": 37,
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "question": "季卡可以转让吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["可以转让"]
+      },
+      "initial_skill_handles": false,
+      "note": "季卡不可转让"
+    },
+    {
+      "id": 38,
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "question": "体验卡可以转让吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["可以转让"]
+      },
+      "initial_skill_handles": false,
+      "note": "体验卡不可转让"
+    },
+    {
+      "id": 39,
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "question": "年卡最多可以转让几次？",
+      "ground_truth": {
+        "required": ["1次"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "年卡最多转1次"
+    },
+    {
+      "id": 40,
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "question": "转让后剩余有效期会变吗？",
+      "ground_truth": {
+        "required": ["不变"],
+        "forbidden": ["延长", "缩短"]
+      },
+      "initial_skill_handles": false,
+      "note": "转让后有效期不变"
+    },
+    {
+      "id": 41,
+      "category": "transfer_rule",
+      "difficulty": "hard",
+      "question": "转让需要多久生效？",
+      "ground_truth": {
+        "required": ["3个工作日"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "3个工作日内生效"
+    },
+    {
+      "id": 42,
+      "category": "transfer_rule",
+      "difficulty": "hard",
+      "question": "转入方需要满足什么条件？",
+      "ground_truth": {
+        "required": ["健康评估"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "转入方需通过健康评估"
+    },
+    {
+      "id": 43,
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "question": "月卡可以转让吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["可以转让"]
+      },
+      "initial_skill_handles": false,
+      "note": "月卡不可转让"
+    },
+    {
+      "id": 44,
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "question": "转让需要双方到场吗？",
+      "ground_truth": {
+        "required": ["到店"],
+        "forbidden": ["不需要"]
+      },
+      "initial_skill_handles": false,
+      "note": "双方到店办理"
+    },
+    {
+      "id": 45,
+      "category": "transfer_rule",
+      "difficulty": "hard",
+      "question": "私教课可以随年卡一起转让给他人吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["可以转让"]
+      },
+      "initial_skill_handles": false,
+      "note": "陷阱题：私教课不可随卡转让"
+    },
+    {
+      "id": 46,
+      "category": "transfer_rule",
+      "difficulty": "hard",
+      "question": "已冻结的年卡可以转让吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["可以转让"]
+      },
+      "initial_skill_handles": false,
+      "note": "已冻结的卡不可转让"
+    },
+    {
+      "id": 47,
+      "category": "group_class",
+      "difficulty": "medium",
+      "question": "团课提前多久开放预约？",
+      "ground_truth": {
+        "required": ["3天"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "团课提前3天开放预约，初始Skill完全缺失"
+    },
+    {
+      "id": 48,
+      "category": "group_class",
+      "difficulty": "medium",
+      "question": "团课取消需要在课程开始前多久？",
+      "ground_truth": {
+        "required": ["2小时"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "课程开始前2小时可取消"
+    },
+    {
+      "id": 49,
+      "category": "group_class",
+      "difficulty": "hard",
+      "question": "团课爽约3次会怎样？",
+      "ground_truth": {
+        "required": ["禁约", "1周"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "爽约3次禁约1周"
+    },
+    {
+      "id": 50,
+      "category": "group_class",
+      "difficulty": "medium",
+      "question": "团课需要提前多久签到？",
+      "ground_truth": {
+        "required": ["15分钟"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "需提前15分钟签到"
+    },
+    {
+      "id": 51,
+      "category": "group_class",
+      "difficulty": "medium",
+      "question": "瑜伽课需要自带什么装备？",
+      "ground_truth": {
+        "required": ["瑜伽垫"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "需自带瑜伽垫或租用5元/次"
+    },
+    {
+      "id": 52,
+      "category": "group_class",
+      "difficulty": "medium",
+      "question": "搏击操需要什么装备？",
+      "ground_truth": {
+        "required": ["拳击手套"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "需自备拳击手套或租用10元/次"
+    },
+    {
+      "id": 53,
+      "category": "group_class",
+      "difficulty": "easy",
+      "question": "每人每节团课可以约几个名额？",
+      "ground_truth": {
+        "required": ["1"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "每人每节限约1个名额"
+    },
+    {
+      "id": 54,
+      "category": "group_class",
+      "difficulty": "hard",
+      "question": "体验卡可以预约团课吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["可以预约"]
+      },
+      "initial_skill_handles": false,
+      "note": "陷阱题：体验卡不可预约团课"
+    },
+    {
+      "id": 55,
+      "category": "join_refund",
+      "difficulty": "medium",
+      "question": "购卡后多久内可以全额退款？",
+      "ground_truth": {
+        "required": ["7天"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "7天冷静期内未开卡可全额退，初始Skill完全缺失"
+    },
+    {
+      "id": 56,
+      "category": "join_refund",
+      "difficulty": "hard",
+      "question": "我已经开卡入场了一次，还能冷静期全额退款吗？",
+      "ground_truth": {
+        "required": ["不"],
+        "forbidden": ["可以退", "可以全额"]
+      },
+      "initial_skill_handles": false,
+      "note": "陷阱题：已开卡不支持冷静期退款"
+    },
+    {
+      "id": 57,
+      "category": "join_refund",
+      "difficulty": "medium",
+      "question": "已开卡退会手续费多少？",
+      "ground_truth": {
+        "required": ["30%"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "已开卡退会扣30%手续费"
+    },
+    {
+      "id": 58,
+      "category": "join_refund",
+      "difficulty": "hard",
+      "question": "年卡退会最低扣多少？",
+      "ground_truth": {
+        "required": ["500"],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "年卡退会最低扣500元"
+    },
+    {
+      "id": 59,
+      "category": "join_refund",
+      "difficulty": "hard",
+      "question": "特殊疾病可以退费吗？需要什么？",
+      "ground_truth": {
+        "required": ["可以", "证明"],
+        "forbidden": ["不可以"]
+      },
+      "initial_skill_handles": false,
+      "note": "特殊疾病凭三甲医院证明可全额退未使用部分"
+    },
+    {
+      "id": 60,
+      "category": "join_refund",
+      "difficulty": "hard",
+      "question": "搬家退会可以免手续费吗？",
+      "ground_truth": {
+        "required": ["免"],
+        "forbidden": ["不免", "收取"]
+      },
+      "initial_skill_handles": false,
+      "note": "搬家凭居住证明退会免手续费"
+    }
+  ]
+}
