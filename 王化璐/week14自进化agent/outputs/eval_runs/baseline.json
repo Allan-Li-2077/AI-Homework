@@ -1,0 +1,348 @@
+{
+  "run_id": "baseline",
+  "label": "基线（初始Skills）",
+  "timestamp": "2026-08-05T21:42:04.552112",
+  "skill_versions_active": {
+    "basic_membership": 1,
+    "personal_training": 1
+  },
+  "summary": {
+    "total": 60,
+    "correct": 13,
+    "accuracy": 0.217
+  },
+  "by_category": {
+    "basic_membership": {
+      "total": 10,
+      "correct": 8,
+      "accuracy": 0.8
+    },
+    "personal_training": {
+      "total": 12,
+      "correct": 5,
+      "accuracy": 0.417
+    },
+    "freeze_rule": {
+      "total": 12,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "transfer_rule": {
+      "total": 12,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "group_class": {
+      "total": 8,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "join_refund": {
+      "total": 6,
+      "correct": 0,
+      "accuracy": 0.0
+    }
+  },
+  "answers": {
+    "1": {
+      "answer": "是的，年卡不限次入场，有效期365天。",
+      "correct": false,
+      "fail_reason": "缺少关键词: '可以'"
+    },
+    "2": {
+      "answer": "季卡限30次入场，有效期90天。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "3": {
+      "answer": "月卡有效期30天，限12次入场。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "4": {
+      "answer": "储物柜日租5元，离场需清空。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "5": {
+      "answer": "健身房的营业时间是6:00-23:00。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "6": {
+      "answer": "每次入场单次时长不超过3小时。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "7": {
+      "answer": "年卡会员的附加权益包括：赠送2次体测、免费饮水。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "8": {
+      "answer": "所有会员免费使用淋浴和停车场（限2小时）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "9": {
+      "answer": "体验卡限1次入场，有效期7天。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "10": {
+      "answer": "根据技能文档，体验卡会员没有免费体测和饮水权益。年卡会员赠送2次体测、免费饮水；季卡会员赠送1次体测；所有会员免费使用淋浴、停车场（限2小时）。",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不'"
+    },
+    "11": {
+      "answer": "私教课需提前24小时预约。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "12": {
+      "answer": "私教课取消需在课程开始前24小时，否则视为旷课。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "13": {
+      "answer": "根据技能文档，私教课取消需在课程开始前24小时，否则视为旷课。但文档中未说明旷课的具体后果，需要联系人工客服。",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "14": {
+      "answer": "私教课有效期6个月。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "15": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "16": {
+      "answer": "每节私教课是1对1教学，时长60分钟。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "17": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "18": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "19": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "20": {
+      "answer": "每节私教课为1对1教学，时长60分钟。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "21": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "22": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "23": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "24": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "25": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "26": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "27": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "28": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "29": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "30": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "31": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "32": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "33": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "34": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "35": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "36": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "37": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "38": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "39": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "40": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "41": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "42": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "43": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "44": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "45": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "46": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "47": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "48": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "49": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "50": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "51": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "52": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "53": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "54": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "55": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "56": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "57": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "58": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "59": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    },
+    "60": {
+      "answer": "需要联系人工客服",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '联系人工'）"
+    }
+  }
+}
