@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>self_evolving_agent — 代码地图</title>
+<style>
+  :root { --accent:#2f6fed; --bg:#fafbfc; --text:#1f2328;
+          --muted:#57606a; --border:#d0d7de; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+         background:var(--bg); color:var(--text); line-height:1.7; }
+  .layout { display:flex; min-height:100vh; }
+  aside { width:260px; position:sticky; top:0; height:100vh; overflow-y:auto;
+          border-right:1px solid var(--border); padding:16px; background:#fff; }
+  aside a { display:block; padding:4px 8px; color:var(--muted); text-decoration:none;
+            border-radius:6px; }
+  aside a:hover { background:#f0f3f6; color:var(--accent); }
+  main { flex:1; padding:24px 40px; max-width:960px; }
+  h1 { font-size:1.8em; } h2 { border-bottom:1px solid var(--border);
+       padding-bottom:6px; margin-top:2em; }
+  table { border-collapse:collapse; width:100%; }
+  th,td { border:1px solid var(--border); padding:6px 10px; text-align:left;
+          font-size:.95em; }
+  code { background:#eff1f3; border-radius:4px; padding:1px 5px;
+         font-family:ui-monospace,Consolas,monospace; }
+  pre { background:#fff; border:1px solid var(--border); border-radius:8px;
+        padding:12px; overflow-x:auto; }
+  details { border:1px solid var(--border); border-radius:8px; padding:8px 12px;
+            margin:8px 0; background:#fff; }
+  .tag { display:inline-block; background:#eef3ff; color:var(--accent);
+         border-radius:999px; padding:1px 10px; font-size:.85em; margin-right:6px; }
+  svg text { font-family:ui-monospace,Consolas,monospace; }
+  @media print { aside { display:none; } main { max-width:none; padding:0; } }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside>
+    <strong>self_evolving_agent</strong>
+    <nav>
+      <a href="#overview">项目概览</a>
+      <a href="#structure">目录结构</a>
+      <a href="#modules">模块清单</a>
+      <a href="#flow">调用链路</a>
+      <a href="#key-logic">关键逻辑</a>
+      <a href="#extend">扩展指南</a>
+    </nav>
+  </aside>
+  <main>
+    <h1>self_evolving_agent <span class="tag">Python 3.12</span><span class="tag">FastAPI</span><span class="tag">SSE</span><span class="tag">DeepSeek</span><span class="tag">OpenAI SDK</span></h1>
+    <p>「客服 Agent 自进化」教学 Demo —— 参考 Anthropic Hermes 的 Skill Nudge 与 DSPy GEPA，让客服技能从对话失败中自动演化、并量化每版改进。</p>
+
+    <h2 id="overview">项目概览</h2>
+    <p><strong>核心功能</strong>：虚构电商客服（云购商城）场景下，Agent 每次回答都基于「当前 Skills」知识库；回答错了就把失败样本送给后台 Reviewer，由它比对完整政策后对 Skill 做最小修改（create/patch），再用 probe eval 量化准确率提升。整个流程可步进回放、可还原重置。</p>
+    <table>
+      <tr><th>启动方式</th><th>命令</th></tr>
+      <tr><td>Web 演示 UI（入口①）</td><td><code>cd self_evolving_agent &amp;&amp; uvicorn serve:app --host 0.0.0.0 --port 8000 --reload</code> → 浏览器打开 <code>http://localhost:8000</code></td></tr>
+      <tr><td>CLI 完整实验（入口②）</td><td><code>python src/demo_runner.py</code></td></tr>
+      <tr><td>一键规则评估</td><td><code>python src/rule_eval_with_review.py</code></td></tr>
+    </table>
+    <p><strong>依赖 / 环境变量</strong>：<code>requirements.txt</code> 仅 <code>openai&gt;=1.0.0</code>（另有 fastapi / uvicorn）；<code>.env</code> 需 <code>DEEPSEEK_API_KEY</code>（默认模型 <code>deepseek-chat</code>）、<code>DASHSCOPE_API_KEY</code>。</p>
+
+    <h2 id="structure">目录结构</h2>
+    <pre>
+self_evolving_agent/
+├── serve.py                    # 入口① Web 服务：FastAPI + SSE 步进式演示 + 全局状态机
+├── index.html                  # 前端演示页（44KB 纯静态，无构建）
+├── requirements.txt            # 依赖：openai>=1.0.0（另有 fastapi/uvicorn）
+├── .env                        # DEEPSEEK_API_KEY / DASHSCOPE_API_KEY
+├── ARCHITECTURE.md             # 技术方案：Hermes Skill Nudge + DSPy GEPA
+├── USAGE_GUIDE.md              # 运行与调用指南
+├── RESUME_GUIDE.md             # 讲解/复盘指南
+├── src/
+│   ├── agent.py                # 客服 Agent：技能注入 + 回答 + Nudge 计数
+│   ├── skill_manager.py        # Skill 管理器：三重持久化 + create/patch + 版本追踪
+│   ├── evaluator.py            # 零 LLM 关键词评估器
+│   ├── background_reviewer.py  # 后台回顾 Agent：失败样本 → 结构化 Skill 操作
+│   ├── demo_runner.py          # 入口② CLI 自进化实验 + EvolutionLog
+│   └── rule_eval_with_review.py# 一键全量规则评估（60 题）
+├── skills/                     # 可进化知识库（Agent 唯一知识来源）
+│   ├── refund/SKILL.md         #   退款政策技能
+│   ├── vip_benefits/SKILL.md   #   VIP 权益技能
+│   └── read-code/              #   代码地图技能（本产物即由其生成）
+├── data/
+│   ├── eval_set.json           # 60 题评估集（6 类，含 ground_truth）
+│   ├── demo_script.json        # 80 题演示脚本（10 题/块）
+│   └── policies.md             # 完整政策文档（仅 Reviewer 可见，118 行）
+└── outputs/                    # 实验产物
+    ├── evolution_log.json      #   进化日志（跨版本答案对比）
+    ├── experiment_result.json  #   实验结果（baseline→final）
+    ├── rule_eval_full.json     #   全量规则评估明细
+    ├── skill_versions/         #   各技能版本历史（json）
+    ├── skill_snapshots/        #   各版本独立快照（md，可 UI diff）
+    ├── skills_original/        #   初始技能备份（只建一次）
+    └── skills_initial_backup/  #   二次备份</pre>
+
+    <h2 id="modules">模块清单</h2>
+    <table>
+      <tr><th>文件</th><th>职责</th><th>关键函数 / 入口</th><th>备注</th></tr>
+      <tr><td><code>serve.py</code>（401 行）</td><td>Web 服务：SSE 流式接口、全局实验状态机、静态页托管</td><td><code>lifespan</code>:69 · <code>_init</code>:48 · <code>/stream/baseline</code>:189 · <code>/stream/block/{i}</code>:247 · <code>/stream/final</code>:351 · <code>/state</code>:98 · <code>/reset</code>:145</td><td>阻塞 LLM 用 <code>asyncio.to_thread</code>；phase 状态机 idle→baseline→block_N→final</td></tr>
+      <tr><td><code>src/agent.py</code>（114）</td><td>客服 Agent：技能全文注入 system prompt，回答问题</td><td><code>CustomerServiceAgent.answer</code>:61 · <code>_build_system_prompt</code>:101 · <code>should_trigger_nudge</code>:90</td><td><code>max_tokens=400</code>、<code>temperature=0</code>；能答完整答、不能答只说「联系人工」</td></tr>
+      <tr><td><code>src/skill_manager.py</code>（145）</td><td>Skill 三重持久化 + create/patch + 版本追踪</td><td><code>create</code>:52 · <code>patch</code>:68 · <code>_save_version</code>:118 · <code>_bump_version</code>:141</td><td>patch 为字符串精确替换第一处；版本号 = 历史条目数</td></tr>
+      <tr><td><code>src/evaluator.py</code>（135）</td><td>零 LLM 关键词评估</td><td><code>Evaluator.evaluate_answer</code>:58 · <code>_forbidden_hits</code>:36 · <code>_normalize</code>:30</td><td>「联系人工」一票否决；forbidden 带 4 字否定窗口</td></tr>
+      <tr><td><code>src/background_reviewer.py</code>（150）</td><td>后台回顾：失败样本 → 最小必要 Skill 操作</td><td><code>BackgroundReviewer.review</code>:83 · <code>_parse_actions</code>:136</td><td>独立 LLM、拥有完整政策；输出 JSON 由 SkillManager 执行</td></tr>
+      <tr><td><code>src/demo_runner.py</code>（369）</td><td>CLI 自进化实验编排</td><td><code>run_experiment</code>:211 · <code>run_probe_eval</code>:75 · <code>EvolutionLog.save</code>:166</td><td>baseline → 80 题分块 → Nudge → probe → final</td></tr>
+      <tr><td><code>src/rule_eval_with_review.py</code>（68）</td><td>一键全量规则评估</td><td>主脚本（顶层执行）</td><td>结果写 <code>outputs/rule_eval_full.json</code></td></tr>
+      <tr><td><code>index.html</code>（44KB）</td><td>前端演示 UI（SSE 消费端）</td><td>—</td><td>纯静态；Skill 列表 / 版本 diff / 步进回放</td></tr>
+      <tr><td><code>data/eval_set.json</code></td><td>60 题评估集</td><td>—</td><td>6 类：退款基础/VIP退款/促销退款/数字商品/物流/支付账户</td></tr>
+      <tr><td><code>data/demo_script.json</code></td><td>80 题演示脚本</td><td>—</td><td>10 题/块；<code>nudge_interval=10</code>；probe 30 题</td></tr>
+      <tr><td><code>data/policies.md</code></td><td>完整政策（Reviewer 判定标准）</td><td>—</td><td>118 行；主 Agent 不可见 —— 权限分层</td></tr>
+    </table>
+
+    <h2 id="flow">调用链路</h2>
+
+    <h3>① Web 演示链路（serve.py → 前端）</h3>
+    <ol>
+      <li><strong>启动</strong>：<code>uvicorn serve:app --port 8000</code> → FastAPI <code>lifespan</code>（serve.py:69）→ <code>_init</code>（:48）构造 SkillManager / Evaluator / Agent / Reviewer，并把 demo_script 的 80 题切成 10 题/块（:56）。</li>
+      <li>浏览器打开 <code>/</code> 返回 <code>index.html</code>（:93），前端通过 SSE 逐个调用实验接口。</li>
+      <li><strong>Baseline</strong>：<code>/stream/baseline</code>（:189）对 60 题全量评估，先保存初始 Skill 快照 v1（:199），每题 <code>agent.answer()</code>（agent.py:61）→ <code>ev.evaluate_answer()</code>（evaluator.py:58），逐题 SSE 推送结果。</li>
+      <li><strong>分块进化</strong>：<code>/stream/block/{i}</code>（serve.py:247）
+        <ul>
+          <li>Phase 1：逐题回答并累积失败样本（:262-283）；</li>
+          <li>Phase 2：<strong>全对则跳过进化</strong>（:291）；否则 <code>reviewer.review(失败样本)</code>（:301）→ 结构化 JSON → <code>sm.create()/patch()</code>（:308-324）；</li>
+          <li>Phase 3：跑 probe eval（30 题）量化本次改动（:328-336）。</li>
+        </ul>
+      </li>
+      <li><strong>Final</strong>：<code>/stream/final</code>（:351）对 60 题做最终评估，phase 置为 <code>complete</code>。</li>
+      <li>状态拉取：<code>/state</code>（:98）、<code>/skills</code>（:115）、<code>/skill_version/{name}/{v}</code>（:133）；<code>/reset</code>（:145）还原初始 Skills 后重新开始。</li>
+    </ol>
+
+    <h3>② CLI 实验链路（demo_runner.py）</h3>
+    <ol>
+      <li><code>ensure_original</code>（:44）首跑备份 → <code>restore_from_original</code>（:55）还原可复现。</li>
+      <li>基线 full eval → 按 demo_script 逐题跑，每 10 题为一个 Nudge 块（:262-320）：块内失败样本送 Reviewer，执行 create/patch，随后 probe eval。</li>
+      <li>最终 full eval（:326）→ <code>EvolutionLog.save</code>（:166）写 <code>evolution_log.json</code>（含逐题跨版本答案对比）。</li>
+    </ol>
+
+    <h3>核心闭环示意图</h3>
+    <svg viewBox="0 0 920 250" role="img" aria-label="自进化闭环流程图">
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+          <path d="M0,0 L10,4 L0,8 Z" fill="#57606a"/>
+        </marker>
+      </defs>
+      <style>
+        .box { fill:#fff; stroke:#2f6fed; stroke-width:1.5; rx:8; }
+        .box-eval { fill:#fff; stroke:#8a63d2; stroke-width:1.5; rx:8; }
+        .box-err { fill:#fff; stroke:#d2576b; stroke-width:1.5; rx:8; }
+        .box-act { fill:#fff; stroke:#2da44e; stroke-width:1.5; rx:8; }
+        .lbl { fill:#1f2328; font-size:13px; }
+        .sub { fill:#57606a; font-size:11px; }
+      </style>
+      <rect class="box" x="10"    y="40" width="110" height="52"/>
+      <text class="lbl" x="65"  y="62" text-anchor="middle">用户问题</text>
+      <text class="sub" x="65"  y="80" text-anchor="middle">demo_script</text>
+
+      <rect class="box" x="170"   y="40" width="140" height="52"/>
+      <text class="lbl" x="240" y="62" text-anchor="middle">客服 Agent</text>
+      <text class="sub" x="240" y="80" text-anchor="middle">技能全文注入</text>
+
+      <rect class="box-eval" x="360"   y="40" width="150" height="52"/>
+      <text class="lbl" x="435" y="62" text-anchor="middle">Evaluator 判定</text>
+      <text class="sub" x="435" y="80" text-anchor="middle">关键词 / 一票否决</text>
+
+      <rect class="box" x="560"   y="40" width="150" height="52"/>
+      <text class="lbl" x="635" y="62" text-anchor="middle">回答正确 ✓</text>
+      <text class="sub" x="635" y="80" text-anchor="middle">记录 / 跳过进化</text>
+
+      <rect class="box-err" x="360"  y="150" width="150" height="52"/>
+      <text class="lbl" x="435" y="172" text-anchor="middle">回答错误 ✗</text>
+      <text class="sub" x="435" y="190" text-anchor="middle">累积失败样本</text>
+
+      <rect class="box" x="560"   y="150" width="150" height="52"/>
+      <text class="lbl" x="635" y="172" text-anchor="middle">Reviewer 回顾</text>
+      <text class="sub" x="635" y="190" text-anchor="middle">政策比对 + 最小修复</text>
+
+      <rect class="box-act" x="750"  y="150" width="160" height="52"/>
+      <text class="lbl" x="830" y="172" text-anchor="middle">create / patch Skill</text>
+      <text class="sub" x="830" y="190" text-anchor="middle">SkillManager 版本 +1</text>
+
+      <path d="M120,66 H165" stroke="#57606a" marker-end="url(#arrow)"/>
+      <path d="M310,66 H355" stroke="#57606a" marker-end="url(#arrow)"/>
+      <path d="M510,66 H555" stroke="#57606a" marker-end="url(#arrow)"/>
+      <path d="M435,92 V145" stroke="#57606a" marker-end="url(#arrow)"/>
+      <path d="M510,176 H555" stroke="#57606a" marker-end="url(#arrow)"/>
+      <path d="M710,176 H745" stroke="#57606a" marker-end="url(#arrow)"/>
+      <path d="M830,150 V25 H240 V35" stroke="#57606a" stroke-dasharray="4,3" fill="none" marker-end="url(#arrow)"/>
+      <text class="sub" x="560" y="18">下一块使用更新后的 Skills（Nudge 进化）</text>
+    </svg>
+
+    <h2 id="key-logic">关键逻辑</h2>
+
+    <h3>1. Skill 三重持久化（skill_manager.py:20-26）</h3>
+    <p>活动版 <code>skills/{name}/SKILL.md</code>（每次回答前读取）＋ 完整历史 <code>outputs/skill_versions/{name}_history.json</code> ＋ 每版快照 <code>outputs/skill_snapshots/{name}_v{N}.md</code>。<strong>版本号 = 历史条目数</strong>，解决 Hermes 遗留问题#1（缺乏进化历史）。</p>
+
+    <h3>2. patch 的「精确替换」机制（skill_manager.py:68-86, 141-145）</h3>
+    <p>patch 用 <strong>字符串精确替换第一处</strong>（<code>content.replace(old, new, 1)</code>），而非 diff / LLM 整篇重写——防止意外改动无关内容；每次变更用正则把 frontmatter 的 <code>version</code> 自动 +1。</p>
+
+    <h3>3. 契约式评估（evaluator.py:58-80）</h3>
+    <ul>
+      <li><code>_normalize</code>（:30）：去千位分隔符逗号 + 小写，规避「4,000 / 4000」表述差异。</li>
+      <li><strong>推脱一票否决</strong>（:69）：答案含「联系人工」直接判失败——与 Agent 系统提示「不能答只说推脱」互为契约，行为干净、评估简单。</li>
+      <li>required 关键词必须全部出现；forbidden 关键词经 <code>_forbidden_hits</code>（:36）检查前 4 字内是否有否定前缀（不/无/非/未/没），被否定的不算命中。</li>
+      <li><strong>零 LLM 成本</strong>：ground truth 选取政策专有数字/术语，LLM 在无对应 Skill 时无法猜中，保证评估客观且便宜。</li>
+    </ul>
+
+    <h3>4. 权限分层（agent.py vs background_reviewer.py）</h3>
+    <p>主 Agent 的知识只有 <code>skills/</code>（无政策原文）；Reviewer 拥有完整 <code>policies.md</code> 仅作<strong>判定标准</strong>（background_reviewer.py:24-44），不与回答 Agent 共用，避免政策外泄导致「编造式回答」。</p>
+
+    <h3>5. Reviewer 最小修复原则（background_reviewer.py REVIEWER_SYSTEM:29-37）</h3>
+    <ul>
+      <li>仅修复观察到的失败，不扩展到「样本里没出现」的场景；</li>
+      <li>最小改动优先：能 patch 不加新 Skill；patch 的 old_text 只含要改的几行；</li>
+      <li>聚焦核心：按失败条数排序，只修 1~2 类 —— 刻意留出<strong>进化梯度</strong>。</li>
+    </ul>
+
+    <h3>6. 状态机与实验数据（serve.py:57-66）</h3>
+    <p>phase：<code>idle → baseline_running/done → block_N_running/done → all_blocks_done → final_running → complete</code>。实验记录（outputs/experiment_result.json）：<strong>baseline 14/60 = 23.3% → final 40/60 = 66.7%（+43.4pt）</strong>。</p>
+
+    <h2 id="extend">扩展指南</h2>
+    <table>
+      <tr><th>想改什么</th><th>改哪里</th></tr>
+      <tr><td>调整评估题集 / 关键词</td><td><code>data/eval_set.json</code>（60 题，<code>required</code> / <code>forbidden</code> 结构）</td></tr>
+      <tr><td>改演示节奏（题数、块数、Nudge 间隔）</td><td><code>data/demo_script.json</code> 的 <code>questions</code> 分组与 <code>nudge_interval</code>；serve.py:56 的分块逻辑</td></tr>
+      <tr><td>换模型 / 改 API</td><td><code>src/agent.py:46</code>、<code>src/background_reviewer.py:73</code> 的 <code>model</code> 参数；agent.py:56-59 与 background_reviewer.py:78-81 的 OpenAI client</td></tr>
+      <tr><td>改回答策略（推脱话术、能答/不能答规则）</td><td><code>src/agent.py:22-33</code> 的 <code>SYSTEM_TEMPLATE</code></td></tr>
+      <tr><td>改评估规则（否定窗口、推脱信号、关键词）</td><td><code>src/evaluator.py:20-27</code> 常量（NEG_PREFIXES / NEG_WINDOW / DEFERRAL_SIGNAL）</td></tr>
+      <tr><td>改 Reviewer 优化原则 / 输出格式</td><td><code>src/background_reviewer.py:24-69</code> 的 REVIEWER_SYSTEM / REVIEWER_USER</td></tr>
+      <tr><td>改前端 UI / 步进回放样式</td><td><code>index.html</code></td></tr>
+      <tr><td>新增客服知识技能</td><td><code>skills/{name}/SKILL.md</code>（SkillManager 自动发现，重启即生效）</td></tr>
+      <tr><td>改版本历史存储位置</td><td><code>src/skill_manager.py:29-33</code> 的目录常量</td></tr>
+    </table>
+  </main>
+</div>
+</body>
+</html>

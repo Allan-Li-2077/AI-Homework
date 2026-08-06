@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{项目名} — 代码地图</title>
+<style>
+  :root { --accent:#2f6fed; --bg:#fafbfc; --text:#1f2328;
+          --muted:#57606a; --border:#d0d7de; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+         background:var(--bg); color:var(--text); line-height:1.7; }
+  .layout { display:flex; min-height:100vh; }
+  aside { width:260px; position:sticky; top:0; height:100vh; overflow-y:auto;
+          border-right:1px solid var(--border); padding:16px; background:#fff; }
+  aside a { display:block; padding:4px 8px; color:var(--muted); text-decoration:none;
+            border-radius:6px; }
+  aside a:hover { background:#f0f3f6; color:var(--accent); }
+  main { flex:1; padding:24px 40px; max-width:960px; }
+  h1 { font-size:1.8em; } h2 { border-bottom:1px solid var(--border);
+       padding-bottom:6px; margin-top:2em; }
+  table { border-collapse:collapse; width:100%; }
+  th,td { border:1px solid var(--border); padding:6px 10px; text-align:left;
+          font-size:.95em; }
+  code { background:#eff1f3; border-radius:4px; padding:1px 5px;
+         font-family:ui-monospace,Consolas,monospace; }
+  pre { background:#fff; border:1px solid var(--border); border-radius:8px;
+        padding:12px; overflow-x:auto; }
+  details { border:1px solid var(--border); border-radius:8px; padding:8px 12px;
+            margin:8px 0; background:#fff; }
+  .tag { display:inline-block; background:#eef3ff; color:var(--accent);
+         border-radius:999px; padding:1px 10px; font-size:.85em; margin-right:6px; }
+  @media print { aside { display:none; } main { max-width:none; padding:0; } }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside>
+    <strong>{项目名}</strong>
+    <nav>
+      <a href="#overview">项目概览</a>
+      <a href="#structure">目录结构</a>
+      <a href="#modules">模块清单</a>
+      <a href="#flow">调用链路</a>
+      <a href="#key-logic">关键逻辑</a>
+      <a href="#extend">扩展指南</a>
+    </nav>
+  </aside>
+  <main>
+    <h1>{项目名} <span class="tag">技术栈</span></h1>
+    <p>一句话简介 + 运行方式</p>
+
+    <h2 id="overview">项目概览</h2>
+    <p>核心功能 / 启动命令 / 端口 / 环境变量</p>
+
+    <h2 id="structure">目录结构</h2>
+    <pre>带注释的目录树</pre>
+
+    <h2 id="modules">模块清单</h2>
+    <table>
+      <tr><th>文件</th><th>职责</th><th>关键函数/入口</th><th>备注</th></tr>
+      <tr><td><code>src/xxx.py</code></td><td>…</td><td>…</td><td>…</td></tr>
+    </table>
+
+    <h2 id="flow">调用链路</h2>
+    <ol><li>步骤 1 …</li></ol>
+    <svg viewBox="0 0 600 200">…简单流程图…</svg>
+
+    <h2 id="key-logic">关键逻辑</h2>
+    <p>核心算法 / 易错点拆解</p>
+
+    <h2 id="extend">扩展指南</h2>
+    <table><tr><th>想改什么</th><th>改哪里</th></tr></table>
+  </main>
+</div>
+</body>
+</html>
