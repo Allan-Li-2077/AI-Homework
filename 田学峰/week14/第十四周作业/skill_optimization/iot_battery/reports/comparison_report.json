@@ -1,0 +1,80 @@
+{
+  "generated_at": "2026-08-05T20:31:23.745480",
+  "token_counting_method": "近似估算(中1.5/英1.3/数1.0/标点0.5)",
+  "skill_domain": "物联网IoT电池设备运维",
+  "optimization_goals": [
+    "token消耗",
+    "执行效率",
+    "信息密度"
+  ],
+  "original": {
+    "file": "original/SKILL.md",
+    "chars": {
+      "total_chars": 5912,
+      "chinese_chars": 4603,
+      "english_words": 67,
+      "digits": 189,
+      "lines": 134
+    },
+    "tokens": 7450,
+    "structure": {
+      "headings": 20,
+      "tables": 0,
+      "table_rows": 0,
+      "list_items": 50,
+      "numbered_items": 0,
+      "bold_items": 0
+    },
+    "facts_coverage": {
+      "total": 28,
+      "covered": 27,
+      "coverage_rate": 0.9643,
+      "missing": [
+        {
+          "id": "F10",
+          "category": "功耗",
+          "fact": "Standby模式约1µA",
+          "keywords": [
+            "1µA",
+            "1"
+          ],
+          "covered": false
+        }
+      ]
+    },
+    "info_density": 0.003624
+  },
+  "optimized": {
+    "file": "optimized/SKILL.md",
+    "chars": {
+      "total_chars": 2408,
+      "chinese_chars": 1011,
+      "english_words": 65,
+      "digits": 120,
+      "lines": 107
+    },
+    "tokens": 2043,
+    "structure": {
+      "headings": 19,
+      "tables": 14,
+      "table_rows": 28,
+      "list_items": 23,
+      "numbered_items": 5,
+      "bold_items": 26
+    },
+    "facts_coverage": {
+      "total": 28,
+      "covered": 28,
+      "coverage_rate": 1.0,
+      "missing": []
+    },
+    "info_density": 0.013705
+  },
+  "comparison": {
+    "token_saved": 5407,
+    "token_saved_pct": 72.58,
+    "char_reduction_pct": 59.27,
+    "coverage_rate_change": 0.0357,
+    "info_density_improvement_pct": 278.17
+  }
+}
