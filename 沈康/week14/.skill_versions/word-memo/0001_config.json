@@ -1,0 +1,23 @@
+{
+  "_comment": "word-memo 渲染配置。由 harness 的 skill 自进化功能自动维护——每次进化只改本文件（结构化数据，无多行文本），改前会备份到 .skill_versions/word-memo/NNNN_config.json。也可手动编辑。",
+  "section_order": [
+    "root",
+    "deriv",
+    "mnemonic",
+    "association",
+    "example"
+  ],
+  "min_counts": {
+    "deriv": 3,
+    "mnemonic": 2,
+    "example": 2,
+    "syn": 3,
+    "ant": 2,
+    "theme": 3
+  },
+  "optional_sections": {
+    "root": true,
+    "association": true,
+    "example": true
+  }
+}
