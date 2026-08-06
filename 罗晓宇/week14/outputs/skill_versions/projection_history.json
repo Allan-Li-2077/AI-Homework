@@ -1,0 +1,10 @@
+[
+  {
+    "time": "2026-08-06T23:28:34.727382",
+    "action": "create",
+    "reason": "修复投屏显示相关2条失败（[9][10]）",
+    "version": 1,
+    "content": "---\nname: projection\ndescription: 教师机投屏显示相关问题解决方法\ntype: knowledge\nversion: 1\n---\n\n## 投屏无显示\n### 问题描述\n教师机投屏无显示\n\n### 解决方案\n1. 投屏无显示多为连接数据线出现问题，及时更换数据线可解决。\n\n## 投屏不显示图标\n### 问题描述\n投屏不显示桌面图标\n\n### 解决方案\n1. 在桌面右键选择【显示设置】；\n2. 找到【多显示器设置】；\n3. 下拉栏选择【复制这些显示器】。\n",
+    "snapshot_file": "skill_snapshots/projection_v1.md"
+  }
+]
