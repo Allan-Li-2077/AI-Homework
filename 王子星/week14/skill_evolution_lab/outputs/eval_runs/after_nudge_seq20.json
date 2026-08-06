@@ -1,0 +1,210 @@
+{
+  "run_id": "after_nudge_seq20",
+  "label": "Nudge后（seq=20, block=change_rollback）",
+  "timestamp": "2026-08-06T20:28:26.896627",
+  "skill_versions_active": {
+    "change-rollback": 2,
+    "incident-triage": 2,
+    "oncall-escalation": 1
+  },
+  "summary": {
+    "total": 30,
+    "correct": 10,
+    "accuracy": 0.333
+  },
+  "token_usage": {
+    "prompt_tokens": 44259,
+    "completion_tokens": 4450,
+    "total_tokens": 48709
+  },
+  "avg_prompt_tokens": 1475.3,
+  "by_category": {
+    "severity_basic": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "data_security_severity": {
+      "total": 5,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "escalation_basic": {
+      "total": 4,
+      "correct": 3,
+      "accuracy": 0.75
+    },
+    "escalation_ack_timeout": {
+      "total": 5,
+      "correct": 1,
+      "accuracy": 0.2
+    },
+    "change_rollback": {
+      "total": 5,
+      "correct": 2,
+      "accuracy": 0.4
+    },
+    "external_comms": {
+      "total": 4,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "postmortem": {
+      "total": 3,
+      "correct": 0,
+      "accuracy": 0.0
+    }
+  },
+  "answers": {
+    "1": {
+      "answer": "属于 P0 等级，需在 5分钟内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "3": {
+      "answer": "P2 级故障，响应时限为 **1小时内响应**。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "5": {
+      "answer": "5分钟内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "7": {
+      "answer": "核心服务全站不可用属于 **P0**，需 **5分钟** 内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "9": {
+      "answer": "P3。影响轻微/单用户/边缘case，响应时限为1个工作日内响应。",
+      "correct": false,
+      "fail_reason": "缺少关键词: 'P0'"
+    },
+    "11": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "13": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "15": {
+      "answer": "不是P0。按分级标准，该情况属于“影响轻微/单用户/边缘case”，应定级为 **P3**，响应时限为 **1个工作日**。",
+      "correct": false,
+      "fail_reason": "出现禁止词: 'P3'"
+    },
+    "17": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "19": {
+      "answer": "一线收到告警后需在 **5分钟** 内确认（Acknowledge）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "21": {
+      "answer": "升级至三线（Engineering Manager）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "23": {
+      "answer": "一线确认告警后，需在 **15分钟** 内给出处置方向；若超时未给出，将自动升级至二线。",
+      "correct": false,
+      "fail_reason": "出现禁止词: '5分钟'"
+    },
+    "25": {
+      "answer": "Engineering Manager对应升级链路的**三线**。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "27": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "29": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "31": {
+      "answer": "不一样长。一线收到告警后须在 ``5分钟`` 内确认；确认后若在 ``15分钟`` 内未能给出处置方向，才会自动升级至二线。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "33": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "35": {
+      "answer": "",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不是'"
+    },
+    "37": {
+      "answer": "可以。变更本身导致P0故障时，紧急回滚该变更不受冻结窗口限制，随时可执行，无需等待冻结期结束。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "39": {
+      "answer": "P0紧急回滚无需审批，值班工程师可自主执行，事后需在2小时内补交变更记录。",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不需要'"
+    },
+    "41": {
+      "answer": "常规变更冻结期为每周五18:00至周一09:00。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "43": {
+      "answer": "不可以。P2故障触发的回滚属于“P2/P3 或非故障触发的回滚”场景，需服务Owner审批后才能执行，不能自主执行。",
+      "correct": false,
+      "fail_reason": "缺少关键词: '需要'"
+    },
+    "45": {
+      "answer": "不适用。紧急回滚豁免仅适用于「回滚」操作本身，回滚之外的任何新变更（例如回滚后顺手修复小bug）仍受冻结限制。",
+      "correct": false,
+      "fail_reason": "出现禁止词: '适用于'"
+    },
+    "47": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "49": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "51": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "53": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "55": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "57": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "59": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    }
+  }
+}

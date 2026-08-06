@@ -1,0 +1,25 @@
+[
+  {
+    "time": "2026-08-06T20:38:40.441888",
+    "action": "create",
+    "reason": "修复所有 10 条失败：值班助手对事后总结规则完全无知识，新建 Skill 入口指向参考文件。",
+    "touched_file": "SKILL.md",
+    "version": 1,
+    "files": {
+      "SKILL.md": "---\nname: postmortem\ndescription: 事后总结（Postmortem）提交时限、是否强制，以及数据安全类事件的特殊总结要求。用于回答 P0/P1/P2/P3 事故事后总结多久提交、是否必须提交书面总结、审批人必须包含谁、需要包含什么评估结论等问题。\nversion: 1\n---\n\n# 事后总结（Postmortem）\n\n回答事故解决后事后总结的提交时限、是否强制、数据安全类事件的特殊要求。\n\n## 使用步骤\n\n1. 先判断事故等级（P0/P1/P2/P3）\n2. 根据等级查表得出提交时限与是否强制书面总结\n3. 若涉及数据安全事件，额外套用特殊总结要求（必须含合规/法务评估结论，审批人必须包含法务代表）\n\n详细规则见 [postmortem_rules.md](reference/postmortem_rules.md)。"
+    },
+    "snapshot_file": "skill_snapshots/postmortem_v1.md"
+  },
+  {
+    "time": "2026-08-06T20:38:40.464027",
+    "action": "create",
+    "reason": "修复所有 10 条失败：提供事后总结的具体数字/规则，覆盖 5.1 与 5.2 全部内容。",
+    "touched_file": "reference/postmortem_rules.md",
+    "version": 2,
+    "files": {
+      "SKILL.md": "---\nname: postmortem\ndescription: 事后总结（Postmortem）提交时限、是否强制，以及数据安全类事件的特殊总结要求。用于回答 P0/P1/P2/P3 事故事后总结多久提交、是否必须提交书面总结、审批人必须包含谁、需要包含什么评估结论等问题。\nversion: 2\n---\n\n# 事后总结（Postmortem）\n\n回答事故解决后事后总结的提交时限、是否强制、数据安全类事件的特殊要求。\n\n## 使用步骤\n\n1. 先判断事故等级（P0/P1/P2/P3）\n2. 根据等级查表得出提交时限与是否强制书面总结\n3. 若涉及数据安全事件，额外套用特殊总结要求（必须含合规/法务评估结论，审批人必须包含法务代表）\n\n详细规则见 [postmortem_rules.md](reference/postmortem_rules.md)。",
+      "reference/postmortem_rules.md": "# 事后总结（Postmortem）规则\n\n## 一、提交时限\n\n| 事故等级 | 提交时限 | 是否强制书面总结 | 备注 |\n|---------|---------|----------------|------|\n| P0 | 故障解决后 **3个工作日内** | 必须提交 | 完整事后总结文档 |\n| P1 | 故障解决后 **3个工作日内** | 必须提交 | 完整事后总结文档 |\n| P2 | **5个工作日内** | 必须提交 | 可简化模板 |\n| P3 | 不强制要求 | 不强制 | 无需书面总结 |\n\n## 二、数据安全事件的特殊总结要求（交叉点A延伸）\n\n- 数据安全类事件（用户数据泄露、越权访问、数据被篡改）的事后总结，除常规内容外，**必须包含合规/法务评估结论**。\n- 数据安全类事件的事后总结，**审批人必须包含法务代表**。\n- 其他等级事件无此要求。"
+    },
+    "snapshot_file": "skill_snapshots/postmortem_v2.md"
+  }
+]

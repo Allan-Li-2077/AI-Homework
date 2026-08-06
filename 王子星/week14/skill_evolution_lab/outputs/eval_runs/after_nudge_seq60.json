@@ -1,0 +1,211 @@
+{
+  "run_id": "after_nudge_seq60",
+  "label": "Nudge后（seq=60, block=external_comms）",
+  "timestamp": "2026-08-06T20:38:14.479780",
+  "skill_versions_active": {
+    "change-rollback": 2,
+    "incident-triage": 3,
+    "oncall-escalation": 2,
+    "public-communication": 2
+  },
+  "summary": {
+    "total": 30,
+    "correct": 17,
+    "accuracy": 0.567
+  },
+  "token_usage": {
+    "prompt_tokens": 59229,
+    "completion_tokens": 4020,
+    "total_tokens": 63249
+  },
+  "avg_prompt_tokens": 1974.3,
+  "by_category": {
+    "severity_basic": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "data_security_severity": {
+      "total": 5,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "escalation_basic": {
+      "total": 4,
+      "correct": 3,
+      "accuracy": 0.75
+    },
+    "escalation_ack_timeout": {
+      "total": 5,
+      "correct": 4,
+      "accuracy": 0.8
+    },
+    "change_rollback": {
+      "total": 5,
+      "correct": 2,
+      "accuracy": 0.4
+    },
+    "external_comms": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "postmortem": {
+      "total": 3,
+      "correct": 0,
+      "accuracy": 0.0
+    }
+  },
+  "answers": {
+    "1": {
+      "answer": "核心服务全站不可用属于 **P0**，需 **5分钟内响应**。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "3": {
+      "answer": "1小时内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "5": {
+      "answer": "P0 必须写 ``5分钟``，即 **5分钟内响应**。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "7": {
+      "answer": "属于P0，5分钟内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "9": {
+      "answer": "P3（影响轻微/单用户/边缘case），响应时限为1个工作日内响应。",
+      "correct": false,
+      "fail_reason": "缺少关键词: 'P0'"
+    },
+    "11": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "13": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "15": {
+      "answer": "根据故障分级标准，影响轻微/单用户/边缘case应定级为 **P3**，而非 P0。P0 仅适用于“核心服务全站不可用”的场景。",
+      "correct": false,
+      "fail_reason": "出现禁止词: 'P3'"
+    },
+    "17": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "19": {
+      "answer": "一线收到告警后需在 **5分钟内** 确认（Acknowledge）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "21": {
+      "answer": "升级至三线（Engineering Manager）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "23": {
+      "answer": "15分钟。",
+      "correct": false,
+      "fail_reason": "出现禁止词: '5分钟'"
+    },
+    "25": {
+      "answer": "Engineering Manager 对应升级链路的第三线（三线）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "27": {
+      "answer": "一线若在5分钟内未确认（Ack）告警本身，不需要等待处置方向的15分钟窗口结束，立即直接升级至二线（跳过“给处置方向”的等待期）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "29": {
+      "answer": "立即升级至三线。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "31": {
+      "answer": "不一样。“未确认告警”的升级时限是 **5分钟**，而“未给出处置方向”的升级时限是 **15分钟**，前者更短。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "33": {
+      "answer": "不需要。一线告警若在5分钟内未确认（Ack），**不需要**等待处置方向的15分钟窗口结束，应立即直接升级至二线。",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不等待'"
+    },
+    "35": {
+      "answer": "不是同一个流程。\n\n- **二线30分钟判断是否需要三线支持**：指二线介入后，若在 **30分钟内** 判断需要更高层级支持，则升级至三线。这是基于处置情况作出的判断。\n- **二线5分钟未确认告警升级**：指二线在收到升级后 **5分钟内** 未确认（Acknowledge）告警本身，立即升级至三线。这是基于“未确认”动作触发的自动升级。\n\n两者",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "37": {
+      "answer": "可以。变更导致P0故障属于紧急回滚，不受常规冻结期限制，随时可执行，且值班工程师可自主执行、无需审批，事后2小时内补交变更记录即可。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "39": {
+      "answer": "P0/P1 触发的紧急回滚，值班工程师可自主执行，无需审批；事后 2 小时内补交变更记录。",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不需要'"
+    },
+    "41": {
+      "answer": "常规变更冻结期为**每周五18:00至周一09:00**。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "43": {
+      "answer": "P2/P3 故障触发的回滚需服务Owner审批后才能执行，不可自主执行。",
+      "correct": false,
+      "fail_reason": "缺少关键词: '需要'"
+    },
+    "45": {
+      "answer": "不适用。该豁免仅适用于『回滚』操作本身，回滚之外的任何新变更（例如回滚后顺手修复小bug）仍受冻结限制。",
+      "correct": false,
+      "fail_reason": "出现禁止词: '适用于'"
+    },
+    "47": {
+      "answer": "P0故障且客户可感知（如页面报错、服务中断）时，必须在 **30分钟** 内发布对外公告；即使根因还在诊断中，公告内容可以是“我们已知晓并在处理”。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "49": {
+      "answer": "P1且客户可感知的故障，必须在 **1小时内** 发布对外公告。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "51": {
+      "answer": "P0故障期间，公告更新频率为至少每30分钟更新一次公告进展。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "53": {
+      "answer": "不需要。根据对外公告规则，P1/P0 故障若客户不可感知（内部故障），不强制要求对外公告，视公司公关政策决定。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "55": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "57": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "59": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    }
+  }
+}

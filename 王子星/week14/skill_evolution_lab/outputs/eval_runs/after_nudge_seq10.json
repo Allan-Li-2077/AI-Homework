@@ -1,0 +1,209 @@
+{
+  "run_id": "after_nudge_seq10",
+  "label": "Nudge后（seq=10, block=severity_basic）",
+  "timestamp": "2026-08-06T20:27:04.313062",
+  "skill_versions_active": {
+    "incident-triage": 2,
+    "oncall-escalation": 1
+  },
+  "summary": {
+    "total": 30,
+    "correct": 7,
+    "accuracy": 0.233
+  },
+  "token_usage": {
+    "prompt_tokens": 30369,
+    "completion_tokens": 4113,
+    "total_tokens": 34482
+  },
+  "avg_prompt_tokens": 1012.3,
+  "by_category": {
+    "severity_basic": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "data_security_severity": {
+      "total": 5,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "escalation_basic": {
+      "total": 4,
+      "correct": 3,
+      "accuracy": 0.75
+    },
+    "escalation_ack_timeout": {
+      "total": 5,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "change_rollback": {
+      "total": 5,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "external_comms": {
+      "total": 4,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "postmortem": {
+      "total": 3,
+      "correct": 0,
+      "accuracy": 0.0
+    }
+  },
+  "answers": {
+    "1": {
+      "answer": "P0，5分钟内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "3": {
+      "answer": "P2，响应时限为1小时内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "5": {
+      "answer": "5分钟内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "7": {
+      "answer": "核心服务全站不可用属于 **P0**，需 **5分钟** 内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "9": {
+      "answer": "该事件应定级为 **P3**，响应时限为 **1个工作日内响应**。",
+      "correct": false,
+      "fail_reason": "缺少关键词: 'P0'"
+    },
+    "11": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "13": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "15": {
+      "answer": "不是P0。根据故障分级标准，仅影响单用户/边缘case应定级为P3，响应时限为1个工作日内。",
+      "correct": false,
+      "fail_reason": "出现禁止词: 'P3'"
+    },
+    "17": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "19": {
+      "answer": "一线收到告警后需在 **5分钟** 内确认（Acknowledge）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "21": {
+      "answer": "升级到三线（Engineering Manager）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "23": {
+      "answer": "一线确认告警后，需在 **十五分钟** 内给出处置方向；若超时未给出，将自动升级至二线。",
+      "correct": false,
+      "fail_reason": "缺少关键词: '15分钟'"
+    },
+    "25": {
+      "answer": "Engineering Manager对应升级链路的第三线（三线）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "27": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "29": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "31": {
+      "answer": "",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不一样'"
+    },
+    "33": {
+      "answer": "",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不需要'"
+    },
+    "35": {
+      "answer": "",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不是'"
+    },
+    "37": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "39": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "41": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "43": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "45": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "47": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "49": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "51": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "53": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "55": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "57": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "59": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    }
+  }
+}

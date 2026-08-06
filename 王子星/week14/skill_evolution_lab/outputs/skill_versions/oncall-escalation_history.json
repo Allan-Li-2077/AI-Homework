@@ -1,0 +1,26 @@
+[
+  {
+    "time": "2026-08-06T20:22:29.097290",
+    "action": "initial",
+    "reason": "初始版本",
+    "touched_file": "SKILL.md",
+    "version": 1,
+    "files": {
+      "SKILL.md": "---\nname: oncall-escalation\ndescription: 值班升级链路，判断告警何时应从一线升级到二线/三线。\nversion: 1\n---\n\n# 值班升级（On-call Escalation）\n\n判断告警在什么条件下需要从一线升级到二线，以及二线何时需要升级到三线。\n\n## 使用步骤\n\n1. 判断当前处于升级链路的哪一环（一线/二线/三线）\n2. 查看具体升级触发条件和对应时限\n3. 给出是否应该升级、升级到哪一层\n\n详细的升级链路和时限见 [escalation_chain.md](reference/escalation_chain.md)。\n\n<!-- v1: 初始版本 -->\n",
+      "reference/escalation_chain.md": "# 升级链路\n\n## 基础升级链路\n- 一线（Primary On-call）收到告警后需在5分钟内确认（Acknowledge）\n- 一线确认后若在15分钟内未能给出处置方向，自动升级至二线（Secondary On-call）\n- 二线介入后，若在30分钟内判断需要更高层级支持，需升级至三线（Engineering Manager）\n- 三线以上需要总监级介入的情况：仅限P0且预计恢复时间（ETA）超过2小时\n\n<!-- v1: 初始版本 -->\n"
+    },
+    "snapshot_file": "skill_snapshots/oncall-escalation_v1.md"
+  },
+  {
+    "time": "2026-08-06T20:32:51.267411",
+    "action": "patch",
+    "reason": "修复 3 条未确认自动升级问题：补充交叉点C规则，明确一线/二线未确认时无需等待处置方向窗口，立即升级到下一级。",
+    "touched_file": "reference/escalation_chain.md",
+    "version": 2,
+    "files": {
+      "SKILL.md": "---\nname: oncall-escalation\ndescription: 值班升级链路，判断告警何时应从一线升级到二线/三线。\nversion: 2\n---\n\n# 值班升级（On-call Escalation）\n\n判断告警在什么条件下需要从一线升级到二线，以及二线何时需要升级到三线。\n\n## 使用步骤\n\n1. 判断当前处于升级链路的哪一环（一线/二线/三线）\n2. 查看具体升级触发条件和对应时限\n3. 给出是否应该升级、升级到哪一层\n\n详细的升级链路和时限见 [escalation_chain.md](reference/escalation_chain.md)。\n\n<!-- v1: 初始版本 -->\n",
+      "reference/escalation_chain.md": "# 升级链路\n\n## 基础升级链路\n- 一线（Primary On-call）收到告警后需在5分钟内确认（Acknowledge）\n- 一线确认后若在15分钟内未能给出处置方向，自动升级至二线（Secondary On-call）\n- 二线介入后，若在30分钟内判断需要更高层级支持，需升级至三线（Engineering Manager）\n- 三线以上需要总监级介入的情况：仅限P0且预计恢复时间（ETA）超过2小时\n\n## 未确认自动升级（交叉点C）\n- 一线若在5分钟内未确认（Ack）告警本身，**不需要**等待处置方向的15分钟窗口结束，立即直接升级至二线（跳过“给处置方向”的等待期）。\n- 二线同样适用：若二线在收到升级后5分钟内未确认，立即升级至三线。\n- “未确认”的升级时限（5分钟）比“未给出处置方向”的升级时限（15分钟）短得多。\n\n<!-- v1: 初始版本 -->\n"
+    },
+    "snapshot_file": "skill_snapshots/oncall-escalation_v2.md"
+  }
+]

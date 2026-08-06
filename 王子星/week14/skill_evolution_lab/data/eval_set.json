@@ -1,0 +1,995 @@
+{
+  "description": "监控平台故障响应评估集，60题，7类，关键词为处置手册专有数字/术语",
+  "evaluation_rule": "required中所有词均出现在回答中，且forbidden中所有词均不出现（含否定前置豁免），则判为正确",
+  "categories": {
+    "severity_basic": "基础故障分级（8题）：测试1.1节，初始Skill应能处理",
+    "data_security_severity": "数据安全事件强制定级（10题）：测试1.2/1.3节交叉点A，初始Skill完全缺失，最高优先级",
+    "escalation_basic": "值班升级基础链路（8题）：测试2.1节，初始Skill应能处理",
+    "escalation_ack_timeout": "未确认自动升级（10题）：测试2.2节交叉点C，初始Skill缺失该细分时限",
+    "change_rollback": "变更与紧急回滚（10题）：测试三、交叉点B，初始Skill完全缺失",
+    "external_comms": "对外沟通公告时限（8题）：测试四、交叉点D，初始Skill完全缺失",
+    "postmortem": "事后总结时限与要求（6题）：测试五、初始Skill完全缺失"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "category": "severity_basic",
+      "difficulty": "easy",
+      "question": "核心服务全站不可用，属于哪个等级，多久内响应？",
+      "ground_truth": {
+        "required": [
+          "P0",
+          "5分钟"
+        ],
+        "forbidden": [
+          "15分钟",
+          "1小时"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "P0全站不可用，5分钟内响应"
+    },
+    {
+      "id": 2,
+      "category": "severity_basic",
+      "difficulty": "easy",
+      "question": "核心服务部分不可用，已经持续超过10分钟，属于哪个等级？",
+      "ground_truth": {
+        "required": [
+          "P1"
+        ],
+        "forbidden": [
+          "P0",
+          "P2"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "P1持续超10分钟"
+    },
+    {
+      "id": 3,
+      "category": "severity_basic",
+      "difficulty": "easy",
+      "question": "非核心服务受影响，持续超过30分钟，响应时限是多久？",
+      "ground_truth": {
+        "required": [
+          "1小时"
+        ],
+        "forbidden": [
+          "5分钟",
+          "15分钟"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "P2响应时限1小时"
+    },
+    {
+      "id": 4,
+      "category": "severity_basic",
+      "difficulty": "easy",
+      "question": "单用户的边缘case问题，响应时限是多久？",
+      "ground_truth": {
+        "required": [
+          "1个工作日"
+        ],
+        "forbidden": [
+          "5分钟",
+          "1小时"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "P3响应时限1个工作日"
+    },
+    {
+      "id": 5,
+      "category": "severity_basic",
+      "difficulty": "easy",
+      "question": "P0故障的响应时限是多久？",
+      "ground_truth": {
+        "required": [
+          "5分钟"
+        ],
+        "forbidden": [
+          "15分钟",
+          "1小时"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "P0响应时限5分钟"
+    },
+    {
+      "id": 6,
+      "category": "severity_basic",
+      "difficulty": "easy",
+      "question": "P1故障的响应时限是多久？",
+      "ground_truth": {
+        "required": [
+          "15分钟"
+        ],
+        "forbidden": [
+          "5分钟",
+          "1小时"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "P1响应时限15分钟"
+    },
+    {
+      "id": 7,
+      "category": "severity_basic",
+      "difficulty": "medium",
+      "question": "核心服务全站宕机，这属于P0还是P1？",
+      "ground_truth": {
+        "required": [
+          "P0"
+        ],
+        "forbidden": [
+          "P1"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "全站不可用直接是P0"
+    },
+    {
+      "id": 8,
+      "category": "severity_basic",
+      "difficulty": "medium",
+      "question": "非核心服务受影响但只持续了5分钟，还没到30分钟阈值，此时能定级为P2吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以定级为P2",
+          "属于P2"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "未持续超30分钟不满足P2条件"
+    },
+    {
+      "id": 9,
+      "category": "data_security_severity",
+      "difficulty": "medium",
+      "question": "只影响1个用户的数据泄露事件，应该定级为？",
+      "ground_truth": {
+        "required": [
+          "P0"
+        ],
+        "forbidden": [
+          "P3",
+          "P2",
+          "P1"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "数据安全事件无论范围一律P0"
+    },
+    {
+      "id": 10,
+      "category": "data_security_severity",
+      "difficulty": "hard",
+      "question": "数据安全事件的定级规则，相对于常规分级表，谁的优先级更高？",
+      "ground_truth": {
+        "required": [
+          "优先"
+        ],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "交叉点A优先于常规分级表"
+    },
+    {
+      "id": 11,
+      "category": "data_security_severity",
+      "difficulty": "medium",
+      "question": "数据安全事件必须在多久内通知安全负责人？",
+      "ground_truth": {
+        "required": [
+          "10分钟"
+        ],
+        "forbidden": [
+          "5分钟",
+          "30分钟"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "10分钟内通知安全负责人"
+    },
+    {
+      "id": 12,
+      "category": "data_security_severity",
+      "difficulty": "medium",
+      "question": "越权访问事件即使只有1个用户受影响，算P几？",
+      "ground_truth": {
+        "required": [
+          "P0"
+        ],
+        "forbidden": [
+          "P3",
+          "P2",
+          "P1"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "越权访问一律P0"
+    },
+    {
+      "id": 13,
+      "category": "data_security_severity",
+      "difficulty": "medium",
+      "question": "数据被篡改事件，无论影响范围多小，应定级为？",
+      "ground_truth": {
+        "required": [
+          "P0"
+        ],
+        "forbidden": [
+          "P3",
+          "P2"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "数据篡改一律P0"
+    },
+    {
+      "id": 14,
+      "category": "data_security_severity",
+      "difficulty": "hard",
+      "question": "二线复核数据安全事件的定级时，能否把等级调低？",
+      "ground_truth": {
+        "required": [
+          "不能"
+        ],
+        "forbidden": [
+          "可以调低",
+          "能调低"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "复核不能调低数据安全事件定级"
+    },
+    {
+      "id": 15,
+      "category": "data_security_severity",
+      "difficulty": "hard",
+      "question": "数据泄露只影响了一个非核心功能的边缘用户，是否仍定级为P0？",
+      "ground_truth": {
+        "required": [
+          "P0"
+        ],
+        "forbidden": [
+          "P3",
+          "P2"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "数据安全事件覆盖一切情形，包括边缘case"
+    },
+    {
+      "id": 16,
+      "category": "data_security_severity",
+      "difficulty": "easy",
+      "question": "一线临时定级后，二线多久内需要复核？",
+      "ground_truth": {
+        "required": [
+          "20分钟"
+        ],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "二线20分钟内复核"
+    },
+    {
+      "id": 17,
+      "category": "data_security_severity",
+      "difficulty": "medium",
+      "question": "复核数据安全事件定级时，是否可以维持原定级不变？",
+      "ground_truth": {
+        "required": [
+          "可以"
+        ],
+        "forbidden": [
+          "不可以"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "复核只能调高或维持"
+    },
+    {
+      "id": 18,
+      "category": "data_security_severity",
+      "difficulty": "hard",
+      "question": "数据安全事件的强制定级规则，是否覆盖1.1节所有常规分级情形？",
+      "ground_truth": {
+        "required": [
+          "覆盖"
+        ],
+        "forbidden": [
+          "不覆盖"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "交叉点A覆盖一切常规分级情形"
+    },
+    {
+      "id": 19,
+      "category": "escalation_basic",
+      "difficulty": "easy",
+      "question": "一线收到告警后，需要在多久内确认（Ack）？",
+      "ground_truth": {
+        "required": [
+          "5分钟"
+        ],
+        "forbidden": [
+          "15分钟"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "一线5分钟内确认"
+    },
+    {
+      "id": 20,
+      "category": "escalation_basic",
+      "difficulty": "medium",
+      "question": "一线确认告警后，若15分钟内没能给出处置方向，会怎样？",
+      "ground_truth": {
+        "required": [
+          "二线"
+        ],
+        "forbidden": [
+          "三线"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "升级至二线"
+    },
+    {
+      "id": 21,
+      "category": "escalation_basic",
+      "difficulty": "medium",
+      "question": "二线介入后，若30分钟内判断需要更高层级支持，升级到哪一层？",
+      "ground_truth": {
+        "required": [
+          "三线"
+        ],
+        "forbidden": [
+          "二线"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "升级至三线EM"
+    },
+    {
+      "id": 22,
+      "category": "escalation_basic",
+      "difficulty": "medium",
+      "question": "二线判断需要升级到三线的时限是多久？",
+      "ground_truth": {
+        "required": [
+          "30分钟"
+        ],
+        "forbidden": [
+          "15分钟",
+          "5分钟"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "二线30分钟时限"
+    },
+    {
+      "id": 23,
+      "category": "escalation_basic",
+      "difficulty": "medium",
+      "question": "一线确认告警后，给出处置方向的等待时限是多久？",
+      "ground_truth": {
+        "required": [
+          "15分钟"
+        ],
+        "forbidden": [
+          "5分钟",
+          "30分钟"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "一线处置方向15分钟窗口"
+    },
+    {
+      "id": 24,
+      "category": "escalation_basic",
+      "difficulty": "hard",
+      "question": "总监级介入的情况，除了必须是P0外，还需要满足什么条件？",
+      "ground_truth": {
+        "required": [
+          "2小时"
+        ],
+        "forbidden": []
+      },
+      "initial_skill_handles": true,
+      "note": "预计恢复时间超过2小时"
+    },
+    {
+      "id": 25,
+      "category": "escalation_basic",
+      "difficulty": "easy",
+      "question": "Engineering Manager对应升级链路的第几线？",
+      "ground_truth": {
+        "required": [
+          "三线"
+        ],
+        "forbidden": [
+          "二线"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "三线即EM"
+    },
+    {
+      "id": 26,
+      "category": "escalation_basic",
+      "difficulty": "medium",
+      "question": "一线5分钟内已经确认了告警，但15分钟内没给处置方向，此时应该升级到哪？",
+      "ground_truth": {
+        "required": [
+          "二线"
+        ],
+        "forbidden": [
+          "三线"
+        ]
+      },
+      "initial_skill_handles": true,
+      "note": "常规升级路径先到二线"
+    },
+    {
+      "id": 27,
+      "category": "escalation_ack_timeout",
+      "difficulty": "medium",
+      "question": "一线5分钟内没有确认告警本身（而不是没给处置方向），会立即怎样？",
+      "ground_truth": {
+        "required": [
+          "升级",
+          "二线"
+        ],
+        "forbidden": [
+          "等待15分钟",
+          "15分钟后"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "未确认告警立即升级，不等待15分钟窗口"
+    },
+    {
+      "id": 28,
+      "category": "escalation_ack_timeout",
+      "difficulty": "hard",
+      "question": "一线未确认告警的升级时限是多久？",
+      "ground_truth": {
+        "required": [
+          "5分钟"
+        ],
+        "forbidden": [
+          "15分钟"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "未确认告警的升级时限是5分钟"
+    },
+    {
+      "id": 29,
+      "category": "escalation_ack_timeout",
+      "difficulty": "medium",
+      "question": "二线收到升级后，若5分钟内未确认，会怎样？",
+      "ground_truth": {
+        "required": [
+          "三线"
+        ],
+        "forbidden": [
+          "30分钟"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "二线未确认同样5分钟升级至三线"
+    },
+    {
+      "id": 30,
+      "category": "escalation_ack_timeout",
+      "difficulty": "hard",
+      "question": "一线告警发出后第6分钟仍未确认，此时应该已经发生了什么？",
+      "ground_truth": {
+        "required": [
+          "升级"
+        ],
+        "forbidden": [
+          "还在等待",
+          "继续等待"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "超过5分钟未确认应已升级"
+    },
+    {
+      "id": 31,
+      "category": "escalation_ack_timeout",
+      "difficulty": "hard",
+      "question": "\"未确认告警\"的升级时限和\"未给出处置方向\"的升级时限，是一样长吗？",
+      "ground_truth": {
+        "required": [
+          "不一样"
+        ],
+        "forbidden": [
+          "一样"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "5分钟 vs 15分钟，不一样"
+    },
+    {
+      "id": 32,
+      "category": "escalation_ack_timeout",
+      "difficulty": "medium",
+      "question": "二线未确认升级的判定时限是多久？",
+      "ground_truth": {
+        "required": [
+          "5分钟"
+        ],
+        "forbidden": [
+          "30分钟",
+          "15分钟"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "二线未确认同样是5分钟"
+    },
+    {
+      "id": 33,
+      "category": "escalation_ack_timeout",
+      "difficulty": "hard",
+      "question": "一线告警未确认满5分钟后，是否需要等待处置方向的15分钟窗口结束才升级？",
+      "ground_truth": {
+        "required": [
+          "不需要",
+          "不等待"
+        ],
+        "forbidden": [
+          "需要等待"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "未确认升级不受15分钟窗口约束"
+    },
+    {
+      "id": 34,
+      "category": "escalation_ack_timeout",
+      "difficulty": "medium",
+      "question": "一线确认告警的时限是多久？",
+      "ground_truth": {
+        "required": [
+          "5分钟"
+        ],
+        "forbidden": [
+          "15分钟"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "确认告警本身的时限"
+    },
+    {
+      "id": 35,
+      "category": "escalation_ack_timeout",
+      "difficulty": "hard",
+      "question": "二线30分钟判断是否需要三线支持，和二线5分钟未确认告警升级，是同一个流程吗？",
+      "ground_truth": {
+        "required": [
+          "不是"
+        ],
+        "forbidden": [
+          "是同一个"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "两个不同的判定流程和时限"
+    },
+    {
+      "id": 36,
+      "category": "escalation_ack_timeout",
+      "difficulty": "medium",
+      "question": "一线未确认告警的升级路径，需要先等一线给出处置方向吗？",
+      "ground_truth": {
+        "required": [
+          "不需要",
+          "不用等"
+        ],
+        "forbidden": [
+          "需要先等"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "未确认直接升级不经过处置方向环节"
+    },
+    {
+      "id": 37,
+      "category": "change_rollback",
+      "difficulty": "medium",
+      "question": "变更导致了P0故障，现在正处于常规冻结期，能立即回滚这个变更吗？",
+      "ground_truth": {
+        "required": [
+          "可以"
+        ],
+        "forbidden": [
+          "不可以",
+          "不能"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "紧急回滚不受冻结限制"
+    },
+    {
+      "id": 38,
+      "category": "change_rollback",
+      "difficulty": "hard",
+      "question": "紧急回滚P0故障后，除了回滚本身，还想顺便修一个小bug，这个小修复受冻结限制吗？",
+      "ground_truth": {
+        "required": [
+          "受"
+        ],
+        "forbidden": [
+          "不受"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "豁免仅适用回滚本身，不含额外修复"
+    },
+    {
+      "id": 39,
+      "category": "change_rollback",
+      "difficulty": "medium",
+      "question": "P0紧急回滚需要审批吗？",
+      "ground_truth": {
+        "required": [
+          "不需要",
+          "无需"
+        ],
+        "forbidden": [
+          "需要审批"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "P0/P1紧急回滚可自主执行"
+    },
+    {
+      "id": 40,
+      "category": "change_rollback",
+      "difficulty": "medium",
+      "question": "P0紧急回滚后，多久内需要补交变更记录？",
+      "ground_truth": {
+        "required": [
+          "2小时"
+        ],
+        "forbidden": [
+          "24小时"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "事后2小时内补交记录"
+    },
+    {
+      "id": 41,
+      "category": "change_rollback",
+      "difficulty": "easy",
+      "question": "常规变更冻结期是从周几到周几？",
+      "ground_truth": {
+        "required": [
+          "周五",
+          "周一"
+        ],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "周五18:00至周一09:00"
+    },
+    {
+      "id": 42,
+      "category": "change_rollback",
+      "difficulty": "easy",
+      "question": "重大冻结期的时长是多长？",
+      "ground_truth": {
+        "required": [
+          "48小时"
+        ],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "大促前后各48小时"
+    },
+    {
+      "id": 43,
+      "category": "change_rollback",
+      "difficulty": "medium",
+      "question": "P2故障触发的回滚，是否可以自主执行不需要审批？",
+      "ground_truth": {
+        "required": [
+          "需要",
+          "审批"
+        ],
+        "forbidden": [
+          "自主执行",
+          "无需审批"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "P2/P3回滚需Owner审批"
+    },
+    {
+      "id": 44,
+      "category": "change_rollback",
+      "difficulty": "hard",
+      "question": "重大冻结期内，P2故障的非紧急回滚能获批吗？",
+      "ground_truth": {
+        "required": [
+          "不批准"
+        ],
+        "forbidden": [
+          "可以批准",
+          "予以批准"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "重大冻结期内非紧急P2/P3回滚一律不批准"
+    },
+    {
+      "id": 45,
+      "category": "change_rollback",
+      "difficulty": "hard",
+      "question": "回滚不受冻结限制的豁免，是否也适用于回滚之外的新变更？",
+      "ground_truth": {
+        "required": [
+          "不适用"
+        ],
+        "forbidden": [
+          "适用于",
+          "也适用"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "豁免仅限回滚操作本身"
+    },
+    {
+      "id": 46,
+      "category": "change_rollback",
+      "difficulty": "medium",
+      "question": "非故障触发的常规回滚，需要谁审批？",
+      "ground_truth": {
+        "required": [
+          "Owner"
+        ],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "服务Owner审批"
+    },
+    {
+      "id": 47,
+      "category": "external_comms",
+      "difficulty": "medium",
+      "question": "P0故障且客户能感知到（比如页面报错），多久内必须发布对外公告？",
+      "ground_truth": {
+        "required": [
+          "30分钟"
+        ],
+        "forbidden": [
+          "1小时"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "P0客户可感知30分钟内公告"
+    },
+    {
+      "id": 48,
+      "category": "external_comms",
+      "difficulty": "hard",
+      "question": "根因还没查清楚，P0且客户可感知的故障，对外公告能不能先发？",
+      "ground_truth": {
+        "required": [
+          "可以"
+        ],
+        "forbidden": [
+          "不可以",
+          "等根因"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "根因诊断中也要先发公告"
+    },
+    {
+      "id": 49,
+      "category": "external_comms",
+      "difficulty": "medium",
+      "question": "P1且客户可感知的故障，公告时限是多久？",
+      "ground_truth": {
+        "required": [
+          "1小时"
+        ],
+        "forbidden": [
+          "30分钟"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "P1客户可感知1小时内公告"
+    },
+    {
+      "id": 50,
+      "category": "external_comms",
+      "difficulty": "medium",
+      "question": "客户完全无法感知的内部故障，是否强制要求发公告？",
+      "ground_truth": {
+        "required": [
+          "不强制"
+        ],
+        "forbidden": [
+          "强制要求"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "内部故障不强制公告"
+    },
+    {
+      "id": 51,
+      "category": "external_comms",
+      "difficulty": "medium",
+      "question": "P0故障期间，公告更新频率是多久一次？",
+      "ground_truth": {
+        "required": [
+          "30分钟"
+        ],
+        "forbidden": [
+          "2小时"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "P0期间至少30分钟更新一次"
+    },
+    {
+      "id": 52,
+      "category": "external_comms",
+      "difficulty": "medium",
+      "question": "P1故障期间，公告更新频率是多久一次？",
+      "ground_truth": {
+        "required": [
+          "2小时"
+        ],
+        "forbidden": [
+          "30分钟"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "P1期间至少2小时更新一次"
+    },
+    {
+      "id": 53,
+      "category": "external_comms",
+      "difficulty": "hard",
+      "question": "P1故障但客户完全无法感知，是否必须在1小时内发公告？",
+      "ground_truth": {
+        "required": [
+          "不强制",
+          "不需要"
+        ],
+        "forbidden": [
+          "必须",
+          "强制"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "客户不可感知不受1小时时限约束"
+    },
+    {
+      "id": 54,
+      "category": "external_comms",
+      "difficulty": "hard",
+      "question": "P0客户可感知故障，是否需要等根因诊断完成才能发公告？",
+      "ground_truth": {
+        "required": [
+          "不需要",
+          "不用"
+        ],
+        "forbidden": [
+          "需要等",
+          "等待根因"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "无需等根因即可先发公告"
+    },
+    {
+      "id": 55,
+      "category": "postmortem",
+      "difficulty": "medium",
+      "question": "P0事故的事后总结，多久内必须提交？",
+      "ground_truth": {
+        "required": [
+          "3个工作日"
+        ],
+        "forbidden": [
+          "5个工作日"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "P0/P1三个工作日内提交"
+    },
+    {
+      "id": 56,
+      "category": "postmortem",
+      "difficulty": "medium",
+      "question": "P2事故的事后总结提交时限是多久？",
+      "ground_truth": {
+        "required": [
+          "5个工作日"
+        ],
+        "forbidden": [
+          "3个工作日"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "P2五个工作日内提交"
+    },
+    {
+      "id": 57,
+      "category": "postmortem",
+      "difficulty": "medium",
+      "question": "P3事故是否强制要求提交书面事后总结？",
+      "ground_truth": {
+        "required": [
+          "不强制"
+        ],
+        "forbidden": [
+          "强制要求"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "P3不强制书面总结"
+    },
+    {
+      "id": 58,
+      "category": "postmortem",
+      "difficulty": "medium",
+      "question": "数据安全事件的事后总结，审批人必须包含谁？",
+      "ground_truth": {
+        "required": [
+          "法务"
+        ],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "审批人须含法务代表"
+    },
+    {
+      "id": 59,
+      "category": "postmortem",
+      "difficulty": "medium",
+      "question": "P1事故的事后总结提交时限是多久？",
+      "ground_truth": {
+        "required": [
+          "3个工作日"
+        ],
+        "forbidden": [
+          "5个工作日"
+        ]
+      },
+      "initial_skill_handles": false,
+      "note": "P1同P0三个工作日内提交"
+    },
+    {
+      "id": 60,
+      "category": "postmortem",
+      "difficulty": "medium",
+      "question": "数据安全事件的事后总结，除常规内容外还必须包含什么评估结论？",
+      "ground_truth": {
+        "required": [
+          "合规"
+        ],
+        "forbidden": []
+      },
+      "initial_skill_handles": false,
+      "note": "必须包含合规/法务评估结论"
+    }
+  ]
+}
