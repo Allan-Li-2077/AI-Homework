@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>李明 · 易经运势简札</title>
+<style>
+:root {
+  --ink: #14241c;
+  --muted: #3d5c4a;
+  --paper: #e8efe6;
+  --card: rgba(248, 252, 248, 0.88);
+  --line: rgba(26, 58, 42, 0.18);
+  --accent: #1f6b4a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh;
+  font-family: "Source Han Serif SC", "Noto Serif SC", "Songti SC",
+               "SimSun", Georgia, serif;
+  color: var(--ink);
+  background: radial-gradient(ellipse at 30% 20%, #f3f7f2 0%, var(--paper) 55%, #d5e0d6 100%);
+}
+.bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 1;
+}
+.bg svg { width: min(92vmin, 820px); height: min(92vmin, 820px); }
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 720px; margin: 0 auto; padding: 2.5rem 1.25rem 3rem;
+}
+header {
+  text-align: center; margin-bottom: 1.75rem;
+}
+header .seal {
+  display: inline-block; font-size: 0.75rem; letter-spacing: 0.25em;
+  color: var(--accent); border: 1px solid var(--accent);
+  padding: 0.2rem 0.6rem; margin-bottom: 0.75rem;
+}
+h1 {
+  font-weight: 600; font-size: 1.75rem; margin: 0.2rem 0;
+  letter-spacing: 0.08em;
+}
+.sub { color: var(--muted); font-size: 0.95rem; margin: 0.4rem 0 0; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(2px);
+  padding: 1.25rem 1.35rem;
+  margin-bottom: 1rem;
+}
+.card h2 {
+  margin: 0 0 0.75rem; font-size: 1.05rem; color: var(--accent);
+  letter-spacing: 0.12em; font-weight: 600;
+}
+.gua-row {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+}
+.gua-box {
+  flex: 1; min-width: 200px;
+  border: 1px dashed var(--line); padding: 0.9rem 1rem; text-align: center;
+}
+.gua-box .sym { font-size: 2rem; line-height: 1.2; }
+.gua-box .name { font-size: 1.15rem; margin-top: 0.35rem; }
+.gua-box .kw { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
+.meta { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+.reading p {
+  margin: 0 0 0.85rem; line-height: 1.85; font-size: 0.98rem;
+  text-align: justify;
+}
+.metrics {
+  font-size: 0.8rem; color: var(--muted); line-height: 1.6;
+  font-family: ui-monospace, Consolas, monospace;
+}
+footer {
+  margin-top: 1.5rem; text-align: center;
+  font-size: 0.78rem; color: var(--muted);
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><circle cx="50" cy="50" r="46" fill="none" stroke="#1a3a2a" stroke-width="0.4" opacity="0.35"/><circle cx="50" cy="50" r="30" fill="none" stroke="#1a3a2a" stroke-width="0.3" opacity="0.25"/><text x="50" y="53" text-anchor="middle" font-size="8" fill="#1a3a2a" opacity="0.2" font-family="serif">太极</text><text x="50" y="12" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☰</text><text x="50" y="17" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">乾</text><text x="78" y="22" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☴</text><text x="78" y="27" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">巽</text><text x="88" y="50" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☵</text><text x="88" y="55" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">坎</text><text x="78" y="78" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☶</text><text x="78" y="83" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">艮</text><text x="50" y="88" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☷</text><text x="50" y="93" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">坤</text><text x="22" y="78" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☳</text><text x="22" y="83" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">震</text><text x="12" y="50" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☲</text><text x="12" y="55" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">离</text><text x="22" y="22" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☱</text><text x="22" y="27" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">兑</text></svg></div>
+<main class="wrap">
+  <header>
+    <div class="seal">易经运势 · 动态简札</div>
+    <h1>李明 · 运势简札</h1>
+    <p class="sub">男 · 1990-08-15 · 亥时 · 生成于 2026-08-08 23:29:10</p>
+  </header>
+
+  <section class="card">
+    <h2>本卦 · 变卦</h2>
+    <div class="gua-row">
+      <div class="gua-box">
+        <div class="sym">☵☱</div>
+        <div class="name">本卦 · 水泽节</div>
+        <div class="kw">节制有度</div>
+      </div>
+      <div class="gua-box">
+        <div class="sym">☴☱</div>
+        <div class="name">变卦 · 风泽中孚</div>
+        <div class="kw">诚信感通</div>
+      </div>
+    </div>
+    <p class="meta" style="margin-top:0.9rem">
+      动爻：上爻<br/>
+      上卦推算：(7+8+15)%8 → 6 坎<br/>
+      下卦推算：(7+8+15+12)%8 → 2 兑<br/>
+      动爻推算：(7+8+15+12)%6 → 6
+    </p>
+  </section>
+
+  <section class="card reading">
+    <h2>解读</h2>
+    <p>命局提要</p><p>你的命局推演为水泽节卦，上爻动，变为风泽中孚。节卦主节制、分寸，中孚主诚信、感通。整体气象是：以柔纳刚，以信立诚。你天生对“度”有敏锐直觉，知道何时该进、何时该止，只是有时过于谨慎，反而束缚了自己。变卦中孚则提醒你：真正的力量不在控制，而在信任——信任自己，也信任他人。</p><p>本卦变卦</p><p>本卦水泽节，上坎水、下兑泽。水入泽中，有所蓄积，也需堤防满溢。这象征你人生有极强的规划能力，习惯为长远做准备。上爻动，爻辞曰“苦节，贞凶”，意为过度节制会让人痛苦，若固守不变，反而不利。变卦风泽中孚，上巽风、下兑泽。风行水上，波澜不惊，是诚信感通之象。从“苦节”到“中孚”，暗示你正从自我克制走向内外合一，放下过度计算，以真诚回应世界。</p><p>性格与课题</p><p>你性格沉稳，重诺守信，做事有条理，厌恶轻浮与随意。内在有浪漫敏感的一面，但往往被理性压抑。课题在于：你习惯用规则保护自己，却忘了规则之外还有弹性。上爻动显示你容易对自己和他人要求过高，一旦标准无法达成，便自责或失望。变卦中孚告诉你，真正的诚信不是严苛，而是自然流露的善意。学会接受“不完美的分寸”，反而能打开新的可能。</p><p>运势走势</p><p>近一年：节卦上爻动，宜调整节奏。此阶段你可能感到某种“过紧”的状态，比如工作压力、人际关系或自我期许。变卦中孚带来转机：放下掌控，多与人坦诚沟通，会有贵人出现。财务上不要过度紧缩，适度投资学习或健康，反而增益。</p><p>三年内：中孚卦逐渐显现，你的信誉与真诚会赢得他人信任，合作机会增多。事业或学业上，你过去积累的稳健将获得回报。注意情绪管理，避免因“怕出错”而犹豫不决。感情上，若已有伴侣，可深化默契；若单身，以诚相待会遇见可靠缘分。</p><p>五至十年：风泽中孚，风行水上，泽润万物。此阶段你的影响力温和而深远，可能成为团队、家庭或社区中受人信赖的角色。切记勿因小利而失信，保持初心。长期看，你的“节”之智慧与“孚”之真诚融合，将形成独特的个人魅力——既有原则，又有温度。</p><p>开运建议</p><p>一、练习“柔性节制”：每月留出几天不设计划，随兴而行，感受流动的喜悦。</p><p>二、对他人减少挑剔，多给赞美。你的真诚需要言语表达，而非默默观察。</p><p>三、佩戴或接触水元素饰物（如蓝色、水晶），增强变卦的感通之力。</p><p>四、每日静坐五分钟，观想“风过水面”的景象，帮助放松紧绷。</p><p>五、遇到抉择时，问自己“这是出于恐惧还是信任？”然后选择信任。</p><p>免责声明</p><p>本解读基于传统易理推演，旨在提供参考与启发，不构成人生决策依据。命运掌握在你自己手中，请结合实际情况理性看待。愿你在节制与诚信中，活出从容自在。</p>
+  </section>
+
+  <section class="card">
+    <h2>本次 Skill 指标</h2>
+    <div class="metrics">
+      elapsed_s: 14.0415<br/>
+      prompt_tokens: 307<br/>
+      completion_tokens: 798<br/>
+      total_tokens: 1105<br/>
+      model: deepseek-v4-flash
+    </div>
+  </section>
+
+  <footer>传统文化趣味咨询 · 非科学预测 · 每次运行动态生成 · 无外网依赖</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>李明 · 易经运势简札</title>
+<style>
+:root {
+  --ink: #14241c;
+  --muted: #3d5c4a;
+  --paper: #e8efe6;
+  --card: rgba(248, 252, 248, 0.88);
+  --line: rgba(26, 58, 42, 0.18);
+  --accent: #1f6b4a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh;
+  font-family: "Source Han Serif SC", "Noto Serif SC", "Songti SC",
+               "SimSun", Georgia, serif;
+  color: var(--ink);
+  background: radial-gradient(ellipse at 30% 20%, #f3f7f2 0%, var(--paper) 55%, #d5e0d6 100%);
+}
+.bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 1;
+}
+.bg svg { width: min(92vmin, 820px); height: min(92vmin, 820px); }
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 720px; margin: 0 auto; padding: 2.5rem 1.25rem 3rem;
+}
+header {
+  text-align: center; margin-bottom: 1.75rem;
+}
+header .seal {
+  display: inline-block; font-size: 0.75rem; letter-spacing: 0.25em;
+  color: var(--accent); border: 1px solid var(--accent);
+  padding: 0.2rem 0.6rem; margin-bottom: 0.75rem;
+}
+h1 {
+  font-weight: 600; font-size: 1.75rem; margin: 0.2rem 0;
+  letter-spacing: 0.08em;
+}
+.sub { color: var(--muted); font-size: 0.95rem; margin: 0.4rem 0 0; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(2px);
+  padding: 1.25rem 1.35rem;
+  margin-bottom: 1rem;
+}
+.card h2 {
+  margin: 0 0 0.75rem; font-size: 1.05rem; color: var(--accent);
+  letter-spacing: 0.12em; font-weight: 600;
+}
+.gua-row {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+}
+.gua-box {
+  flex: 1; min-width: 200px;
+  border: 1px dashed var(--line); padding: 0.9rem 1rem; text-align: center;
+}
+.gua-box .sym { font-size: 2rem; line-height: 1.2; }
+.gua-box .name { font-size: 1.15rem; margin-top: 0.35rem; }
+.gua-box .kw { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
+.meta { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+.reading p {
+  margin: 0 0 0.85rem; line-height: 1.85; font-size: 0.98rem;
+  text-align: justify;
+}
+.metrics {
+  font-size: 0.8rem; color: var(--muted); line-height: 1.6;
+  font-family: ui-monospace, Consolas, monospace;
+}
+footer {
+  margin-top: 1.5rem; text-align: center;
+  font-size: 0.78rem; color: var(--muted);
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><circle cx="50" cy="50" r="46" fill="none" stroke="#1a3a2a" stroke-width="0.4" opacity="0.35"/><circle cx="50" cy="50" r="30" fill="none" stroke="#1a3a2a" stroke-width="0.3" opacity="0.25"/><text x="50" y="53" text-anchor="middle" font-size="8" fill="#1a3a2a" opacity="0.2" font-family="serif">太极</text><text x="50" y="12" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☰</text><text x="50" y="17" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">乾</text><text x="78" y="22" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☴</text><text x="78" y="27" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">巽</text><text x="88" y="50" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☵</text><text x="88" y="55" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">坎</text><text x="78" y="78" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☶</text><text x="78" y="83" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">艮</text><text x="50" y="88" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☷</text><text x="50" y="93" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">坤</text><text x="22" y="78" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☳</text><text x="22" y="83" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">震</text><text x="12" y="50" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☲</text><text x="12" y="55" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">离</text><text x="22" y="22" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☱</text><text x="22" y="27" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">兑</text></svg></div>
+<main class="wrap">
+  <header>
+    <div class="seal">易经运势 · 动态简札</div>
+    <h1>李明 · 运势简札</h1>
+    <p class="sub">男 · 1990-08-15 · 辰时 · 生成于 2026-08-08 23:24:37</p>
+  </header>
+
+  <section class="card">
+    <h2>本卦 · 变卦</h2>
+    <div class="gua-row">
+      <div class="gua-box">
+        <div class="sym">☵☲</div>
+        <div class="name">本卦 · 水火既济</div>
+        <div class="kw">事成宜稳</div>
+      </div>
+      <div class="gua-box">
+        <div class="sym">☷☲</div>
+        <div class="name">变卦 · 地火明夷</div>
+        <div class="kw">晦而守正</div>
+      </div>
+    </div>
+    <p class="meta" style="margin-top:0.9rem">
+      动爻：五爻<br/>
+      上卦推算：(7+8+15)%8 → 6 坎<br/>
+      下卦推算：(7+8+15+5)%8 → 3 离<br/>
+      动爻推算：(7+8+15+5)%6 → 5
+    </p>
+  </section>
+
+  <section class="card reading">
+    <h2>解读</h2>
+    <p>命局提要</p><p>你的命局以“水火既济”为本卦，有“事成宜稳”之象；动爻在五爻（君位），提示你正处于一件事的关键转折点。变卦为“地火明夷”，象征光明入地、晦而守正。综合来看，你的人生主旋律是：在顺利中保持清醒，在逆境中内守光明。你具备把事情做成的能力，但更重要的功课是——如何面对成功后随之而来的责任感与低调期。</p><p>本卦变卦</p><p>本卦水火既济，上坎水、下离火，水火相交，阴阳得位，是“已成”之卦。生活中易遇到阶段性收尾、目标达成或关系落定。但“既济”之后必有“未济”，所以卦意提醒：不要因一时顺利而松懈。变卦为五爻阳变阴，本卦九五“东邻杀牛，不如西邻之禴祭”的诚敬精神，转为明夷六五“箕子之明夷”，意思是：当外界环境变暗时，要以内敛和智慧保存实力，不较一时之锋芒。</p><p>性格与课题</p><p>你性格中兼具水的适应与火的行动力：做事有规划、重执行，对结果有掌控欲，也容易在成功后自我加压。明夷卦暗示你有时会感到“明明有光，却要暗着来”，甚至可能经历被忽视、被低估的阶段。你的核心课题是：学会把聚光灯移开，依然能保持内心的光。不是所有努力都要立刻被看见，厚积薄发才是你的长远之道。</p><p>运势走势</p><p>近一年内（当下至一年后）：既济余温未散，你仍能靠过去的积累稳中求进。事业或财务上有收尾、复盘、交接之事，适合整理而非开新局。内心会有“差不多了，但不敢停”的感觉。注意人際关系中的暗流，尤其与上级或长辈有关时，话宜少、心宜诚，避免张扬。健康上留意心火偏旺，建议规律作息，少熬夜。</p><p>未来三年：进入明夷阶段，外部助力减少，你可能面临“明明有能力却发挥受限”的境况。这反而是修身养性的黄金期。工作上适合深耕专业、打磨技能，不宜强求升职或公开出头。财务上要守，不要做大额冒险投资。感情与家庭方面，少说理、多体贴，你的沉默会比激烈表达更有效。若你此时正感委屈，请记住：这是暂时天黑，不是星光熄灭。</p><p>五到十年：明夷的尽头是“光明复归”。随着时间推移，你会在沉寂中积累出不可替代的厚度。约在第五年后，机会将重新浮现，且比从前更扎实。你的角色会从“做事者”转为“引路人”或“后盾型人物”。中年后运势渐入佳境，但依然建议保持既济卦的“思患预防”心态，不可大起大落。整体来看，你的人生是“先成一局，再藏一程，后稳一生”。</p><p>开运建议</p><p>1. 每年农历正月初一，静坐十分钟，默念“内外有光，不急不耀”，调整全年心境。</p><p>2. 常穿或佩戴与大地色系（土）、微红色（火）相关的衣物配饰，平衡水火。</p><p>3. 多靠近水边散步，少去喧闹夜场；晨起面向东，深呼吸七次。</p><p>4. 家中或办公位西北方放一盏小夜灯，暗而不灭，象征“明夷”之守。</p><p>5. 重要决策前，先写下“最坏结果”三个应对方案，可增强你的稳健气运。</p><p>免责声明</p><p>本解读基于传统易经象数推演，旨在提供文化参考与心理建设，不构成对具体人生决策的绝对断言。命运由自身行动与选择塑造，请理性看待，行稳致远。</p>
+  </section>
+
+  <section class="card">
+    <h2>本次 Skill 指标</h2>
+    <div class="metrics">
+      elapsed_s: 14.3991<br/>
+      prompt_tokens: 309<br/>
+      completion_tokens: 906<br/>
+      total_tokens: 1215<br/>
+      model: deepseek-v4-flash
+    </div>
+  </section>
+
+  <footer>传统文化趣味咨询 · 非科学预测 · 每次运行动态生成 · 无外网依赖</footer>
+</main>
+</body>
+</html>
