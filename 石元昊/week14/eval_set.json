@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "description": "东南亚旅行规划评估集",
+    "total": 15,
+    "categories": ["visa", "budget", "transport", "best_time", "tips"]
+  },
+  "questions": [
+    {
+      "id": 1,
+      "category": "visa",
+      "question": "中国护照去泰国需要办签证吗？能待多久？",
+      "must_include": ["免签", "30天"],
+      "must_exclude": ["需要签证", "必须办签证"]
+    },
+    {
+      "id": 2,
+      "category": "visa",
+      "question": "去越南旅游签证怎么弄？多少钱？",
+      "must_include": ["电子签证", "25美元"],
+      "must_exclude": ["免签"]
+    },
+    {
+      "id": 3,
+      "category": "visa",
+      "question": "马来西亚免签吗？有什么条件？",
+      "must_include": ["免签", "30天", "6个月"],
+      "must_exclude": ["需要签证"]
+    },
+    {
+      "id": 4,
+      "category": "budget",
+      "question": "去泰国玩5天，经济型大概要花多少钱？",
+      "must_include": ["2500", "4000"],
+      "must_exclude": []
+    },
+    {
+      "id": 5,
+      "category": "budget",
+      "question": "泰国、越南、马来西亚5天行程哪个最便宜？",
+      "must_include": ["越南", "2000"],
+      "must_exclude": []
+    },
+    {
+      "id": 6,
+      "category": "budget",
+      "question": "在泰国每天经济型消费大概多少泰铢？",
+      "must_include": ["800", "1200"],
+      "must_exclude": []
+    },
+    {
+      "id": 7,
+      "category": "transport",
+      "question": "从曼谷去清迈有什么交通方式？大概多少钱？",
+      "must_include": ["火车", "飞机"],
+      "must_exclude": []
+    },
+    {
+      "id": 8,
+      "category": "transport",
+      "question": "从吉隆坡去槟城坐火车要多久？多少钱？",
+      "must_include": ["59林吉特", "4小时"],
+      "must_exclude": []
+    },
+    {
+      "id": 9,
+      "category": "transport",
+      "question": "会安古镇可以开车进去吗？",
+      "must_include": ["禁止", "机动车"],
+      "must_exclude": ["可以开车"]
+    },
+    {
+      "id": 10,
+      "category": "best_time",
+      "question": "泰国普吉岛什么时候去最好？建议玩几天？",
+      "must_include": ["11月", "4月"],
+      "must_exclude": []
+    },
+    {
+      "id": 11,
+      "category": "best_time",
+      "question": "沙巴最佳旅游时间是什么时候？",
+      "must_include": ["3月", "10月"],
+      "must_exclude": []
+    },
+    {
+      "id": 12,
+      "category": "best_time",
+      "question": "胡志明市什么时候是旱季？",
+      "must_include": ["12月", "4月"],
+      "must_exclude": []
+    },
+    {
+      "id": 13,
+      "category": "tips",
+      "question": "去泰国寺庙要注意什么？",
+      "must_include": ["脱鞋", "过膝", "过肘"],
+      "must_exclude": []
+    },
+    {
+      "id": 14,
+      "category": "tips",
+      "question": "马来西亚哪个岛是免税岛？适合买什么？",
+      "must_include": ["兰卡威", "巧克力"],
+      "must_exclude": []
+    },
+    {
+      "id": 15,
+      "category": "tips",
+      "question": "去越南买什么电话卡比较好？",
+      "must_include": ["Viettel"],
+      "must_exclude": []
+    }
+  ]
+}
