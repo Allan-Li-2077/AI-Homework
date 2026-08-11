@@ -1,0 +1,10 @@
+[
+  {
+    "time": "2026-08-06T23:28:34.727382",
+    "action": "create",
+    "reason": "修复正确关机相关3条失败（[6][7][8]）",
+    "version": 1,
+    "content": "---\nname: shutdown\ndescription: 电脑正确关机相关问题解决方法\ntype: knowledge\nversion: 1\n---\n\n## 正确关机流程\n### 问题描述\n使用机房电脑时正确的关机流程\n\n### 解决方案\n1. 提醒老师同学使用完电脑后需要正常关机，不能直接关电闸；\n2. 直接关电闸会导致元件短路，损坏元件等问题。\n",
+    "snapshot_file": "skill_snapshots/shutdown_v1.md"
+  }
+]
