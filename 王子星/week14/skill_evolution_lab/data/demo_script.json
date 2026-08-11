@@ -1,0 +1,584 @@
+{
+  "description": "演示脚本：80题，nudge_interval=10，每块10题，每次Nudge有清晰失败信号",
+  "nudge_interval": 10,
+  "probe_question_ids": [
+    1,
+    3,
+    5,
+    7,
+    9,
+    11,
+    13,
+    15,
+    17,
+    19,
+    21,
+    23,
+    25,
+    27,
+    29,
+    31,
+    33,
+    35,
+    37,
+    39,
+    41,
+    43,
+    45,
+    47,
+    49,
+    51,
+    53,
+    55,
+    57,
+    59
+  ],
+  "expected_evolutions": [
+    {
+      "after_seq": 10,
+      "block": "severity_basic",
+      "trigger_reason": "基础分级大多答对，预期无需大改",
+      "expected_action": "none_or_minor_patch",
+      "expected_skill": "incident-triage"
+    },
+    {
+      "after_seq": 20,
+      "block": "change_rollback",
+      "trigger_reason": "变更回滚规则完全缺失，连续失败",
+      "expected_action": "create",
+      "expected_skill": "change-rollback（新建）"
+    },
+    {
+      "after_seq": 30,
+      "block": "escalation_ack_timeout",
+      "trigger_reason": "未确认自动升级细分时限缺失，连续失败",
+      "expected_action": "patch",
+      "expected_skill": "oncall-escalation（补未确认升级分支）"
+    },
+    {
+      "after_seq": 40,
+      "block": "mixed_validation_1",
+      "trigger_reason": "检查前3轮进化有无技能漂移回归",
+      "expected_action": "none_expected_if_no_drift",
+      "expected_skill": "-"
+    },
+    {
+      "after_seq": 50,
+      "block": "data_security_severity",
+      "trigger_reason": "数据安全事件强制定级规则完全缺失",
+      "expected_action": "patch",
+      "expected_skill": "incident-triage（补交叉点A覆盖规则）"
+    },
+    {
+      "after_seq": 60,
+      "block": "external_comms",
+      "trigger_reason": "对外沟通公告时限规则完全缺失",
+      "expected_action": "create",
+      "expected_skill": "external-comms（新建）"
+    },
+    {
+      "after_seq": 70,
+      "block": "postmortem",
+      "trigger_reason": "事后总结时限与要求完全缺失",
+      "expected_action": "create",
+      "expected_skill": "postmortem（新建）"
+    },
+    {
+      "after_seq": 80,
+      "block": "mixed_validation_2",
+      "trigger_reason": "跨全部7类最终回归检查",
+      "expected_action": "none_expected_if_no_drift",
+      "expected_skill": "-"
+    }
+  ],
+  "questions": [
+    {
+      "seq": 1,
+      "eval_id": 1,
+      "question": "核心服务全站不可用，属于哪个等级，多久内响应？",
+      "block": "severity_basic",
+      "note": "基础分级多数应答对，Reviewer预期无需大改或只做小幅补充"
+    },
+    {
+      "seq": 2,
+      "eval_id": 2,
+      "question": "核心服务部分不可用，已经持续超过10分钟，属于哪个等级？",
+      "block": "severity_basic"
+    },
+    {
+      "seq": 3,
+      "eval_id": 3,
+      "question": "非核心服务受影响，持续超过30分钟，响应时限是多久？",
+      "block": "severity_basic"
+    },
+    {
+      "seq": 4,
+      "eval_id": 4,
+      "question": "单用户的边缘case问题，响应时限是多久？",
+      "block": "severity_basic"
+    },
+    {
+      "seq": 5,
+      "eval_id": 5,
+      "question": "P0故障的响应时限是多久？",
+      "block": "severity_basic"
+    },
+    {
+      "seq": 6,
+      "eval_id": 6,
+      "question": "P1故障的响应时限是多久？",
+      "block": "severity_basic"
+    },
+    {
+      "seq": 7,
+      "eval_id": 7,
+      "question": "核心服务全站宕机，这属于P0还是P1？",
+      "block": "severity_basic"
+    },
+    {
+      "seq": 8,
+      "eval_id": 8,
+      "question": "非核心服务受影响但只持续了5分钟，还没到30分钟阈值，此时能定级为P2吗？",
+      "block": "severity_basic"
+    },
+    {
+      "seq": 9,
+      "eval_id": 1,
+      "question": "核心服务全站不可用，属于哪个等级，多久内响应？",
+      "block": "severity_basic"
+    },
+    {
+      "seq": 10,
+      "eval_id": 2,
+      "question": "核心服务部分不可用，已经持续超过10分钟，属于哪个等级？",
+      "block": "severity_basic"
+    },
+    {
+      "seq": 11,
+      "eval_id": 37,
+      "question": "变更导致了P0故障，现在正处于常规冻结期，能立即回滚这个变更吗？",
+      "block": "change_rollback",
+      "note": "变更回滚规则完全缺失，连续10题全部失败/推脱"
+    },
+    {
+      "seq": 12,
+      "eval_id": 38,
+      "question": "紧急回滚P0故障后，除了回滚本身，还想顺便修一个小bug，这个小修复受冻结限制吗？",
+      "block": "change_rollback"
+    },
+    {
+      "seq": 13,
+      "eval_id": 39,
+      "question": "P0紧急回滚需要审批吗？",
+      "block": "change_rollback"
+    },
+    {
+      "seq": 14,
+      "eval_id": 40,
+      "question": "P0紧急回滚后，多久内需要补交变更记录？",
+      "block": "change_rollback"
+    },
+    {
+      "seq": 15,
+      "eval_id": 41,
+      "question": "常规变更冻结期是从周几到周几？",
+      "block": "change_rollback"
+    },
+    {
+      "seq": 16,
+      "eval_id": 42,
+      "question": "重大冻结期的时长是多长？",
+      "block": "change_rollback"
+    },
+    {
+      "seq": 17,
+      "eval_id": 43,
+      "question": "P2故障触发的回滚，是否可以自主执行不需要审批？",
+      "block": "change_rollback"
+    },
+    {
+      "seq": 18,
+      "eval_id": 44,
+      "question": "重大冻结期内，P2故障的非紧急回滚能获批吗？",
+      "block": "change_rollback"
+    },
+    {
+      "seq": 19,
+      "eval_id": 45,
+      "question": "回滚不受冻结限制的豁免，是否也适用于回滚之外的新变更？",
+      "block": "change_rollback"
+    },
+    {
+      "seq": 20,
+      "eval_id": 46,
+      "question": "非故障触发的常规回滚，需要谁审批？",
+      "block": "change_rollback"
+    },
+    {
+      "seq": 21,
+      "eval_id": 27,
+      "question": "一线5分钟内没有确认告警本身（而不是没给处置方向），会立即怎样？",
+      "block": "escalation_ack_timeout",
+      "note": "未确认自动升级的细分时限缺失，连续失败"
+    },
+    {
+      "seq": 22,
+      "eval_id": 28,
+      "question": "一线未确认告警的升级时限是多久？",
+      "block": "escalation_ack_timeout"
+    },
+    {
+      "seq": 23,
+      "eval_id": 29,
+      "question": "二线收到升级后，若5分钟内未确认，会怎样？",
+      "block": "escalation_ack_timeout"
+    },
+    {
+      "seq": 24,
+      "eval_id": 30,
+      "question": "一线告警发出后第6分钟仍未确认，此时应该已经发生了什么？",
+      "block": "escalation_ack_timeout"
+    },
+    {
+      "seq": 25,
+      "eval_id": 31,
+      "question": "\"未确认告警\"的升级时限和\"未给出处置方向\"的升级时限，是一样长吗？",
+      "block": "escalation_ack_timeout"
+    },
+    {
+      "seq": 26,
+      "eval_id": 32,
+      "question": "二线未确认升级的判定时限是多久？",
+      "block": "escalation_ack_timeout"
+    },
+    {
+      "seq": 27,
+      "eval_id": 33,
+      "question": "一线告警未确认满5分钟后，是否需要等待处置方向的15分钟窗口结束才升级？",
+      "block": "escalation_ack_timeout"
+    },
+    {
+      "seq": 28,
+      "eval_id": 34,
+      "question": "一线确认告警的时限是多久？",
+      "block": "escalation_ack_timeout"
+    },
+    {
+      "seq": 29,
+      "eval_id": 35,
+      "question": "二线30分钟判断是否需要三线支持，和二线5分钟未确认告警升级，是同一个流程吗？",
+      "block": "escalation_ack_timeout"
+    },
+    {
+      "seq": 30,
+      "eval_id": 36,
+      "question": "一线未确认告警的升级路径，需要先等一线给出处置方向吗？",
+      "block": "escalation_ack_timeout"
+    },
+    {
+      "seq": 31,
+      "eval_id": 2,
+      "question": "核心服务部分不可用，已经持续超过10分钟，属于哪个等级？",
+      "block": "mixed_validation_1",
+      "note": "混合验证：检查前3块的进化是否发生技能漂移（回归）"
+    },
+    {
+      "seq": 32,
+      "eval_id": 6,
+      "question": "P1故障的响应时限是多久？",
+      "block": "mixed_validation_1"
+    },
+    {
+      "seq": 33,
+      "eval_id": 8,
+      "question": "非核心服务受影响但只持续了5分钟，还没到30分钟阈值，此时能定级为P2吗？",
+      "block": "mixed_validation_1"
+    },
+    {
+      "seq": 34,
+      "eval_id": 38,
+      "question": "紧急回滚P0故障后，除了回滚本身，还想顺便修一个小bug，这个小修复受冻结限制吗？",
+      "block": "mixed_validation_1"
+    },
+    {
+      "seq": 35,
+      "eval_id": 41,
+      "question": "常规变更冻结期是从周几到周几？",
+      "block": "mixed_validation_1"
+    },
+    {
+      "seq": 36,
+      "eval_id": 44,
+      "question": "重大冻结期内，P2故障的非紧急回滚能获批吗？",
+      "block": "mixed_validation_1"
+    },
+    {
+      "seq": 37,
+      "eval_id": 29,
+      "question": "二线收到升级后，若5分钟内未确认，会怎样？",
+      "block": "mixed_validation_1"
+    },
+    {
+      "seq": 38,
+      "eval_id": 33,
+      "question": "一线告警未确认满5分钟后，是否需要等待处置方向的15分钟窗口结束才升级？",
+      "block": "mixed_validation_1"
+    },
+    {
+      "seq": 39,
+      "eval_id": 36,
+      "question": "一线未确认告警的升级路径，需要先等一线给出处置方向吗？",
+      "block": "mixed_validation_1"
+    },
+    {
+      "seq": 40,
+      "eval_id": 19,
+      "question": "一线收到告警后，需要在多久内确认（Ack）？",
+      "block": "mixed_validation_1"
+    },
+    {
+      "seq": 41,
+      "eval_id": 9,
+      "question": "只影响1个用户的数据泄露事件，应该定级为？",
+      "block": "data_security_severity",
+      "note": "数据安全事件强制定级规则连续失败，初始Skill完全缺失该交叉点"
+    },
+    {
+      "seq": 42,
+      "eval_id": 10,
+      "question": "数据安全事件的定级规则，相对于常规分级表，谁的优先级更高？",
+      "block": "data_security_severity"
+    },
+    {
+      "seq": 43,
+      "eval_id": 11,
+      "question": "数据安全事件必须在多久内通知安全负责人？",
+      "block": "data_security_severity"
+    },
+    {
+      "seq": 44,
+      "eval_id": 12,
+      "question": "越权访问事件即使只有1个用户受影响，算P几？",
+      "block": "data_security_severity"
+    },
+    {
+      "seq": 45,
+      "eval_id": 13,
+      "question": "数据被篡改事件，无论影响范围多小，应定级为？",
+      "block": "data_security_severity"
+    },
+    {
+      "seq": 46,
+      "eval_id": 14,
+      "question": "二线复核数据安全事件的定级时，能否把等级调低？",
+      "block": "data_security_severity"
+    },
+    {
+      "seq": 47,
+      "eval_id": 15,
+      "question": "数据泄露只影响了一个非核心功能的边缘用户，是否仍定级为P0？",
+      "block": "data_security_severity"
+    },
+    {
+      "seq": 48,
+      "eval_id": 16,
+      "question": "一线临时定级后，二线多久内需要复核？",
+      "block": "data_security_severity"
+    },
+    {
+      "seq": 49,
+      "eval_id": 17,
+      "question": "复核数据安全事件定级时，是否可以维持原定级不变？",
+      "block": "data_security_severity"
+    },
+    {
+      "seq": 50,
+      "eval_id": 18,
+      "question": "数据安全事件的强制定级规则，是否覆盖1.1节所有常规分级情形？",
+      "block": "data_security_severity"
+    },
+    {
+      "seq": 51,
+      "eval_id": 47,
+      "question": "P0故障且客户能感知到（比如页面报错），多久内必须发布对外公告？",
+      "block": "external_comms",
+      "note": "对外沟通公告时限规则连续失败，初始Skill完全缺失"
+    },
+    {
+      "seq": 52,
+      "eval_id": 48,
+      "question": "根因还没查清楚，P0且客户可感知的故障，对外公告能不能先发？",
+      "block": "external_comms"
+    },
+    {
+      "seq": 53,
+      "eval_id": 49,
+      "question": "P1且客户可感知的故障，公告时限是多久？",
+      "block": "external_comms"
+    },
+    {
+      "seq": 54,
+      "eval_id": 50,
+      "question": "客户完全无法感知的内部故障，是否强制要求发公告？",
+      "block": "external_comms"
+    },
+    {
+      "seq": 55,
+      "eval_id": 51,
+      "question": "P0故障期间，公告更新频率是多久一次？",
+      "block": "external_comms"
+    },
+    {
+      "seq": 56,
+      "eval_id": 52,
+      "question": "P1故障期间，公告更新频率是多久一次？",
+      "block": "external_comms"
+    },
+    {
+      "seq": 57,
+      "eval_id": 53,
+      "question": "P1故障但客户完全无法感知，是否必须在1小时内发公告？",
+      "block": "external_comms"
+    },
+    {
+      "seq": 58,
+      "eval_id": 54,
+      "question": "P0客户可感知故障，是否需要等根因诊断完成才能发公告？",
+      "block": "external_comms"
+    },
+    {
+      "seq": 59,
+      "eval_id": 47,
+      "question": "P0故障且客户能感知到（比如页面报错），多久内必须发布对外公告？",
+      "block": "external_comms"
+    },
+    {
+      "seq": 60,
+      "eval_id": 49,
+      "question": "P1且客户可感知的故障，公告时限是多久？",
+      "block": "external_comms"
+    },
+    {
+      "seq": 61,
+      "eval_id": 55,
+      "question": "P0事故的事后总结，多久内必须提交？",
+      "block": "postmortem",
+      "note": "事后总结时限与要求连续失败，初始Skill完全缺失"
+    },
+    {
+      "seq": 62,
+      "eval_id": 56,
+      "question": "P2事故的事后总结提交时限是多久？",
+      "block": "postmortem"
+    },
+    {
+      "seq": 63,
+      "eval_id": 57,
+      "question": "P3事故是否强制要求提交书面事后总结？",
+      "block": "postmortem"
+    },
+    {
+      "seq": 64,
+      "eval_id": 58,
+      "question": "数据安全事件的事后总结，审批人必须包含谁？",
+      "block": "postmortem"
+    },
+    {
+      "seq": 65,
+      "eval_id": 59,
+      "question": "P1事故的事后总结提交时限是多久？",
+      "block": "postmortem"
+    },
+    {
+      "seq": 66,
+      "eval_id": 60,
+      "question": "数据安全事件的事后总结，除常规内容外还必须包含什么评估结论？",
+      "block": "postmortem"
+    },
+    {
+      "seq": 67,
+      "eval_id": 55,
+      "question": "P0事故的事后总结，多久内必须提交？",
+      "block": "postmortem"
+    },
+    {
+      "seq": 68,
+      "eval_id": 57,
+      "question": "P3事故是否强制要求提交书面事后总结？",
+      "block": "postmortem"
+    },
+    {
+      "seq": 69,
+      "eval_id": 58,
+      "question": "数据安全事件的事后总结，审批人必须包含谁？",
+      "block": "postmortem"
+    },
+    {
+      "seq": 70,
+      "eval_id": 60,
+      "question": "数据安全事件的事后总结，除常规内容外还必须包含什么评估结论？",
+      "block": "postmortem"
+    },
+    {
+      "seq": 71,
+      "eval_id": 3,
+      "question": "非核心服务受影响，持续超过30分钟，响应时限是多久？",
+      "block": "mixed_validation_2",
+      "note": "最终混合验证：跨全部7类抽样，检查整体进化是否稳固无回归"
+    },
+    {
+      "seq": 72,
+      "eval_id": 13,
+      "question": "数据被篡改事件，无论影响范围多小，应定级为？",
+      "block": "mixed_validation_2"
+    },
+    {
+      "seq": 73,
+      "eval_id": 22,
+      "question": "二线判断需要升级到三线的时限是多久？",
+      "block": "mixed_validation_2"
+    },
+    {
+      "seq": 74,
+      "eval_id": 30,
+      "question": "一线告警发出后第6分钟仍未确认，此时应该已经发生了什么？",
+      "block": "mixed_validation_2"
+    },
+    {
+      "seq": 75,
+      "eval_id": 42,
+      "question": "重大冻结期的时长是多长？",
+      "block": "mixed_validation_2"
+    },
+    {
+      "seq": 76,
+      "eval_id": 48,
+      "question": "根因还没查清楚，P0且客户可感知的故障，对外公告能不能先发？",
+      "block": "mixed_validation_2"
+    },
+    {
+      "seq": 77,
+      "eval_id": 58,
+      "question": "数据安全事件的事后总结，审批人必须包含谁？",
+      "block": "mixed_validation_2"
+    },
+    {
+      "seq": 78,
+      "eval_id": 7,
+      "question": "核心服务全站宕机，这属于P0还是P1？",
+      "block": "mixed_validation_2"
+    },
+    {
+      "seq": 79,
+      "eval_id": 16,
+      "question": "一线临时定级后，二线多久内需要复核？",
+      "block": "mixed_validation_2"
+    },
+    {
+      "seq": 80,
+      "eval_id": 44,
+      "question": "重大冻结期内，P2故障的非紧急回滚能获批吗？",
+      "block": "mixed_validation_2"
+    }
+  ]
+}

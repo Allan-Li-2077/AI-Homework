@@ -1,0 +1,212 @@
+{
+  "run_id": "after_nudge_seq80",
+  "label": "Nudge后（seq=80, block=mixed_validation_2）",
+  "timestamp": "2026-08-06T20:42:09.421797",
+  "skill_versions_active": {
+    "change-rollback": 2,
+    "incident-triage": 5,
+    "oncall-escalation": 2,
+    "postmortem": 2,
+    "public-communication": 2
+  },
+  "summary": {
+    "total": 30,
+    "correct": 24,
+    "accuracy": 0.8
+  },
+  "token_usage": {
+    "prompt_tokens": 78189,
+    "completion_tokens": 4004,
+    "total_tokens": 82193
+  },
+  "avg_prompt_tokens": 2606.3,
+  "by_category": {
+    "severity_basic": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "data_security_severity": {
+      "total": 5,
+      "correct": 5,
+      "accuracy": 1.0
+    },
+    "escalation_basic": {
+      "total": 4,
+      "correct": 2,
+      "accuracy": 0.5
+    },
+    "escalation_ack_timeout": {
+      "total": 5,
+      "correct": 4,
+      "accuracy": 0.8
+    },
+    "change_rollback": {
+      "total": 5,
+      "correct": 3,
+      "accuracy": 0.6
+    },
+    "external_comms": {
+      "total": 4,
+      "correct": 3,
+      "accuracy": 0.75
+    },
+    "postmortem": {
+      "total": 3,
+      "correct": 3,
+      "accuracy": 1.0
+    }
+  },
+  "answers": {
+    "1": {
+      "answer": "属于 **P0** 故障，需在 **5分钟** 内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "3": {
+      "answer": "P2，响应时限为1小时内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "5": {
+      "answer": "P0故障的响应时限是 **5分钟内响应**。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "7": {
+      "answer": "属于 **P0**（核心服务全站不可用，任意持续时长）。响应时限为 **5分钟内响应**。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "9": {
+      "answer": "P0。根据数据安全事件强制定级规则，任何涉及用户数据泄露的事件，无论影响范围大小，一律强制定级为P0。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "11": {
+      "answer": "数据安全事件必须在 **10分钟** 内通知安全负责人（Security Lead）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "13": {
+      "answer": "P0（数据被篡改事件无论影响范围大小，一律强制定级为P0）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "15": {
+      "answer": "仍定级为 **P0**。根据规则，任何涉及用户数据泄露、越权访问、数据被篡改的事件，无论影响范围大小，一律强制定级为 **P0**，即使只影响 1 个用户的数据泄露也是 P0。同时，数据安全事件必须在 **10分钟** 内通知安全负责人（Security Lead）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "17": {
+      "answer": "可以维持原定级不变。根据定级复议规则，二线复核时只能调高或维持，不能调低数据安全类事件的定级。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "19": {
+      "answer": "一线收到告警后需在 **5分钟** 内确认（Acknowledge）。若5分钟内未确认，立即升级至二线。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "21": {
+      "answer": "根据升级链路规则，二线介入后若在30分钟内判断需要更高层级支持，应升级至**三线（Engineering Manager）**。",
+      "correct": false,
+      "fail_reason": "出现禁止词: '二线'"
+    },
+    "23": {
+      "answer": "一线确认告警后，需在 **15分钟** 内给出处置方向，否则自动升级至二线。",
+      "correct": false,
+      "fail_reason": "出现禁止词: '5分钟'"
+    },
+    "25": {
+      "answer": "Engineering Manager 对应升级链路的第三线（三线）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "27": {
+      "answer": "一线5分钟内未确认告警本身，会立即直接升级至二线（跳过“给处置方向”的15分钟等待期）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "29": {
+      "answer": "二线在收到升级后5分钟内未确认，立即升级至三线。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "31": {
+      "answer": "不一样长。\n\n- **未确认告警**的升级时限：**5分钟**（一线收到告警后5分钟内未确认，立即直接升级至二线；二线同理，5分钟内未确认立即升级至三线）。\n- **未给出处置方向**的升级时限：**15分钟**（一线确认后15分钟内未能给出处置方向，才升级至二线）。\n\n未确认场景",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "33": {
+      "answer": "不需要。一线在5分钟内未确认告警，立即直接升级至二线，无需等待处置方向的15分钟窗口结束。",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不等待'"
+    },
+    "35": {
+      "answer": "不是同一个流程。根据升级链路规则：\n\n- **二线30分钟升级**：指二线介入后，若在30分钟内判断需要更高层级支持，需升级至三线（Engineering Manager）。\n- **二线5分钟升级**：指二线收到升级后若在5分钟内未确认（Ack），立即升级至三线，属于“未确认自动升级”流程。\n\n两者的触发条件不同：一个是“已确认但判断需要更高层级支持”，另一个是“未确认告警本身”。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "37": {
+      "answer": "可以。变更导致 P0/P1 故障时，紧急回滚该变更不受常规冻结期限制，随时可执行，无需审批；事后需在2小时内补交变更记录。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "39": {
+      "answer": "P0/P1 触发的紧急回滚无需审批，值班工程师可自主执行；事后需在 **2小时内** 补交变更记录。",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不需要'"
+    },
+    "41": {
+      "answer": "常规变更冻结期为 **每周五18:00至周一09:00**。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "43": {
+      "answer": "P2故障触发的回滚不能自主执行，需要服务Owner审批后才能执行。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "45": {
+      "answer": "不适用。紧急回滚的豁免**仅适用于『回滚』操作本身**，不适用于回滚之外的任何新变更。例如：回滚后想顺手修一个小bug，这个『顺手修复』仍受冻结窗口限制。",
+      "correct": false,
+      "fail_reason": "出现禁止词: '适用于'"
+    },
+    "47": {
+      "answer": "P0故障且客户可感知时，须在 **30分钟内** 必须发布对外公告。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "49": {
+      "answer": "P1且客户可感知的故障，公告时限为 **1小时内** 必须发布对外公告。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "51": {
+      "answer": "P0故障期间，对外公告至少 **每30分钟** 更新一次进展。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "53": {
+      "answer": "不必须。P1/P0 故障若客户不可感知（内部故障），不强制要求对外公告，视公司公关政策决定。",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不需要'"
+    },
+    "55": {
+      "answer": "P0事故的事后总结，必须在故障解决后 **3个工作日内** 提交，且必须提交完整的事后总结文档。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "57": {
+      "answer": "P3 不强制要求书面总结，无需提交。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "59": {
+      "answer": "P1事故的事后总结提交时限为：故障解决后 **3个工作日内**，必须提交完整事后总结文档。",
+      "correct": true,
+      "fail_reason": ""
+    }
+  }
+}

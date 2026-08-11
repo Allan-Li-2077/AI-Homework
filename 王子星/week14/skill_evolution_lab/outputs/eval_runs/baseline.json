@@ -1,0 +1,359 @@
+{
+  "run_id": "baseline",
+  "label": "基线（初始Skills）",
+  "timestamp": "2026-08-06T20:24:31.878272",
+  "skill_versions_active": {
+    "incident-triage": 1,
+    "oncall-escalation": 1
+  },
+  "summary": {
+    "total": 60,
+    "correct": 15,
+    "accuracy": 0.25
+  },
+  "token_usage": {
+    "prompt_tokens": 52632,
+    "completion_tokens": 8522,
+    "total_tokens": 61154
+  },
+  "avg_prompt_tokens": 877.2,
+  "by_category": {
+    "severity_basic": {
+      "total": 8,
+      "correct": 6,
+      "accuracy": 0.75
+    },
+    "data_security_severity": {
+      "total": 10,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "escalation_basic": {
+      "total": 8,
+      "correct": 6,
+      "accuracy": 0.75
+    },
+    "escalation_ack_timeout": {
+      "total": 10,
+      "correct": 3,
+      "accuracy": 0.3
+    },
+    "change_rollback": {
+      "total": 10,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "external_comms": {
+      "total": 8,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "postmortem": {
+      "total": 6,
+      "correct": 0,
+      "accuracy": 0.0
+    }
+  },
+  "answers": {
+    "1": {
+      "answer": "核心服务全站不可用属于 **P0** 等级，需 **5分钟内响应**。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "2": {
+      "answer": "根据故障分级标准表，核心服务部分不可用且持续超10分钟属于 **P1 等级**，对应响应时限为 **15分钟内响应**。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "3": {
+      "answer": "P2级：非核心服务受影响，持续超30分钟，响应时限为1小时内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "4": {
+      "answer": "P3：1个工作日内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "5": {
+      "answer": "P0故障的响应时限是5分钟内响应。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "6": {
+      "answer": "P1故障的响应时限是15分钟内响应。",
+      "correct": false,
+      "fail_reason": "出现禁止词: '5分钟'"
+    },
+    "7": {
+      "answer": "核心服务全站宕机属于 **P0**，对应响应时限为 **5分钟内响应**。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "8": {
+      "answer": "",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不'"
+    },
+    "9": {
+      "answer": "根据技能文档，该事件属于“影响轻微/单用户/边缘case”，应定级为 **P3**，响应时限为 **1个工作日内响应**。",
+      "correct": false,
+      "fail_reason": "缺少关键词: 'P0'"
+    },
+    "10": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "11": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "12": {
+      "answer": "根据故障分级标准，单用户/边缘case属P3，响应时限为1个工作日内。",
+      "correct": false,
+      "fail_reason": "缺少关键词: 'P0'"
+    },
+    "13": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "14": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "15": {
+      "answer": "不应定级为P0。根据故障分级标准，影响轻微/单用户/边缘case 对应的是 P3，响应时限为 1 个工作日内响应；P0 仅指核心服务全站不可用的情况。",
+      "correct": false,
+      "fail_reason": "出现禁止词: 'P3'"
+    },
+    "16": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "17": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "18": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "19": {
+      "answer": "一线收到告警后需在 **5分钟内** 确认（Acknowledge）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "20": {
+      "answer": "一线确认告警后，若在15分钟内未能给出处置方向，将自动升级至二线（Secondary On-call）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "21": {
+      "answer": "二线介入后，若在30分钟内判断需要更高层级支持，需升级至三线（Engineering Manager）。",
+      "correct": false,
+      "fail_reason": "出现禁止词: '二线'"
+    },
+    "22": {
+      "answer": "二线介入后，若在30分钟内判断需要更高层级支持，需升级至三线。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "23": {
+      "answer": "15分钟。",
+      "correct": false,
+      "fail_reason": "出现禁止词: '5分钟'"
+    },
+    "24": {
+      "answer": "总监级介入还需满足“预计恢复时间（ETA）超过2小时”。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "25": {
+      "answer": "Engineering Manager对应升级链路的第三线。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "26": {
+      "answer": "应自动升级至二线（Secondary On-call）。根据升级链路：一线确认后若在15分钟内未能给出处置方向，自动升级至二线。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "27": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "28": {
+      "answer": "",
+      "correct": false,
+      "fail_reason": "缺少关键词: '5分钟'"
+    },
+    "29": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "30": {
+      "answer": "",
+      "correct": false,
+      "fail_reason": "缺少关键词: '升级'"
+    },
+    "31": {
+      "answer": "不一样。一线收到告警后需在**5分钟内确认**；一线确认后若在**15分钟内**未能给出处置方向，才自动升级至二线。因此未确认告警对应的是5分钟确认时限，未给出处置方向对应的是15分钟处置方向时限，两者长度不同。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "32": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "33": {
+      "answer": "",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不需要'"
+    },
+    "34": {
+      "answer": "一线确认告警的时限是5分钟内确认。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "35": {
+      "answer": "不是同一个流程。按照升级链路文档：\n\n- “二线30分钟判断是否需要三线支持”是指：二线介入后，若在30分钟内判断需要更高层级支持，需升级至三线。\n- 文档",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "36": {
+      "answer": "",
+      "correct": false,
+      "fail_reason": "缺少关键词: '不需要'"
+    },
+    "37": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "38": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "39": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "40": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "41": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "42": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "43": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "44": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "45": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "46": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "47": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "48": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "49": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "50": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "51": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "52": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "53": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "54": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "55": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "56": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "57": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "58": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "59": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    },
+    "60": {
+      "answer": "需要人工判定",
+      "correct": false,
+      "fail_reason": "Agent 推脱（含 '人工判定'）"
+    }
+  }
+}
