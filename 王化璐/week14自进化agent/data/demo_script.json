@@ -1,0 +1,152 @@
+{
+  "description": "演示脚本：80题，nudge_interval=10，每块10题同类别，每次Nudge有清晰失败信号",
+  "nudge_interval": 10,
+  "probe_question_ids": [1, 2, 5, 8, 10, 11, 14, 15, 17, 19, 23, 24, 26, 28, 33, 35, 37, 39, 45, 46, 47, 49, 50, 54, 55, 56, 57, 58, 59, 60],
+  "expected_evolutions": [
+    {
+      "after_seq": 10,
+      "block": "basic_membership",
+      "trigger_reason": "基础会员权益大多答对，Reviewer预期无需大改或小幅补充体验卡权益",
+      "expected_action": "none_or_minor_patch",
+      "expected_skill": "basic_membership"
+    },
+    {
+      "after_seq": 20,
+      "block": "freeze_rule",
+      "trigger_reason": "请假冻结连续10题全部失败，Reviewer发现完全缺失冻结规则",
+      "expected_action": "create",
+      "expected_skill": "freeze_rule（新建）"
+    },
+    {
+      "after_seq": 30,
+      "block": "personal_training_basic",
+      "trigger_reason": "私教课进阶题频繁失败，Reviewer发现personal_training Skill缺少退费/签字/激活等规则",
+      "expected_action": "patch",
+      "expected_skill": "personal_training（补退费和课时管理规则）"
+    },
+    {
+      "after_seq": 40,
+      "block": "transfer_rule",
+      "trigger_reason": "转让规则全部失败，Reviewer发现完全缺失转让知识",
+      "expected_action": "create",
+      "expected_skill": "transfer_rule（新建）"
+    },
+    {
+      "after_seq": 50,
+      "block": "group_class",
+      "trigger_reason": "团课预约全部失败，Reviewer发现完全缺失团课知识",
+      "expected_action": "create",
+      "expected_skill": "group_class（新建）"
+    },
+    {
+      "after_seq": 60,
+      "block": "join_refund",
+      "trigger_reason": "入会退会规则全部失败，Reviewer发现完全缺失退会知识",
+      "expected_action": "create",
+      "expected_skill": "join_refund（新建）"
+    },
+    {
+      "after_seq": 70,
+      "block": "freeze_pt_cross",
+      "trigger_reason": "冻结与私教课交叉题失败，Reviewer发现冻结期间私教课继续计时的规则缺失",
+      "expected_action": "patch",
+      "expected_skill": "freeze_rule或personal_training（补交叉规则）"
+    },
+    {
+      "after_seq": 80,
+      "block": "mixed_validation",
+      "trigger_reason": "综合各类题，发现零散遗漏，微调现有Skills",
+      "expected_action": "patch",
+      "expected_skill": "各Skill小幅优化"
+    }
+  ],
+  "questions": [
+    {"seq": 1,  "eval_id": 1,  "question": "年卡可以不限次入场吗？",                                              "block": "basic_membership"},
+    {"seq": 2,  "eval_id": 2,  "question": "季卡有多少次入场次数？有效期多久？",                                  "block": "basic_membership"},
+    {"seq": 3,  "eval_id": 3,  "question": "月卡有效期多少天？能入场几次？",                                      "block": "basic_membership"},
+    {"seq": 4,  "eval_id": 4,  "question": "储物柜怎么收费？",                                                    "block": "basic_membership"},
+    {"seq": 5,  "eval_id": 5,  "question": "健身房营业时间是几点到几点？",                                        "block": "basic_membership"},
+    {"seq": 6,  "eval_id": 6,  "question": "每次入场最长可以待多久？",                                            "block": "basic_membership"},
+    {"seq": 7,  "eval_id": 7,  "question": "年卡会员有什么附加权益？",                                            "block": "basic_membership"},
+    {"seq": 8,  "eval_id": 8,  "question": "淋浴和停车场收费吗？",                                                "block": "basic_membership"},
+    {"seq": 9,  "eval_id": 9,  "question": "体验卡有几次入场次数？有效期多久？",                                  "block": "basic_membership"},
+    {"seq": 10, "eval_id": 10, "question": "体验卡会员有免费体测和饮水权益吗？",                                  "block": "basic_membership", "note": "第10题后触发Nudge#1"},
+
+    {"seq": 11, "eval_id": 23, "question": "年卡每年可以冻结多久？",                                              "block": "freeze_rule"},
+    {"seq": 12, "eval_id": 24, "question": "季卡可以冻结吗？",                                                    "block": "freeze_rule"},
+    {"seq": 13, "eval_id": 25, "question": "冻结需要提前多久申请？",                                              "block": "freeze_rule"},
+    {"seq": 14, "eval_id": 26, "question": "怀孕可以冻结会员卡吗？最长多久？",                                    "block": "freeze_rule"},
+    {"seq": 15, "eval_id": 27, "question": "伤病可以冻结多久？需要什么证明？",                                    "block": "freeze_rule"},
+    {"seq": 16, "eval_id": 28, "question": "冻结期间可以入场健身吗？",                                            "block": "freeze_rule"},
+    {"seq": 17, "eval_id": 29, "question": "冻结结束后会员卡有效期怎么处理？",                                    "block": "freeze_rule"},
+    {"seq": 18, "eval_id": 30, "question": "月卡可以冻结吗？",                                                    "block": "freeze_rule"},
+    {"seq": 19, "eval_id": 31, "question": "出差可以冻结吗？能冻多久？",                                          "block": "freeze_rule"},
+    {"seq": 20, "eval_id": 34, "question": "体验卡可以冻结吗？",                                                  "block": "freeze_rule", "note": "第20题后触发Nudge#2"},
+
+    {"seq": 21, "eval_id": 11, "question": "私教课需要提前多久预约？",                                            "block": "personal_training_basic"},
+    {"seq": 22, "eval_id": 12, "question": "私教课取消需要在课程开始前多久？",                                    "block": "personal_training_basic"},
+    {"seq": 23, "eval_id": 13, "question": "私教课旷课会怎样？",                                                  "block": "personal_training_basic"},
+    {"seq": 24, "eval_id": 14, "question": "私教课有效期多久？",                                                  "block": "personal_training_basic"},
+    {"seq": 25, "eval_id": 15, "question": "过期的私教课课时怎么处理？",                                          "block": "personal_training_basic"},
+    {"seq": 26, "eval_id": 16, "question": "每节私教课是1对1还是小组课？",                                        "block": "personal_training_basic"},
+    {"seq": 27, "eval_id": 17, "question": "私教课可以转让给朋友吗？",                                            "block": "personal_training_basic"},
+    {"seq": 28, "eval_id": 18, "question": "未消耗的私教课退费比例是多少？",                                      "block": "personal_training_basic"},
+    {"seq": 29, "eval_id": 19, "question": "已消耗的私教课可以退费吗？",                                          "block": "personal_training_basic"},
+    {"seq": 30, "eval_id": 21, "question": "私教课完成后需要什么确认？",                                          "block": "personal_training_basic", "note": "第30题后触发Nudge#3"},
+
+    {"seq": 31, "eval_id": 35, "question": "年卡可以转让给别人吗？",                                              "block": "transfer_rule"},
+    {"seq": 32, "eval_id": 36, "question": "年卡转让手续费多少？",                                                "block": "transfer_rule"},
+    {"seq": 33, "eval_id": 37, "question": "季卡可以转让吗？",                                                    "block": "transfer_rule"},
+    {"seq": 34, "eval_id": 38, "question": "体验卡可以转让吗？",                                                  "block": "transfer_rule"},
+    {"seq": 35, "eval_id": 39, "question": "年卡最多可以转让几次？",                                              "block": "transfer_rule"},
+    {"seq": 36, "eval_id": 40, "question": "转让后剩余有效期会变吗？",                                            "block": "transfer_rule"},
+    {"seq": 37, "eval_id": 41, "question": "转让需要多久生效？",                                                  "block": "transfer_rule"},
+    {"seq": 38, "eval_id": 42, "question": "转入方需要满足什么条件？",                                            "block": "transfer_rule"},
+    {"seq": 39, "eval_id": 43, "question": "月卡可以转让吗？",                                                    "block": "transfer_rule"},
+    {"seq": 40, "eval_id": 45, "question": "私教课可以随年卡一起转让给他人吗？",                                  "block": "transfer_rule", "note": "第40题后触发Nudge#4"},
+
+    {"seq": 41, "eval_id": 47, "question": "团课提前多久开放预约？",                                              "block": "group_class"},
+    {"seq": 42, "eval_id": 48, "question": "团课取消需要在课程开始前多久？",                                      "block": "group_class"},
+    {"seq": 43, "eval_id": 49, "question": "团课爽约3次会怎样？",                                                 "block": "group_class"},
+    {"seq": 44, "eval_id": 50, "question": "团课需要提前多久签到？",                                              "block": "group_class"},
+    {"seq": 45, "eval_id": 51, "question": "瑜伽课需要自带什么装备？",                                            "block": "group_class"},
+    {"seq": 46, "eval_id": 52, "question": "搏击操需要什么装备？",                                                "block": "group_class"},
+    {"seq": 47, "eval_id": 53, "question": "每人每节团课可以约几个名额？",                                        "block": "group_class"},
+    {"seq": 48, "eval_id": 54, "question": "体验卡可以预约团课吗？",                                              "block": "group_class"},
+    {"seq": 49, "eval_id": 47, "question": "团课提前多久开放预约？",                                              "block": "group_class", "note": "重复以增加信号强度"},
+    {"seq": 50, "eval_id": 49, "question": "团课爽约3次会怎样？",                                                 "block": "group_class", "note": "第50题后触发Nudge#5"},
+
+    {"seq": 51, "eval_id": 55, "question": "购卡后多久内可以全额退款？",                                          "block": "join_refund"},
+    {"seq": 52, "eval_id": 56, "question": "我已经开卡入场了一次，还能冷静期全额退款吗？",                        "block": "join_refund"},
+    {"seq": 53, "eval_id": 57, "question": "已开卡退会手续费多少？",                                              "block": "join_refund"},
+    {"seq": 54, "eval_id": 58, "question": "年卡退会最低扣多少？",                                                "block": "join_refund"},
+    {"seq": 55, "eval_id": 59, "question": "特殊疾病可以退费吗？需要什么？",                                      "block": "join_refund"},
+    {"seq": 56, "eval_id": 60, "question": "搬家退会可以免手续费吗？",                                            "block": "join_refund"},
+    {"seq": 57, "eval_id": 55, "question": "购卡后多久内可以全额退款？",                                          "block": "join_refund", "note": "重复以增加信号"},
+    {"seq": 58, "eval_id": 56, "question": "我已经开卡入场了一次，还能冷静期全额退款吗？",                        "block": "join_refund", "note": "重复以增加信号"},
+    {"seq": 59, "eval_id": 57, "question": "已开卡退会手续费多少？",                                              "block": "join_refund", "note": "重复以增加信号"},
+    {"seq": 60, "eval_id": 58, "question": "年卡退会最低扣多少？",                                                "block": "join_refund", "note": "第60题后触发Nudge#6"},
+
+    {"seq": 61, "eval_id": 33, "question": "冻结期间私教课会暂停计时吗？",                                        "block": "freeze_pt_cross"},
+    {"seq": 62, "eval_id": 22, "question": "私教课过期后激活可以延期多久？",                                      "block": "freeze_pt_cross"},
+    {"seq": 63, "eval_id": 20, "question": "每节私教课多长时间？",                                                "block": "freeze_pt_cross"},
+    {"seq": 64, "eval_id": 46, "question": "已冻结的年卡可以转让吗？",                                            "block": "freeze_pt_cross"},
+    {"seq": 65, "eval_id": 13, "question": "私教课旷课会怎样？",                                                  "block": "freeze_pt_cross"},
+    {"seq": 66, "eval_id": 32, "question": "每次冻结最短多久？",                                                  "block": "freeze_pt_cross"},
+    {"seq": 67, "eval_id": 44, "question": "转让需要双方到场吗？",                                                "block": "freeze_pt_cross"},
+    {"seq": 68, "eval_id": 15, "question": "过期的私教课课时怎么处理？",                                          "block": "freeze_pt_cross"},
+    {"seq": 69, "eval_id": 33, "question": "冻结期间私教课会暂停计时吗？",                                        "block": "freeze_pt_cross", "note": "重复以增加信号"},
+    {"seq": 70, "eval_id": 46, "question": "已冻结的年卡可以转让吗？",                                            "block": "freeze_pt_cross", "note": "第70题后触发Nudge#7"},
+
+    {"seq": 71, "eval_id": 23, "question": "年卡每年可以冻结多久？",                                              "block": "mixed_validation"},
+    {"seq": 72, "eval_id": 17, "question": "私教课可以转让给朋友吗？",                                            "block": "mixed_validation"},
+    {"seq": 73, "eval_id": 35, "question": "年卡可以转让给别人吗？",                                              "block": "mixed_validation"},
+    {"seq": 74, "eval_id": 54, "question": "体验卡可以预约团课吗？",                                              "block": "mixed_validation"},
+    {"seq": 75, "eval_id": 56, "question": "我已经开卡入场了一次，还能冷静期全额退款吗？",                        "block": "mixed_validation"},
+    {"seq": 76, "eval_id": 33, "question": "冻结期间私教课会暂停计时吗？",                                        "block": "mixed_validation"},
+    {"seq": 77, "eval_id": 45, "question": "私教课可以随年卡一起转让给他人吗？",                                  "block": "mixed_validation"},
+    {"seq": 78, "eval_id": 55, "question": "购卡后多久内可以全额退款？",                                          "block": "mixed_validation"},
+    {"seq": 79, "eval_id": 47, "question": "团课提前多久开放预约？",                                              "block": "mixed_validation"},
+    {"seq": 80, "eval_id": 59, "question": "特殊疾病可以退费吗？需要什么？",                                      "block": "mixed_validation", "note": "第80题后触发Nudge#8"}
+  ]
+}

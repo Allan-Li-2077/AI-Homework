@@ -1,0 +1,18 @@
+[
+  {
+    "time": "2026-08-05T21:41:10.744651",
+    "action": "initial",
+    "reason": "初始版本",
+    "version": 1,
+    "content": "---\nname: personal_training\ndescription: 私教课预约规则、课时管理\ntype: knowledge\nversion: 1\n---\n\n## 私教课基础\n- 私教课需提前24小时预约\n- 取消需在课程开始前24小时，否则视为旷课\n- 每节课1对1教学，时长60分钟\n- 私教课有效期6个月\n\n## 会员等级权益\n- 年卡：赠送2次体测\n- 季卡：赠送1次体测\n- 所有会员：免费淋浴、停车场\n\n<!-- v1: 初始版本 -->\n",
+    "snapshot_file": "skill_snapshots/personal_training_v1.md"
+  },
+  {
+    "time": "2026-08-05T21:43:45.389992",
+    "action": "patch",
+    "reason": "修复私教课旷课后果、过期课时处理、转让、退费、签字确认等规则缺失导致的推脱",
+    "version": 2,
+    "content": "---\nname: personal_training\ndescription: 私教课预约规则、课时管理\ntype: knowledge\nversion: 2\n---\n\n## 私教课基础\n- 私教课需提前24小时预约\n- 取消需在课程开始前24小时，否则视为旷课\n- 旷课扣1次私教课时\n- 每节课1对1教学，时长60分钟\n- 私教课有效期6个月\n- 过期未使用的课时需缴纳20%激活费方可延期3个月\n- 每节课完成后需学员签字确认，未签字的课时视为未完成\n\n## 私教课转让与退费\n- 私教课不可转让给他人\n- 已消耗的课时不可退费\n- 未消耗的课时退费按70%计算\n- 退费需扣除已赠送的体测费用（100元/次）\n\n## 会员等级权益\n- 年卡：赠送2次体测\n- 季卡：赠送1次体测\n- 所有会员：免费淋浴、停车场\n\n<!-- v1: 初始版本 -->\n",
+    "snapshot_file": "skill_snapshots/personal_training_v2.md"
+  }
+]

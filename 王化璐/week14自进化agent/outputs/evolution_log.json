@@ -1,0 +1,5598 @@
+{
+  "generated_at": "2026-08-05T21:47:47.597151",
+  "skill_snapshots": {
+    "basic_membership": [
+      {
+        "version": 1,
+        "time": "2026-08-05T21:41:10.738956",
+        "action": "initial",
+        "reason": "初始版本",
+        "snapshot_file": "skill_snapshots/basic_membership_v1.md"
+      },
+      {
+        "version": 2,
+        "time": "2026-08-05T21:42:17.969109",
+        "action": "patch",
+        "reason": "修复体验卡附加权益表述不完整，明确体验卡不享任何附加权益",
+        "snapshot_file": "skill_snapshots/basic_membership_v2.md"
+      }
+    ],
+    "freeze_policy": [
+      {
+        "version": 1,
+        "time": "2026-08-05T21:43:00.019848",
+        "action": "create",
+        "reason": "修复所有冻结规则相关推脱问题（10条）",
+        "snapshot_file": "skill_snapshots/freeze_policy_v1.md"
+      }
+    ],
+    "group_class": [
+      {
+        "version": 1,
+        "time": "2026-08-05T21:45:05.918410",
+        "action": "create",
+        "reason": "修复团课相关全部失败（10条），覆盖预约、取消、爽约、签到、装备、名额、体验卡限制等规则",
+        "snapshot_file": "skill_snapshots/group_class_v1.md"
+      }
+    ],
+    "membership_refund": [
+      {
+        "version": 1,
+        "time": "2026-08-05T21:45:41.330249",
+        "action": "create",
+        "reason": "修复全部 10 条失败：Agent 对冷静期退款、已开卡退会手续费、最低扣款、特殊疾病/搬家退会等入会退会问题均推脱，需新增知识覆盖第六章。",
+        "snapshot_file": "skill_snapshots/membership_refund_v1.md"
+      },
+      {
+        "version": 2,
+        "time": "2026-08-05T21:46:30.110538",
+        "action": "patch",
+        "reason": "修复特殊疾病退费回答缺少关键词'可以'的问题",
+        "snapshot_file": "skill_snapshots/membership_refund_v2.md"
+      }
+    ],
+    "personal_training": [
+      {
+        "version": 1,
+        "time": "2026-08-05T21:41:10.744651",
+        "action": "initial",
+        "reason": "初始版本",
+        "snapshot_file": "skill_snapshots/personal_training_v1.md"
+      },
+      {
+        "version": 2,
+        "time": "2026-08-05T21:43:45.389992",
+        "action": "patch",
+        "reason": "修复私教课旷课后果、过期课时处理、转让、退费、签字确认等规则缺失导致的推脱",
+        "snapshot_file": "skill_snapshots/personal_training_v2.md"
+      }
+    ],
+    "transfer_policy": [
+      {
+        "version": 1,
+        "time": "2026-08-05T21:44:32.712327",
+        "action": "create",
+        "reason": "修复所有转让规则相关失败（样本1-10）",
+        "snapshot_file": "skill_snapshots/transfer_policy_v1.md"
+      }
+    ]
+  },
+  "eval_runs": [
+    {
+      "run_id": "baseline",
+      "label": "基线（初始Skills）",
+      "timestamp": "2026-08-05T21:42:04.552112",
+      "skill_versions_active": {
+        "basic_membership": 1,
+        "personal_training": 1
+      },
+      "accuracy": 0.217,
+      "correct": 13,
+      "total": 60,
+      "by_category": {
+        "basic_membership": 0.8,
+        "personal_training": 0.417,
+        "freeze_rule": 0.0,
+        "transfer_rule": 0.0,
+        "group_class": 0.0,
+        "join_refund": 0.0
+      }
+    },
+    {
+      "run_id": "after_nudge_seq10",
+      "label": "Nudge后（seq=10, block=basic_membership）",
+      "timestamp": "2026-08-05T21:42:48.583440",
+      "skill_versions_active": {
+        "basic_membership": 2,
+        "personal_training": 1
+      },
+      "accuracy": 0.2,
+      "correct": 6,
+      "total": 30,
+      "by_category": {
+        "basic_membership": 0.8,
+        "personal_training": 0.4,
+        "freeze_rule": 0.0,
+        "transfer_rule": 0.0,
+        "group_class": 0.0,
+        "join_refund": 0.0
+      }
+    },
+    {
+      "run_id": "after_nudge_seq20",
+      "label": "Nudge后（seq=20, block=freeze_rule）",
+      "timestamp": "2026-08-05T21:43:30.945838",
+      "skill_versions_active": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "personal_training": 1
+      },
+      "accuracy": 0.367,
+      "correct": 11,
+      "total": 30,
+      "by_category": {
+        "basic_membership": 0.8,
+        "personal_training": 0.4,
+        "freeze_rule": 1.0,
+        "transfer_rule": 0.0,
+        "group_class": 0.0,
+        "join_refund": 0.0
+      }
+    },
+    {
+      "run_id": "after_nudge_seq30",
+      "label": "Nudge后（seq=30, block=personal_training_basic）",
+      "timestamp": "2026-08-05T21:44:19.232800",
+      "skill_versions_active": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "personal_training": 2
+      },
+      "accuracy": 0.467,
+      "correct": 14,
+      "total": 30,
+      "by_category": {
+        "basic_membership": 0.8,
+        "personal_training": 1.0,
+        "freeze_rule": 1.0,
+        "transfer_rule": 0.0,
+        "group_class": 0.0,
+        "join_refund": 0.0
+      }
+    },
+    {
+      "run_id": "after_nudge_seq40",
+      "label": "Nudge后（seq=40, block=transfer_rule）",
+      "timestamp": "2026-08-05T21:44:56.439903",
+      "skill_versions_active": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "personal_training": 2,
+        "transfer_policy": 1
+      },
+      "accuracy": 0.633,
+      "correct": 19,
+      "total": 30,
+      "by_category": {
+        "basic_membership": 0.8,
+        "personal_training": 1.0,
+        "freeze_rule": 1.0,
+        "transfer_rule": 1.0,
+        "group_class": 0.0,
+        "join_refund": 0.0
+      }
+    },
+    {
+      "run_id": "after_nudge_seq50",
+      "label": "Nudge后（seq=50, block=group_class）",
+      "timestamp": "2026-08-05T21:45:29.995488",
+      "skill_versions_active": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "group_class": 1,
+        "personal_training": 2,
+        "transfer_policy": 1
+      },
+      "accuracy": 0.767,
+      "correct": 23,
+      "total": 30,
+      "by_category": {
+        "basic_membership": 0.8,
+        "personal_training": 1.0,
+        "freeze_rule": 1.0,
+        "transfer_rule": 1.0,
+        "group_class": 1.0,
+        "join_refund": 0.0
+      }
+    },
+    {
+      "run_id": "after_nudge_seq60",
+      "label": "Nudge后（seq=60, block=join_refund）",
+      "timestamp": "2026-08-05T21:46:10.278087",
+      "skill_versions_active": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "group_class": 1,
+        "membership_refund": 1,
+        "personal_training": 2,
+        "transfer_policy": 1
+      },
+      "accuracy": 0.933,
+      "correct": 28,
+      "total": 30,
+      "by_category": {
+        "basic_membership": 0.8,
+        "personal_training": 1.0,
+        "freeze_rule": 1.0,
+        "transfer_rule": 1.0,
+        "group_class": 1.0,
+        "join_refund": 0.833
+      }
+    },
+    {
+      "run_id": "after_nudge_seq80",
+      "label": "Nudge后（seq=80, block=mixed_validation）",
+      "timestamp": "2026-08-05T21:46:56.736787",
+      "skill_versions_active": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "group_class": 1,
+        "membership_refund": 2,
+        "personal_training": 2,
+        "transfer_policy": 1
+      },
+      "accuracy": 0.967,
+      "correct": 29,
+      "total": 30,
+      "by_category": {
+        "basic_membership": 0.8,
+        "personal_training": 1.0,
+        "freeze_rule": 1.0,
+        "transfer_rule": 1.0,
+        "group_class": 1.0,
+        "join_refund": 1.0
+      }
+    },
+    {
+      "run_id": "final",
+      "label": "最终（进化后）",
+      "timestamp": "2026-08-05T21:47:47.568501",
+      "skill_versions_active": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "group_class": 1,
+        "membership_refund": 2,
+        "personal_training": 2,
+        "transfer_policy": 1
+      },
+      "accuracy": 0.983,
+      "correct": 59,
+      "total": 60,
+      "by_category": {
+        "basic_membership": 0.9,
+        "personal_training": 1.0,
+        "freeze_rule": 1.0,
+        "transfer_rule": 1.0,
+        "group_class": 1.0,
+        "join_refund": 1.0
+      }
+    }
+  ],
+  "nudge_events": [
+    {
+      "after_seq": 10,
+      "block": "basic_membership",
+      "timestamp": "2026-08-05T21:42:48.599349",
+      "accuracy_before_this_block": 0.8,
+      "actions_taken": [
+        {
+          "action": "patch",
+          "skill": "basic_membership",
+          "reason": "修复体验卡附加权益表述不完整，明确体验卡不享任何附加权益"
+        }
+      ],
+      "skill_versions_after": {
+        "basic_membership": 2,
+        "personal_training": 1
+      }
+    },
+    {
+      "after_seq": 20,
+      "block": "freeze_rule",
+      "timestamp": "2026-08-05T21:43:30.973343",
+      "accuracy_before_this_block": 0.0,
+      "actions_taken": [
+        {
+          "action": "create",
+          "skill": "freeze_policy",
+          "reason": "修复所有冻结规则相关推脱问题（10条）"
+        }
+      ],
+      "skill_versions_after": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "personal_training": 1
+      }
+    },
+    {
+      "after_seq": 30,
+      "block": "personal_training_basic",
+      "timestamp": "2026-08-05T21:44:19.264507",
+      "accuracy_before_this_block": 0.4,
+      "actions_taken": [
+        {
+          "action": "patch",
+          "skill": "personal_training",
+          "reason": "修复私教课旷课后果、过期课时处理、转让、退费、签字确认等规则缺失导致的推脱"
+        }
+      ],
+      "skill_versions_after": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "personal_training": 2
+      }
+    },
+    {
+      "after_seq": 40,
+      "block": "transfer_rule",
+      "timestamp": "2026-08-05T21:44:56.454436",
+      "accuracy_before_this_block": 0.0,
+      "actions_taken": [
+        {
+          "action": "create",
+          "skill": "transfer_policy",
+          "reason": "修复所有转让规则相关失败（样本1-10）"
+        }
+      ],
+      "skill_versions_after": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "personal_training": 2,
+        "transfer_policy": 1
+      }
+    },
+    {
+      "after_seq": 50,
+      "block": "group_class",
+      "timestamp": "2026-08-05T21:45:30.013588",
+      "accuracy_before_this_block": 0.0,
+      "actions_taken": [
+        {
+          "action": "create",
+          "skill": "group_class",
+          "reason": "修复团课相关全部失败（10条），覆盖预约、取消、爽约、签到、装备、名额、体验卡限制等规则"
+        }
+      ],
+      "skill_versions_after": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "group_class": 1,
+        "personal_training": 2,
+        "transfer_policy": 1
+      }
+    },
+    {
+      "after_seq": 60,
+      "block": "join_refund",
+      "timestamp": "2026-08-05T21:46:10.304605",
+      "accuracy_before_this_block": 0.0,
+      "actions_taken": [
+        {
+          "action": "create",
+          "skill": "membership_refund",
+          "reason": "修复全部 10 条失败：Agent 对冷静期退款、已开卡退会手续费、最低扣款、特殊疾病/搬家退会等入会退会问题均推脱，需新增知识覆盖第六章。"
+        }
+      ],
+      "skill_versions_after": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "group_class": 1,
+        "membership_refund": 1,
+        "personal_training": 2,
+        "transfer_policy": 1
+      }
+    },
+    {
+      "after_seq": 70,
+      "block": "freeze_pt_cross",
+      "timestamp": "2026-08-05T21:46:18.743833",
+      "accuracy_before_this_block": 1.0,
+      "actions_taken": [],
+      "skill_versions_after": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "group_class": 1,
+        "membership_refund": 1,
+        "personal_training": 2,
+        "transfer_policy": 1
+      }
+    },
+    {
+      "after_seq": 80,
+      "block": "mixed_validation",
+      "timestamp": "2026-08-05T21:46:56.762082",
+      "accuracy_before_this_block": 0.9,
+      "actions_taken": [
+        {
+          "action": "patch",
+          "skill": "membership_refund",
+          "reason": "修复特殊疾病退费回答缺少关键词'可以'的问题"
+        }
+      ],
+      "skill_versions_after": {
+        "basic_membership": 2,
+        "freeze_policy": 1,
+        "group_class": 1,
+        "membership_refund": 2,
+        "personal_training": 2,
+        "transfer_policy": 1
+      }
+    }
+  ],
+  "question_comparison": {
+    "1": {
+      "question": "年卡可以不限次入场吗？",
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "ground_truth": {
+        "required": [
+          "可以"
+        ],
+        "forbidden": [
+          "不可以"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "是的，年卡不限次入场，有效期365天。",
+          "correct": false,
+          "fail_reason": "缺少关键词: '可以'"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "是的，年卡会员可不限次入场，有效期365天。",
+          "correct": false,
+          "fail_reason": "缺少关键词: '可以'"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "是的，年卡不限次入场，有效期365天。",
+          "correct": false,
+          "fail_reason": "缺少关键词: '可以'"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "是的，年卡不限次入场，有效期365天。",
+          "correct": false,
+          "fail_reason": "缺少关键词: '可以'"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "是的，年卡不限次入场，有效期365天。",
+          "correct": false,
+          "fail_reason": "缺少关键词: '可以'"
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "是的，年卡不限次入场，有效期365天。",
+          "correct": false,
+          "fail_reason": "缺少关键词: '可以'"
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "是的，年卡不限次入场，有效期365天。",
+          "correct": false,
+          "fail_reason": "缺少关键词: '可以'"
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "是的，年卡不限次入场，有效期365天。",
+          "correct": false,
+          "fail_reason": "缺少关键词: '可以'"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "是的，年卡不限次入场，有效期365天。",
+          "correct": false,
+          "fail_reason": "缺少关键词: '可以'"
+        }
+      ]
+    },
+    "2": {
+      "question": "季卡有多少次入场次数？有效期多久？",
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "ground_truth": {
+        "required": [
+          "30",
+          "90"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "季卡限30次入场，有效期90天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "季卡限30次入场，有效期90天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "季卡限30次入场，有效期90天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "季卡限30次入场，有效期90天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡限30次入场，有效期90天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡限30次入场，有效期90天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡限30次入场，有效期90天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡限30次入场，有效期90天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡限30次入场，有效期90天。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "3": {
+      "question": "月卡有效期多少天？能入场几次？",
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "ground_truth": {
+        "required": [
+          "30",
+          "12"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "月卡有效期30天，限12次入场。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "月卡有效期30天，限12次入场。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "4": {
+      "question": "储物柜怎么收费？",
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "ground_truth": {
+        "required": [
+          "5"
+        ],
+        "forbidden": [
+          "免费"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "储物柜日租5元，离场需清空。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "储物柜日租5元，离场需清空。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "5": {
+      "question": "健身房营业时间是几点到几点？",
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "ground_truth": {
+        "required": [
+          "6:00",
+          "23:00"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "健身房的营业时间是6:00-23:00。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "健身房的营业时间是6:00-23:00。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "健身房的营业时间是6:00-23:00。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "健身房的营业时间是6:00-23:00。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "健身房的营业时间是6:00-23:00。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "健身房的营业时间是6:00-23:00。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "健身房的营业时间是6:00-23:00。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "健身房的营业时间是6:00-23:00。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "健身房的营业时间是6:00-23:00。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "6": {
+      "question": "每次入场最长可以待多久？",
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "ground_truth": {
+        "required": [
+          "3小时"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "每次入场单次时长不超过3小时。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "每次入场单次时长不超过3小时。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "7": {
+      "question": "年卡会员有什么附加权益？",
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "ground_truth": {
+        "required": [
+          "体测"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "年卡会员的附加权益包括：赠送2次体测、免费饮水。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡会员的附加权益包括：赠送2次体测、免费饮水。此外，所有会员均可免费使用淋浴和停车场（限2小时）。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "8": {
+      "question": "淋浴和停车场收费吗？",
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "ground_truth": {
+        "required": [
+          "免费"
+        ],
+        "forbidden": [
+          "收费"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "所有会员免费使用淋浴和停车场（限2小时）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "所有会员免费使用淋浴和停车场（限2小时）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "淋浴和停车场对所有会员免费，其中停车场限时2小时。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "所有会员免费使用淋浴、停车场（限2小时）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "所有会员免费使用淋浴、停车场（限2小时）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "所有会员免费使用淋浴、停车场（限2小时）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "所有会员免费使用淋浴、停车场（限2小时）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "所有会员免费使用淋浴、停车场（限2小时）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "所有会员免费使用淋浴、停车场（限2小时）。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "9": {
+      "question": "体验卡有几次入场次数？有效期多久？",
+      "category": "basic_membership",
+      "difficulty": "easy",
+      "ground_truth": {
+        "required": [
+          "1",
+          "7"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "体验卡限1次入场，有效期7天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "体验卡限1次入场，有效期7天。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "10": {
+      "question": "体验卡会员有免费体测和饮水权益吗？",
+      "category": "basic_membership",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "有",
+          "可以享"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "根据技能文档，体验卡会员没有免费体测和饮水权益。年卡会员赠送2次体测、免费饮水；季卡会员赠送1次体测；所有会员免费使用淋浴、停车场（限2小时）。",
+          "correct": false,
+          "fail_reason": "缺少关键词: '不'"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "体验卡会员不享任何附加权益，无体测、无免费饮水。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "体验卡不享任何附加权益（无体测、无免费饮水）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "体验卡不享任何附加权益（无体测、无免费饮水）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "体验卡不享任何附加权益（无体测、无免费饮水）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "体验卡不享任何附加权益（无体测、无免费饮水）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "体验卡不享任何附加权益（无体测、无免费饮水）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "体验卡不享任何附加权益（无体测、无免费饮水）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "体验卡不享任何附加权益（无体测、无免费饮水）。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "11": {
+      "question": "私教课需要提前多久预约？",
+      "category": "personal_training",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "24小时"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "私教课需提前24小时预约。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "私教课需提前24小时预约。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "私教课需提前24小时预约。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "私教课需提前24小时预约。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课需提前24小时预约。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课需提前24小时预约。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课需提前24小时预约。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课需提前24小时预约。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课需提前24小时预约。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "12": {
+      "question": "私教课取消需要在课程开始前多久？",
+      "category": "personal_training",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "24小时"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "私教课取消需在课程开始前24小时，否则视为旷课。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课取消需在课程开始前24小时，否则视为旷课，旷课扣1次私教课时。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "13": {
+      "question": "私教课旷课会怎样？",
+      "category": "personal_training",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "扣"
+        ],
+        "forbidden": [
+          "不扣",
+          "没关系"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "根据技能文档，私教课取消需在课程开始前24小时，否则视为旷课。但文档中未说明旷课的具体后果，需要联系人工客服。",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课取消需在课程开始前24小时，否则视为旷课，旷课扣1次私教课时。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "14": {
+      "question": "私教课有效期多久？",
+      "category": "personal_training",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "6个月"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "私教课有效期6个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "私教课有效期6个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "私教课有效期6个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "私教课有效期6个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课有效期6个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课有效期6个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课有效期6个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课有效期6个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课有效期6个月。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "15": {
+      "question": "过期的私教课课时怎么处理？",
+      "category": "personal_training",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "20%",
+          "激活费"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "过期的私教课课时需缴纳20%激活费方可延期3个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "过期的私教课课时需缴纳20%激活费方可延期3个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "过期的私教课课时需缴纳20%激活费方可延期3个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "过期的私教课课时需缴纳20%激活费方可延期3个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，私教课过期未使用的课时需缴纳20%激活费方可延期3个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，私教课过期未使用的课时需缴纳20%激活费方可延期3个月。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "16": {
+      "question": "每节私教课是1对1还是小组课？",
+      "category": "personal_training",
+      "difficulty": "easy",
+      "ground_truth": {
+        "required": [
+          "1对1"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "每节私教课是1对1教学，时长60分钟。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课是1对1教学，时长60分钟。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "17": {
+      "question": "私教课可以转让给朋友吗？",
+      "category": "personal_training",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以转让"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "私教课不可转让给他人。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，私教课不可转让给他人。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，私教课不可转让给他人。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课不可转让给他人。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，私教课不可转让给他人。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，私教课不可转让给他人。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "18": {
+      "question": "未消耗的私教课退费比例是多少？",
+      "category": "personal_training",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "70%"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "未消耗的私教课退费按70%计算。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "19": {
+      "question": "已消耗的私教课可以退费吗？",
+      "category": "personal_training",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以退"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "已消耗的私教课不可退费。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "已消耗的课时不可退费。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "已消耗的私教课时不可退费。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "已消耗的课时不可退费。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "已消耗的课时不可退费。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "已消耗的课时不可退费。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "20": {
+      "question": "每节私教课多长时间？",
+      "category": "personal_training",
+      "difficulty": "easy",
+      "ground_truth": {
+        "required": [
+          "60分钟"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "每节私教课为1对1教学，时长60分钟。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "每节私教课为1对1教学，时长60分钟。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "21": {
+      "question": "私教课完成后需要什么确认？",
+      "category": "personal_training",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "签字"
+        ],
+        "forbidden": [
+          "不需要"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课每节课完成后需学员签字确认，未签字的课时视为未完成。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "22": {
+      "question": "私教课过期后激活可以延期多久？",
+      "category": "personal_training",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "3个月"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "私教课过期后需缴纳20%激活费，方可延期3个月。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "23": {
+      "question": "年卡每年可以冻结多久？",
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "2个月"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "年卡每年可冻结2个月，需提前3天申请。每次冻结最短7天，最长60天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "年卡每年可冻结2个月，需提前3天申请。每次冻结最短7天，最长60天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡每年可冻结2个月，需提前3天申请。每次冻结最短7天，最长60天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡每年可冻结2个月，需提前3天申请。每次冻结最短7天，最长60天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡每年可冻结2个月，需提前3天申请。每次冻结最短7天，最长60天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡每年可冻结2个月，需提前3天申请。每次冻结最短7天，最长60天。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡每年可冻结2个月，需提前3天申请。每次冻结最短7天，最长60天。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "24": {
+      "question": "季卡可以冻结吗？",
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以冻结"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "季卡/月卡/体验卡：不支持冻结。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "季卡/月卡/体验卡：不支持冻结。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡/月卡/体验卡不支持冻结。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡/月卡/体验卡：不支持冻结。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡/月卡/体验卡：不支持冻结。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡/月卡/体验卡：不支持冻结。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡/月卡/体验卡：不支持冻结。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "25": {
+      "question": "冻结需要提前多久申请？",
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "3天"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡冻结需提前3天申请。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "26": {
+      "question": "怀孕可以冻结会员卡吗？最长多久？",
+      "category": "freeze_rule",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "12个月"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "可以。怀孕凭医院证明可长期冻结，最长12个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "可以。怀孕凭医院证明可长期冻结，最长12个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "可以。怀孕凭医院证明可长期冻结，最长12个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据冻结政策，怀孕属于特殊冻结情况：凭医院证明可长期冻结，最长12个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据冻结政策，怀孕属于特殊冻结情况：凭医院证明可长期冻结，最长12个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，怀孕属于特殊冻结情况，凭医院证明可长期冻结，最长12个月。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据冻结政策，怀孕属于特殊冻结情况：凭医院证明可长期冻结，最长12个月。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "27": {
+      "question": "伤病可以冻结多久？需要什么证明？",
+      "category": "freeze_rule",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "3个月",
+          "三甲"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，伤病冻结需凭三甲医院诊断书，可冻结1-3个月。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "28": {
+      "question": "冻结期间可以入场健身吗？",
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以入场"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "冻结期间不可入场。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "冻结期间不可入场。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "冻结期间不可入场。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "冻结期间不可入场。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "冻结期间不可入场。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "冻结期间不可入场。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "冻结期间不可入场。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "29": {
+      "question": "冻结结束后会员卡有效期怎么处理？",
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "顺延"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "冻结结束后会员卡有效期顺延。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "30": {
+      "question": "月卡可以冻结吗？",
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以冻结"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "月卡不支持冻结。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "31": {
+      "question": "出差可以冻结吗？能冻多久？",
+      "category": "freeze_rule",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "1个月"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，出差冻结是年卡会员专属权益，凭出差证明可冻结1个月。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "32": {
+      "question": "每次冻结最短多久？",
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "7天"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "每次冻结最短7天。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "33": {
+      "question": "冻结期间私教课会暂停计时吗？",
+      "category": "freeze_rule",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "暂停",
+          "会暂停"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "冻结期间私教课继续计时，不暂停（此规则优先于一切冻结特权）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "不会暂停。根据冻结期间规则，冻结期间私教课继续计时，不暂停（此规则优先于一切冻结特权）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "冻结期间私教课继续计时，不暂停（此规则优先于一切冻结特权）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "冻结期间私教课继续计时，不暂停（此规则优先于一切冻结特权）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "冻结期间私教课继续计时，不暂停（此规则优先于一切冻结特权）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "冻结期间私教课继续计时，不暂停（此规则优先于一切冻结特权）。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "冻结期间私教课继续计时，不暂停（此规则优先于一切冻结特权）。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "34": {
+      "question": "体验卡可以冻结吗？",
+      "category": "freeze_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以冻结"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "体验卡不支持冻结。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "35": {
+      "question": "年卡可以转让给别人吗？",
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "可以"
+        ],
+        "forbidden": [
+          "不可以转让"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡可以转让，但需注意以下规则：\n\n- 年卡可转让1次，手续费为15%\n- 转入方需通过健康评估\n- 双方需到店办理\n- 缴纳手续费后3个工作日内生效\n- 转让后剩余有效期不变\n- 私教课不可随卡转让\n- 已冻结的卡不可转让\n- 欠费的卡需先补缴方可转让\n- 转让后不退还已扣除的手续费",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡可以转让，但需注意以下规则：\n\n- 年卡可转让1次，手续费为15%\n- 转入方需通过健康评估\n- 双方需到店办理，缴纳手续费后3个工作日内生效\n- 转让后剩余有效期不变\n- 私教课不可随卡转让\n- 已冻结的卡不可转让；欠费的卡需先补缴方可转让\n- 转让后不退还已扣除的手续费",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡可以转让，但需注意以下规则：\n\n- 年卡可转让1次，手续费为15%\n- 转入方需通过健康评估\n- 双方需到店办理\n- 缴纳手续费后3个工作日内生效\n- 转让后剩余有效期不变\n- 私教课不可随卡转让\n- 已冻结的卡不可转让\n- 欠费的卡需先补缴方可转让\n- 转让后不退还已扣除的手续费",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡可以转让，但需注意以下规则：\n\n- 年卡可转让1次，手续费为15%\n- 转入方需通过健康评估\n- 双方需到店办理，缴纳手续费后3个工作日内生效\n- 转让后剩余有效期不变\n- 私教课不可随卡转让\n- 已冻结的卡不可转让；欠费的卡需先补缴方可转让\n- 转让后不退还已扣除的手续费",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡可以转让，但需注意以下规则：\n\n- 年卡可转让1次，手续费为15%\n- 转入方需通过健康评估\n- 双方需到店办理，缴纳手续费后3个工作日内生效\n- 转让后剩余有效期不变\n- 私教课不可随卡转让\n- 已冻结的卡不可转让；欠费的卡需先补缴方可转让\n- 转让后不退还已扣除的手续费",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "36": {
+      "question": "年卡转让手续费多少？",
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "15%"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡可转让1次，手续费为15%。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "37": {
+      "question": "季卡可以转让吗？",
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以转让"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡不可转让。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡不可转让。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡不可转让。根据转让政策，仅年卡可转让1次（手续费15%），季卡、月卡和体验卡均不可转让。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡不可转让。根据转让政策，仅年卡可转让1次（手续费15%），季卡、月卡和体验卡均不支持转让。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "季卡不可转让。根据转让政策，仅年卡可转让1次（手续费15%），季卡、月卡和体验卡均不支持转让。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "38": {
+      "question": "体验卡可以转让吗？",
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以转让"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "体验卡不可转让。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "39": {
+      "question": "年卡最多可以转让几次？",
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "1次"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡可转让1次，手续费15%。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡可转让1次，手续费15%。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡可转让1次，手续费15%。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡可转让1次，手续费15%。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡可转让1次，手续费15%。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "40": {
+      "question": "转让后剩余有效期会变吗？",
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "不变"
+        ],
+        "forbidden": [
+          "延长",
+          "缩短"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "转让后剩余有效期不变。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "41": {
+      "question": "转让需要多久生效？",
+      "category": "transfer_rule",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "3个工作日"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "转让后3个工作日内生效。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "42": {
+      "question": "转入方需要满足什么条件？",
+      "category": "transfer_rule",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "健康评估"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "转入方需通过健康评估。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "43": {
+      "question": "月卡可以转让吗？",
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以转让"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "月卡不可转让。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "44": {
+      "question": "转让需要双方到场吗？",
+      "category": "transfer_rule",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "到店"
+        ],
+        "forbidden": [
+          "不需要"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要双方到店办理转让手续。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "45": {
+      "question": "私教课可以随年卡一起转让给他人吗？",
+      "category": "transfer_rule",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以转让"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，私教课不可随卡转让。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，私教课不可随卡转让。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，私教课不可随卡转让。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，私教课不可随卡转让。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据转让政策，私教课不可随卡转让。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "46": {
+      "question": "已冻结的年卡可以转让吗？",
+      "category": "transfer_rule",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以转让"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "已冻结的卡不可转让。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据转让政策，已冻结的卡不可转让。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据转让政策，已冻结的卡不可转让。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据转让政策，已冻结的卡不可转让。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据转让限制，已冻结的卡不可转让。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "47": {
+      "question": "团课提前多久开放预约？",
+      "category": "group_class",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "3天"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "团课提前3天开放预约。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "团课提前3天开放预约。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "团课提前3天开放预约。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "团课提前3天开放预约。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "48": {
+      "question": "团课取消需要在课程开始前多久？",
+      "category": "group_class",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "2小时"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "团课取消需在课程开始前2小时操作，2小时内取消视为爽约。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "49": {
+      "question": "团课爽约3次会怎样？",
+      "category": "group_class",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "禁约",
+          "1周"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据团课取消规则，爽约3次将禁约1周。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "团课爽约3次，将禁约1周。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "团课爽约3次将禁约1周。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "团课爽约3次将禁约1周。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "50": {
+      "question": "团课需要提前多久签到？",
+      "category": "group_class",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "15分钟"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "团课需在课程开始前15分钟签到。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "团课预约后需在课程开始前15分钟签到。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "团课需在课程开始前15分钟签到。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "团课需在课程开始前15分钟签到。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "51": {
+      "question": "瑜伽课需要自带什么装备？",
+      "category": "group_class",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "瑜伽垫"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "瑜伽/普拉提课需自带瑜伽垫，或租用5元/次。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "52": {
+      "question": "搏击操需要什么装备？",
+      "category": "group_class",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "拳击手套"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "搏击操需自备拳击手套或租用10元/次。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "53": {
+      "question": "每人每节团课可以约几个名额？",
+      "category": "group_class",
+      "difficulty": "easy",
+      "ground_truth": {
+        "required": [
+          "1"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "每人每节课限约1个名额。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "54": {
+      "question": "体验卡可以预约团课吗？",
+      "category": "group_class",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以预约"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "体验卡不可预约团课。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "体验卡不可预约团课。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "体验卡不可预约团课。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "体验卡不可预约团课。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "55": {
+      "question": "购卡后多久内可以全额退款？",
+      "category": "join_refund",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "7天"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "购卡后7天内为冷静期，未开卡可全额退款；已开卡（已入场1次以上）不支持冷静期退款。冷静期退款需扣除赠品费用。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "购卡后7天内为冷静期，未开卡可全额退款。已开卡（已入场1次以上）不支持冷静期退款。冷静期退款需扣除赠品费用。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "购卡后7天内为冷静期，未开卡可全额退款。已开卡（已入场1次以上）不支持冷静期退款。冷静期退款需扣除赠品费用。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "56": {
+      "question": "我已经开卡入场了一次，还能冷静期全额退款吗？",
+      "category": "join_refund",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以退",
+          "可以全额"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，已开卡（已入场1次以上）不支持冷静期退款。因此您的情况不能享受冷静期全额退款。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，已开卡（已入场1次以上）不支持冷静期退款。您已入场一次，因此无法享受冷静期全额退款。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，已开卡（已入场1次以上）不支持冷静期退款。您的情况无法享受冷静期全额退款。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "57": {
+      "question": "已开卡退会手续费多少？",
+      "category": "join_refund",
+      "difficulty": "medium",
+      "ground_truth": {
+        "required": [
+          "30%"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "已开卡退会按剩余天数比例退款，并扣除30%手续费。此外，年卡退会最低扣500元，季卡退会最低扣200元，月卡退会最低扣100元。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "已开卡退会按剩余天数比例退款，并扣除30%手续费。此外，年卡退会最低扣500元，季卡退会最低扣200元，月卡退会最低扣100元。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "已开卡退会按剩余天数比例退款，并扣除30%手续费。年卡退会最低扣500元，季卡退会最低扣200元，月卡退会最低扣100元。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "58": {
+      "question": "年卡退会最低扣多少？",
+      "category": "join_refund",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "500"
+        ],
+        "forbidden": []
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡退会最低扣500元。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡退会最低扣500元。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "年卡退会最低扣500元。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "59": {
+      "question": "特殊疾病可以退费吗？需要什么？",
+      "category": "join_refund",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "可以",
+          "证明"
+        ],
+        "forbidden": [
+          "不可以"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据会员卡退会规则，特殊疾病（需三甲医院证明）可全额退还未使用部分。",
+          "correct": false,
+          "fail_reason": "缺少关键词: '可以'"
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据会员卡退会规则，特殊疾病（需三甲医院证明）可以全额退还未使用部分。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据会员卡退会规则，特殊疾病（需三甲医院证明）可以全额退还未使用部分。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    },
+    "60": {
+      "question": "搬家退会可以免手续费吗？",
+      "category": "join_refund",
+      "difficulty": "hard",
+      "ground_truth": {
+        "required": [
+          "免"
+        ],
+        "forbidden": [
+          "不免",
+          "收取"
+        ]
+      },
+      "history": [
+        {
+          "run_id": "baseline",
+          "label": "基线（初始Skills）",
+          "skill_versions": {
+            "basic_membership": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq10",
+          "label": "Nudge后（seq=10, block=basic_membership）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq20",
+          "label": "Nudge后（seq=20, block=freeze_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq30",
+          "label": "Nudge后（seq=30, block=personal_training_basic）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq40",
+          "label": "Nudge后（seq=40, block=transfer_rule）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq50",
+          "label": "Nudge后（seq=50, block=group_class）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "需要联系人工客服",
+          "correct": false,
+          "fail_reason": "Agent 推脱（含 '联系人工'）"
+        },
+        {
+          "run_id": "after_nudge_seq60",
+          "label": "Nudge后（seq=60, block=join_refund）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 1,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "搬家退会可以免手续费。根据退会规则，搬家（需提供居住证明或租房合同）可按剩余比例退款，且免手续费。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "after_nudge_seq80",
+          "label": "Nudge后（seq=80, block=mixed_validation）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，搬家退会（需居住证明/租房合同）可以按剩余比例退款，且免手续费。",
+          "correct": true,
+          "fail_reason": ""
+        },
+        {
+          "run_id": "final",
+          "label": "最终（进化后）",
+          "skill_versions": {
+            "basic_membership": 2,
+            "freeze_policy": 1,
+            "group_class": 1,
+            "membership_refund": 2,
+            "personal_training": 2,
+            "transfer_policy": 1
+          },
+          "answer": "根据技能文档，搬家退会（需居住证明/租房合同）可以按剩余比例退款，且免手续费。",
+          "correct": true,
+          "fail_reason": ""
+        }
+      ]
+    }
+  }
+}

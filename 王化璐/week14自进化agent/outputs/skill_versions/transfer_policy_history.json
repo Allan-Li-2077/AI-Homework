@@ -1,0 +1,10 @@
+[
+  {
+    "time": "2026-08-05T21:44:32.712327",
+    "action": "create",
+    "reason": "修复所有转让规则相关失败（样本1-10）",
+    "version": 1,
+    "content": "---\nname: transfer_policy\ndescription: 会员卡转让规则，包括转让条件、手续费、流程、限制\nversion: 1\ntype: knowledge\n---\n\n## 转让条件\n- 年卡：可转让1次，手续费15%\n- 季卡/月卡/体验卡：不可转让\n- 转入方需通过健康评估\n\n## 转让流程\n- 双方到店办理\n- 缴纳手续费后3个工作日内生效\n- 转让后剩余有效期不变\n- 私教课不可随卡转让\n\n## 转让限制\n- 已冻结的卡不可转让\n- 欠费的卡需先补缴方可转让\n- 转让后不退还已扣除的手续费\n",
+    "snapshot_file": "skill_snapshots/transfer_policy_v1.md"
+  }
+]

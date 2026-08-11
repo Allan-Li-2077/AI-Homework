@@ -1,0 +1,202 @@
+{
+  "run_id": "after_nudge_seq80",
+  "label": "Nudge后（seq=80, block=mixed_validation）",
+  "timestamp": "2026-08-05T21:46:56.736787",
+  "skill_versions_active": {
+    "basic_membership": 2,
+    "freeze_policy": 1,
+    "group_class": 1,
+    "membership_refund": 2,
+    "personal_training": 2,
+    "transfer_policy": 1
+  },
+  "summary": {
+    "total": 30,
+    "correct": 29,
+    "accuracy": 0.967
+  },
+  "by_category": {
+    "basic_membership": {
+      "total": 5,
+      "correct": 4,
+      "accuracy": 0.8
+    },
+    "personal_training": {
+      "total": 5,
+      "correct": 5,
+      "accuracy": 1.0
+    },
+    "freeze_rule": {
+      "total": 5,
+      "correct": 5,
+      "accuracy": 1.0
+    },
+    "transfer_rule": {
+      "total": 5,
+      "correct": 5,
+      "accuracy": 1.0
+    },
+    "group_class": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "join_refund": {
+      "total": 6,
+      "correct": 6,
+      "accuracy": 1.0
+    }
+  },
+  "answers": {
+    "1": {
+      "answer": "是的，年卡不限次入场，有效期365天。",
+      "correct": false,
+      "fail_reason": "缺少关键词: '可以'"
+    },
+    "2": {
+      "answer": "季卡限30次入场，有效期90天。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "5": {
+      "answer": "健身房的营业时间是6:00-23:00。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "8": {
+      "answer": "所有会员免费使用淋浴、停车场（限2小时）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "10": {
+      "answer": "体验卡不享任何附加权益（无体测、无免费饮水）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "11": {
+      "answer": "私教课需提前24小时预约。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "14": {
+      "answer": "私教课有效期6个月。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "15": {
+      "answer": "根据技能文档，私教课过期未使用的课时需缴纳20%激活费方可延期3个月。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "17": {
+      "answer": "根据技能文档，私教课不可转让给他人。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "19": {
+      "answer": "已消耗的课时不可退费。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "23": {
+      "answer": "年卡每年可冻结2个月，需提前3天申请。每次冻结最短7天，最长60天。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "24": {
+      "answer": "季卡/月卡/体验卡：不支持冻结。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "26": {
+      "answer": "根据技能文档，怀孕属于特殊冻结情况，凭医院证明可长期冻结，最长12个月。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "28": {
+      "answer": "冻结期间不可入场。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "33": {
+      "answer": "冻结期间私教课继续计时，不暂停（此规则优先于一切冻结特权）。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "35": {
+      "answer": "年卡可以转让，但需注意以下规则：\n\n- 年卡可转让1次，手续费为15%\n- 转入方需通过健康评估\n- 双方需到店办理，缴纳手续费后3个工作日内生效\n- 转让后剩余有效期不变\n- 私教课不可随卡转让\n- 已冻结的卡不可转让；欠费的卡需先补缴方可转让\n- 转让后不退还已扣除的手续费",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "37": {
+      "answer": "季卡不可转让。根据转让政策，仅年卡可转让1次（手续费15%），季卡、月卡和体验卡均不支持转让。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "39": {
+      "answer": "年卡可转让1次，手续费15%。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "45": {
+      "answer": "根据技能文档，私教课不可随卡转让。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "46": {
+      "answer": "根据转让政策，已冻结的卡不可转让。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "47": {
+      "answer": "团课提前3天开放预约。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "49": {
+      "answer": "团课爽约3次将禁约1周。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "50": {
+      "answer": "团课需在课程开始前15分钟签到。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "54": {
+      "answer": "体验卡不可预约团课。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "55": {
+      "answer": "购卡后7天内为冷静期，未开卡可全额退款。已开卡（已入场1次以上）不支持冷静期退款。冷静期退款需扣除赠品费用。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "56": {
+      "answer": "根据技能文档，已开卡（已入场1次以上）不支持冷静期退款。您已入场一次，因此无法享受冷静期全额退款。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "57": {
+      "answer": "已开卡退会按剩余天数比例退款，并扣除30%手续费。此外，年卡退会最低扣500元，季卡退会最低扣200元，月卡退会最低扣100元。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "58": {
+      "answer": "年卡退会最低扣500元。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "59": {
+      "answer": "根据会员卡退会规则，特殊疾病（需三甲医院证明）可以全额退还未使用部分。",
+      "correct": true,
+      "fail_reason": ""
+    },
+    "60": {
+      "answer": "根据技能文档，搬家退会（需居住证明/租房合同）可以按剩余比例退款，且免手续费。",
+      "correct": true,
+      "fail_reason": ""
+    }
+  }
+}

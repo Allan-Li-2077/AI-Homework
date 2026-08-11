@@ -1,0 +1,954 @@
+{
+  "timestamp": "2026-08-05T21:49:07.060653",
+  "skill_versions_active": {
+    "basic_membership": 2,
+    "freeze_policy": 1,
+    "group_class": 1,
+    "membership_refund": 2,
+    "personal_training": 2,
+    "transfer_policy": 1
+  },
+  "summary": {
+    "total": 60,
+    "correct": 59,
+    "accuracy": 0.983
+  },
+  "by_category": {
+    "basic_membership": {
+      "total": 10,
+      "correct": 9,
+      "accuracy": 0.9
+    },
+    "personal_training": {
+      "total": 12,
+      "correct": 12,
+      "accuracy": 1.0
+    },
+    "freeze_rule": {
+      "total": 12,
+      "correct": 12,
+      "accuracy": 1.0
+    },
+    "transfer_rule": {
+      "total": 12,
+      "correct": 12,
+      "accuracy": 1.0
+    },
+    "group_class": {
+      "total": 8,
+      "correct": 8,
+      "accuracy": 1.0
+    },
+    "join_refund": {
+      "total": 6,
+      "correct": 6,
+      "accuracy": 1.0
+    }
+  },
+  "results": [
+    {
+      "id": 1,
+      "category": "basic_membership",
+      "question": "年卡可以不限次入场吗？",
+      "ground_truth": {
+        "required": [
+          "可以"
+        ],
+        "forbidden": [
+          "不可以"
+        ]
+      },
+      "answer": "是的，年卡不限次入场，有效期365天。",
+      "rule_correct": false,
+      "rule_reason": "缺少关键词: '可以'"
+    },
+    {
+      "id": 2,
+      "category": "basic_membership",
+      "question": "季卡有多少次入场次数？有效期多久？",
+      "ground_truth": {
+        "required": [
+          "30",
+          "90"
+        ],
+        "forbidden": []
+      },
+      "answer": "季卡限30次入场，有效期90天。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 3,
+      "category": "basic_membership",
+      "question": "月卡有效期多少天？能入场几次？",
+      "ground_truth": {
+        "required": [
+          "30",
+          "12"
+        ],
+        "forbidden": []
+      },
+      "answer": "月卡有效期30天，限12次入场。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 4,
+      "category": "basic_membership",
+      "question": "储物柜怎么收费？",
+      "ground_truth": {
+        "required": [
+          "5"
+        ],
+        "forbidden": [
+          "免费"
+        ]
+      },
+      "answer": "储物柜日租5元，离场需清空。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 5,
+      "category": "basic_membership",
+      "question": "健身房营业时间是几点到几点？",
+      "ground_truth": {
+        "required": [
+          "6:00",
+          "23:00"
+        ],
+        "forbidden": []
+      },
+      "answer": "健身房的营业时间是6:00-23:00。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 6,
+      "category": "basic_membership",
+      "question": "每次入场最长可以待多久？",
+      "ground_truth": {
+        "required": [
+          "3小时"
+        ],
+        "forbidden": []
+      },
+      "answer": "每次入场单次时长不超过3小时。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 7,
+      "category": "basic_membership",
+      "question": "年卡会员有什么附加权益？",
+      "ground_truth": {
+        "required": [
+          "体测"
+        ],
+        "forbidden": []
+      },
+      "answer": "年卡会员的附加权益包括：赠送2次体测、免费饮水。此外，所有会员均可免费使用淋浴和停车场（限2小时）。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 8,
+      "category": "basic_membership",
+      "question": "淋浴和停车场收费吗？",
+      "ground_truth": {
+        "required": [
+          "免费"
+        ],
+        "forbidden": [
+          "收费"
+        ]
+      },
+      "answer": "所有会员免费使用淋浴、停车场（限2小时）。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 9,
+      "category": "basic_membership",
+      "question": "体验卡有几次入场次数？有效期多久？",
+      "ground_truth": {
+        "required": [
+          "1",
+          "7"
+        ],
+        "forbidden": []
+      },
+      "answer": "体验卡限1次入场，有效期7天。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 10,
+      "category": "basic_membership",
+      "question": "体验卡会员有免费体测和饮水权益吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "有",
+          "可以享"
+        ]
+      },
+      "answer": "体验卡不享任何附加权益（无体测、无免费饮水）。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 11,
+      "category": "personal_training",
+      "question": "私教课需要提前多久预约？",
+      "ground_truth": {
+        "required": [
+          "24小时"
+        ],
+        "forbidden": []
+      },
+      "answer": "私教课需提前24小时预约。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 12,
+      "category": "personal_training",
+      "question": "私教课取消需要在课程开始前多久？",
+      "ground_truth": {
+        "required": [
+          "24小时"
+        ],
+        "forbidden": []
+      },
+      "answer": "私教课取消需在课程开始前24小时，否则视为旷课，旷课扣1次私教课时。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 13,
+      "category": "personal_training",
+      "question": "私教课旷课会怎样？",
+      "ground_truth": {
+        "required": [
+          "扣"
+        ],
+        "forbidden": [
+          "不扣",
+          "没关系"
+        ]
+      },
+      "answer": "私教课取消需在课程开始前24小时，否则视为旷课，旷课扣1次私教课时。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 14,
+      "category": "personal_training",
+      "question": "私教课有效期多久？",
+      "ground_truth": {
+        "required": [
+          "6个月"
+        ],
+        "forbidden": []
+      },
+      "answer": "私教课有效期6个月。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 15,
+      "category": "personal_training",
+      "question": "过期的私教课课时怎么处理？",
+      "ground_truth": {
+        "required": [
+          "20%",
+          "激活费"
+        ],
+        "forbidden": []
+      },
+      "answer": "根据私教课规则，过期未使用的课时需缴纳20%激活费方可延期3个月。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 16,
+      "category": "personal_training",
+      "question": "每节私教课是1对1还是小组课？",
+      "ground_truth": {
+        "required": [
+          "1对1"
+        ],
+        "forbidden": []
+      },
+      "answer": "私教课是1对1教学，时长60分钟。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 17,
+      "category": "personal_training",
+      "question": "私教课可以转让给朋友吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以转让"
+        ]
+      },
+      "answer": "根据技能文档，私教课不可转让给他人。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 18,
+      "category": "personal_training",
+      "question": "未消耗的私教课退费比例是多少？",
+      "ground_truth": {
+        "required": [
+          "70%"
+        ],
+        "forbidden": []
+      },
+      "answer": "未消耗的私教课退费按70%计算。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 19,
+      "category": "personal_training",
+      "question": "已消耗的私教课可以退费吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以退"
+        ]
+      },
+      "answer": "已消耗的课时不可退费。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 20,
+      "category": "personal_training",
+      "question": "每节私教课多长时间？",
+      "ground_truth": {
+        "required": [
+          "60分钟"
+        ],
+        "forbidden": []
+      },
+      "answer": "每节私教课为1对1教学，时长60分钟。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 21,
+      "category": "personal_training",
+      "question": "私教课完成后需要什么确认？",
+      "ground_truth": {
+        "required": [
+          "签字"
+        ],
+        "forbidden": [
+          "不需要"
+        ]
+      },
+      "answer": "私教课每节课完成后需学员签字确认，未签字的课时视为未完成。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 22,
+      "category": "personal_training",
+      "question": "私教课过期后激活可以延期多久？",
+      "ground_truth": {
+        "required": [
+          "3个月"
+        ],
+        "forbidden": []
+      },
+      "answer": "私教课过期后需缴纳20%激活费，方可延期3个月。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 23,
+      "category": "freeze_rule",
+      "question": "年卡每年可以冻结多久？",
+      "ground_truth": {
+        "required": [
+          "2个月"
+        ],
+        "forbidden": []
+      },
+      "answer": "年卡每年可冻结2个月，需提前3天申请。每次冻结最短7天，最长60天。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 24,
+      "category": "freeze_rule",
+      "question": "季卡可以冻结吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以冻结"
+        ]
+      },
+      "answer": "季卡/月卡/体验卡：不支持冻结。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 25,
+      "category": "freeze_rule",
+      "question": "冻结需要提前多久申请？",
+      "ground_truth": {
+        "required": [
+          "3天"
+        ],
+        "forbidden": []
+      },
+      "answer": "年卡冻结需提前3天申请。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 26,
+      "category": "freeze_rule",
+      "question": "怀孕可以冻结会员卡吗？最长多久？",
+      "ground_truth": {
+        "required": [
+          "12个月"
+        ],
+        "forbidden": []
+      },
+      "answer": "根据冻结政策，怀孕属于特殊冻结情况：凭医院证明可长期冻结，最长12个月。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 27,
+      "category": "freeze_rule",
+      "question": "伤病可以冻结多久？需要什么证明？",
+      "ground_truth": {
+        "required": [
+          "3个月",
+          "三甲"
+        ],
+        "forbidden": []
+      },
+      "answer": "根据技能文档，伤病冻结需凭三甲医院诊断书，可冻结1-3个月。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 28,
+      "category": "freeze_rule",
+      "question": "冻结期间可以入场健身吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以入场"
+        ]
+      },
+      "answer": "冻结期间不可入场。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 29,
+      "category": "freeze_rule",
+      "question": "冻结结束后会员卡有效期怎么处理？",
+      "ground_truth": {
+        "required": [
+          "顺延"
+        ],
+        "forbidden": []
+      },
+      "answer": "冻结结束后会员卡有效期顺延。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 30,
+      "category": "freeze_rule",
+      "question": "月卡可以冻结吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以冻结"
+        ]
+      },
+      "answer": "月卡不支持冻结。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 31,
+      "category": "freeze_rule",
+      "question": "出差可以冻结吗？能冻多久？",
+      "ground_truth": {
+        "required": [
+          "1个月"
+        ],
+        "forbidden": []
+      },
+      "answer": "根据技能文档，出差冻结是年卡专属权益，凭出差证明可冻结1个月。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 32,
+      "category": "freeze_rule",
+      "question": "每次冻结最短多久？",
+      "ground_truth": {
+        "required": [
+          "7天"
+        ],
+        "forbidden": []
+      },
+      "answer": "每次冻结最短7天。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 33,
+      "category": "freeze_rule",
+      "question": "冻结期间私教课会暂停计时吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "暂停",
+          "会暂停"
+        ]
+      },
+      "answer": "冻结期间私教课继续计时，不暂停（此规则优先于一切冻结特权）。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 34,
+      "category": "freeze_rule",
+      "question": "体验卡可以冻结吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以冻结"
+        ]
+      },
+      "answer": "体验卡不支持冻结。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 35,
+      "category": "transfer_rule",
+      "question": "年卡可以转让给别人吗？",
+      "ground_truth": {
+        "required": [
+          "可以"
+        ],
+        "forbidden": [
+          "不可以转让"
+        ]
+      },
+      "answer": "年卡可以转让，但需注意以下规则：\n\n- 年卡可转让1次，手续费为15%\n- 转入方需通过健康评估\n- 双方需到店办理，缴纳手续费后3个工作日内生效\n- 转让后剩余有效期不变\n- 私教课不可随卡转让\n- 已冻结的卡不可转让；欠费的卡需先补缴方可转让\n- 转让后不退还已扣除的手续费",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 36,
+      "category": "transfer_rule",
+      "question": "年卡转让手续费多少？",
+      "ground_truth": {
+        "required": [
+          "15%"
+        ],
+        "forbidden": []
+      },
+      "answer": "年卡可转让1次，手续费为15%。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 37,
+      "category": "transfer_rule",
+      "question": "季卡可以转让吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以转让"
+        ]
+      },
+      "answer": "季卡不可转让。根据转让政策，仅年卡可转让1次（手续费15%），季卡、月卡和体验卡均不可转让。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 38,
+      "category": "transfer_rule",
+      "question": "体验卡可以转让吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以转让"
+        ]
+      },
+      "answer": "体验卡不可转让。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 39,
+      "category": "transfer_rule",
+      "question": "年卡最多可以转让几次？",
+      "ground_truth": {
+        "required": [
+          "1次"
+        ],
+        "forbidden": []
+      },
+      "answer": "年卡可转让1次，手续费15%。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 40,
+      "category": "transfer_rule",
+      "question": "转让后剩余有效期会变吗？",
+      "ground_truth": {
+        "required": [
+          "不变"
+        ],
+        "forbidden": [
+          "延长",
+          "缩短"
+        ]
+      },
+      "answer": "转让后剩余有效期不变。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 41,
+      "category": "transfer_rule",
+      "question": "转让需要多久生效？",
+      "ground_truth": {
+        "required": [
+          "3个工作日"
+        ],
+        "forbidden": []
+      },
+      "answer": "转让后3个工作日内生效。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 42,
+      "category": "transfer_rule",
+      "question": "转入方需要满足什么条件？",
+      "ground_truth": {
+        "required": [
+          "健康评估"
+        ],
+        "forbidden": []
+      },
+      "answer": "转入方需通过健康评估。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 43,
+      "category": "transfer_rule",
+      "question": "月卡可以转让吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以转让"
+        ]
+      },
+      "answer": "月卡不可转让。根据转让政策，仅年卡可转让1次（手续费15%），季卡、月卡和体验卡均不可转让。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 44,
+      "category": "transfer_rule",
+      "question": "转让需要双方到场吗？",
+      "ground_truth": {
+        "required": [
+          "到店"
+        ],
+        "forbidden": [
+          "不需要"
+        ]
+      },
+      "answer": "需要双方到店办理转让手续。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 45,
+      "category": "transfer_rule",
+      "question": "私教课可以随年卡一起转让给他人吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以转让"
+        ]
+      },
+      "answer": "根据转让政策，私教课不可随卡转让。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 46,
+      "category": "transfer_rule",
+      "question": "已冻结的年卡可以转让吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以转让"
+        ]
+      },
+      "answer": "根据转让政策，已冻结的卡不可转让。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 47,
+      "category": "group_class",
+      "question": "团课提前多久开放预约？",
+      "ground_truth": {
+        "required": [
+          "3天"
+        ],
+        "forbidden": []
+      },
+      "answer": "团课提前3天开放预约。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 48,
+      "category": "group_class",
+      "question": "团课取消需要在课程开始前多久？",
+      "ground_truth": {
+        "required": [
+          "2小时"
+        ],
+        "forbidden": []
+      },
+      "answer": "团课取消需在课程开始前2小时操作，2小时内取消视为爽约。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 49,
+      "category": "group_class",
+      "question": "团课爽约3次会怎样？",
+      "ground_truth": {
+        "required": [
+          "禁约",
+          "1周"
+        ],
+        "forbidden": []
+      },
+      "answer": "团课爽约3次，禁约1周。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 50,
+      "category": "group_class",
+      "question": "团课需要提前多久签到？",
+      "ground_truth": {
+        "required": [
+          "15分钟"
+        ],
+        "forbidden": []
+      },
+      "answer": "团课需在课程开始前15分钟签到。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 51,
+      "category": "group_class",
+      "question": "瑜伽课需要自带什么装备？",
+      "ground_truth": {
+        "required": [
+          "瑜伽垫"
+        ],
+        "forbidden": []
+      },
+      "answer": "瑜伽/普拉提课需自带瑜伽垫，或租用5元/次。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 52,
+      "category": "group_class",
+      "question": "搏击操需要什么装备？",
+      "ground_truth": {
+        "required": [
+          "拳击手套"
+        ],
+        "forbidden": []
+      },
+      "answer": "搏击操需自备拳击手套或租用10元/次。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 53,
+      "category": "group_class",
+      "question": "每人每节团课可以约几个名额？",
+      "ground_truth": {
+        "required": [
+          "1"
+        ],
+        "forbidden": []
+      },
+      "answer": "每人每节课限约1个名额。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 54,
+      "category": "group_class",
+      "question": "体验卡可以预约团课吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以预约"
+        ]
+      },
+      "answer": "体验卡不可预约团课。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 55,
+      "category": "join_refund",
+      "question": "购卡后多久内可以全额退款？",
+      "ground_truth": {
+        "required": [
+          "7天"
+        ],
+        "forbidden": []
+      },
+      "answer": "购卡后7天内为冷静期，未开卡可全额退款。已开卡（已入场1次以上）不支持冷静期退款。冷静期退款需扣除赠品费用。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 56,
+      "category": "join_refund",
+      "question": "我已经开卡入场了一次，还能冷静期全额退款吗？",
+      "ground_truth": {
+        "required": [
+          "不"
+        ],
+        "forbidden": [
+          "可以退",
+          "可以全额"
+        ]
+      },
+      "answer": "根据冷静期规则，已开卡（已入场1次以上）不支持冷静期退款。您已入场1次，因此无法享受冷静期全额退款。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 57,
+      "category": "join_refund",
+      "question": "已开卡退会手续费多少？",
+      "ground_truth": {
+        "required": [
+          "30%"
+        ],
+        "forbidden": []
+      },
+      "answer": "已开卡退会按剩余天数比例退款，并扣除30%手续费。此外，年卡退会最低扣500元，季卡退会最低扣200元，月卡退会最低扣100元。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 58,
+      "category": "join_refund",
+      "question": "年卡退会最低扣多少？",
+      "ground_truth": {
+        "required": [
+          "500"
+        ],
+        "forbidden": []
+      },
+      "answer": "年卡退会最低扣500元。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 59,
+      "category": "join_refund",
+      "question": "特殊疾病可以退费吗？需要什么？",
+      "ground_truth": {
+        "required": [
+          "可以",
+          "证明"
+        ],
+        "forbidden": [
+          "不可以"
+        ]
+      },
+      "answer": "根据会员卡退会规则，特殊疾病（需三甲医院证明）可以全额退还未使用部分。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    },
+    {
+      "id": 60,
+      "category": "join_refund",
+      "question": "搬家退会可以免手续费吗？",
+      "ground_truth": {
+        "required": [
+          "免"
+        ],
+        "forbidden": [
+          "不免",
+          "收取"
+        ]
+      },
+      "answer": "根据技能文档，搬家退会（需居住证明/租房合同）可以按剩余比例退款，且免手续费。",
+      "rule_correct": true,
+      "rule_reason": "correct"
+    }
+  ]
+}
