@@ -1,0 +1,29 @@
+[
+  {
+    "id": "34472a57",
+    "skill_name": "flash-card",
+    "user_input": "apple",
+    "generated_output": "['apple', '苹果']",
+    "feedback_text": "缺少使用场景举例，能造个句子吗？",
+    "feedback_type": "suggestion",
+    "timestamp": "2026-08-06T21:03:41.844457"
+  },
+  {
+    "id": "51dc32fe",
+    "skill_name": "flash-card",
+    "user_input": "apple",
+    "generated_output": "['apple', '苹果']",
+    "feedback_text": "追问补充：能不能加上英式和美式发音的对比？",
+    "feedback_type": "suggestion",
+    "timestamp": "2026-08-06T21:03:41.844457"
+  },
+  {
+    "id": "8417b401",
+    "skill_name": "flash-card",
+    "user_input": "apple",
+    "generated_output": "['apple']",
+    "feedback_text": "用户修改了生成内容（原始: ['apple']...）",
+    "feedback_type": "complaint",
+    "timestamp": "2026-08-06T21:03:41.844457"
+  }
+]
