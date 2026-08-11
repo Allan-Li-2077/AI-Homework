@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progressive Skill Harness — 六层渐进式加载演示</title>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #131826;
+    --surface2: #1c2235;
+    --border: #2a3148;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --accent: #6366f1;
+    --green: #22c55e;
+    --yellow: #eab308;
+    --cyan: #06b6d4;
+    --purple: #a855f7;
+    --orange: #f97316;
+    --red: #ef4444;
+    --pink: #ec4899;
+    --layer-soul: #6366f1;
+    --layer-user: #06b6d4;
+    --layer-agents: #f59e0b;
+    --layer-memory: #22c55e;
+    --layer-faiss: #a855f7;
+    --layer-s0: #94a3b8;
+    --layer-s1: #fbbf24;
+    --layer-s2: #34d399;
+    --layer-s3: #f472b6;
+    --layer-s4: #60a5fa;
+    --layer2: #f97316;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* ── 顶栏 ── */
+  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  header h1 { font-size: 15px; font-weight: 600; }
+  header .subtitle { font-size: 11px; color: var(--muted); }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 99px; background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+  .badge.online { border-color: var(--green); color: var(--green); }
+  header .spacer { flex: 1; }
+  header button { background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: all .15s; }
+  header button:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── 主体 ── */
+  main { flex: 1; display: grid; grid-template-columns: 1fr 420px; gap: 0; overflow: hidden; }
+
+  /* ── 左侧 ── */
+  .chat-panel { display: flex; flex-direction: column; border-right: 1px solid var(--border); min-height: 0; overflow: hidden; }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .msg { display: flex; gap: 10px; max-width: 88%; }
+  .msg.user { flex-direction: row-reverse; align-self: flex-end; }
+  .msg .avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+  .msg.user .avatar { background: var(--accent); }
+  .msg.assistant .avatar { background: var(--surface2); border: 1px solid var(--border); }
+  .msg .bubble { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; font-size: 14px; line-height: 1.65; white-space: pre-wrap; word-break: break-word; }
+  .msg.user .bubble { background: var(--accent); border-color: var(--accent); }
+  .msg .bubble.streaming::after { content: '▌'; animation: blink .7s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* ── Skill trace 事件卡（嵌入在对话流中） ── */
+  .trace-event { background: var(--surface2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 8px 12px; font-size: 12px; font-family: 'Cascadia Code', Consolas, monospace; max-width: 90%; align-self: flex-start; }
+  .trace-event .trace-head { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+  .trace-event .trace-layer { font-size: 10px; padding: 1px 6px; border-radius: 99px; font-weight: 600; }
+  .trace-event .trace-summary { color: var(--muted); }
+  .trace-event .trace-detail { color: var(--muted); margin-top: 3px; font-size: 11px; }
+  .trace-event[data-layer="s0"] { border-left-color: var(--layer-s0); }
+  .trace-event[data-layer="s1"] { border-left-color: var(--layer-s1); }
+  .trace-event[data-layer="s2"] { border-left-color: var(--layer-s2); }
+  .trace-event[data-layer="s3"] { border-left-color: var(--layer-s3); }
+  .trace-event[data-layer="s4"] { border-left-color: var(--layer-s4); }
+  .trace-event[data-layer="l4"] { border-left-color: var(--layer-faiss); }
+  .trace-event[data-layer="l3"] { border-left-color: var(--layer-soul); }
+
+  /* ── 输入区 ── */
+  .chat-input-area { padding: 14px; background: var(--surface); border-top: 1px solid var(--border); flex-shrink: 0; }
+  .chat-input-row { display: flex; gap: 8px; }
+  .chat-input-row textarea { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 9px 13px; color: var(--text); font-size: 14px; resize: none; outline: none; font-family: inherit; line-height: 1.5; max-height: 110px; }
+  .chat-input-row textarea:focus { border-color: var(--accent); }
+  .send-btn { background: var(--accent); border: none; color: white; padding: 9px 18px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; align-self: flex-end; transition: opacity .15s; }
+  .send-btn:disabled { opacity: .5; cursor: default; }
+  .example-btns { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .example-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); padding: 3px 9px; border-radius: 99px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .example-btn:hover { border-color: var(--accent); color: var(--text); }
+
+  /* ── 右侧 ── */
+  .side-panel { overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: var(--bg); min-height: 0; }
+  .side-panel::-webkit-scrollbar { width: 4px; }
+  .side-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .panel-section { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; flex-shrink: 0; }
+  .panel-section .section-header { padding: 8px 14px; font-size: 11px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; border-radius: 10px 10px 0 0; }
+  .panel-section.collapsed .section-header { border-bottom: none; border-radius: 10px; }
+  .panel-section .section-header:hover { background: var(--surface2); }
+  .panel-section .section-header .chevron { margin-left: auto; transition: transform .2s; font-size: 10px; }
+  .panel-section.collapsed .section-header .chevron { transform: rotate(-90deg); }
+  .panel-section .section-body { padding: 10px 14px; }
+  .panel-section.collapsed .section-body { display: none; }
+
+  /* ── Layer 指示灯 ── */
+  .layer-row { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 5px; border: 1px solid transparent; transition: all .25s; }
+  .layer-row.lit { border-color: var(--border); background: var(--surface2); }
+  .layer-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; transition: all .3s; }
+  .layer-dot.lit { box-shadow: 0 0 8px currentColor; }
+  .layer-row .layer-label { font-size: 11px; color: var(--muted); }
+  .layer-row .layer-info { margin-left: auto; font-size: 10px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .layer-row .layer-name { font-weight: 600; color: var(--text); font-size: 12px; }
+
+  /* ── Skill 列表 ── */
+  .skill-list { display: flex; flex-direction: column; gap: 6px; }
+  .skill-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; }
+  .skill-card.used { border-color: var(--green); background: rgba(34, 197, 94, 0.05); }
+  .skill-card .sc-head { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+  .skill-card .sc-name { font-weight: 600; font-size: 12px; color: var(--text); }
+  .skill-card .sc-tag { font-size: 10px; padding: 1px 5px; border-radius: 99px; background: var(--surface); border: 1px solid var(--border); color: var(--muted); margin-left: auto; }
+  .skill-card .sc-desc { color: var(--muted); font-size: 11px; line-height: 1.4; margin-bottom: 4px; }
+  .skill-card .sc-keywords { font-size: 10px; color: var(--muted); }
+  .skill-card .sc-keywords span { background: var(--surface); padding: 1px 5px; border-radius: 3px; margin-right: 3px; display: inline-block; }
+
+  /* ── 记忆查看器 ── */
+  .memory-viewer { font-size: 11px; color: var(--muted); white-space: pre-wrap; word-break: break-word; max-height: 200px; overflow-y: auto; line-height: 1.5; background: var(--surface2); border-radius: 6px; padding: 8px; }
+  .memory-viewer::-webkit-scrollbar { width: 3px; }
+  .memory-viewer::-webkit-scrollbar-thumb { background: var(--border); }
+  .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-label { color: var(--muted); }
+  .stat-value { color: var(--text); font-variant-numeric: tabular-nums; }
+
+  /* ── 加载进度条 ── */
+  .load-meter { display: flex; align-items: center; gap: 6px; margin-top: 5px; font-size: 11px; color: var(--muted); }
+  .meter-bar { flex: 1; height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+  .meter-bar > div { height: 100%; background: linear-gradient(90deg, var(--green), var(--cyan)); transition: width .3s; }
+
+  /* ── 响应式 ── */
+  @media (max-width: 900px) {
+    main { grid-template-columns: 1fr; }
+    .side-panel { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div style="width:26px;height:26px;background:linear-gradient(135deg,#6366f1,#a855f7,#ec4899);border-radius:50%;"></div>
+  <h1>Progressive Skill Harness</h1>
+  <span class="subtitle">六层渐进式加载演示</span>
+  <span class="badge online" id="statusBadge">● 运行中</span>
+  <span class="badge" id="modelBadge">—</span>
+  <span class="badge" id="skillCountBadge">— skill</span>
+  <div class="spacer"></div>
+  <button onclick="reloadSkills()">↻ 重载 Skills</button>
+  <button onclick="newSession()">新会话</button>
+  <button onclick="factoryReset()">出厂重置</button>
+</header>
+
+<main>
+  <!-- 左侧：对话 + 加载事件流 -->
+  <div class="chat-panel">
+    <div class="chat-messages" id="chatMessages">
+      <div style="text-align:center;padding:30px 0;">
+        <div style="font-size:34px;margin-bottom:10px;">⚡</div>
+        <div style="font-size:15px;font-weight:600;margin-bottom:5px;">Helix — 渐进式 Skill Harness</div>
+        <div style="font-size:13px;color:var(--muted);max-width:360px;margin:0 auto;line-height:1.7;">
+          启动时只读 SKILL.md 的 <b>frontmatter</b>（约 5KB 总成本）。<br>
+          真正调用某个 skill 时才读它的 <b>正文</b>。<br>
+          右侧面板实时显示六层加载过程。
+        </div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <div class="chat-input-row">
+        <textarea id="inputBox" placeholder="输入消息，Enter 发送，Shift+Enter 换行" rows="2" onkeydown="handleKey(event)"></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">发送</button>
+      </div>
+      <div class="example-btns">
+        <span style="font-size:11px;color:var(--muted);align-self:center;">试试触发 skill：</span>
+        <button class="example-btn" onclick="fillExample(this)">帮我把"你好世界"翻译成英文</button>
+        <button class="example-btn" onclick="fillExample(this)">总结这段长文本的关键要点</button>
+        <button class="example-btn" onclick="fillExample(this)">搜索一下 LLM Agent 最新进展</button>
+        <button class="example-btn" onclick="fillExample(this)">解这道题：x² + 5x + 6 = 0</button>
+        <button class="example-btn" onclick="fillExample(this)">Code review 一下我的 Python 代码</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右侧：六层加载面板 + 记忆 -->
+  <div class="side-panel">
+
+    <!-- 六层加载指示灯 -->
+    <div class="panel-section" id="layersSection">
+      <div class="section-header" onclick="toggleSection('layersSection')">
+        <span>⚡</span> 六层加载状态
+        <span class="chevron">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="layer-row" id="layer-l3">
+          <div class="layer-dot" style="background:var(--layer-soul);color:var(--layer-soul)"></div>
+          <div>
+            <div class="layer-name">Layer 3 · 长期记忆</div>
+            <div class="layer-label">SOUL/USER/AGENTS/MEMORY.md</div>
+          </div>
+          <div class="layer-info" id="info-l3">—</div>
+        </div>
+        <div class="layer-row" id="layer-s0">
+          <div class="layer-dot" style="background:var(--layer-s0);color:var(--layer-s0)"></div>
+          <div>
+            <div class="layer-name">S0 · Skill 注册表</div>
+            <div class="layer-label">仅 frontmatter</div>
+          </div>
+          <div class="layer-info" id="info-s0">—</div>
+        </div>
+        <div class="layer-row" id="layer-s1">
+          <div class="layer-dot" style="background:var(--layer-s1);color:var(--layer-s1)"></div>
+          <div>
+            <div class="layer-name">S1 · Skill 选择</div>
+            <div class="layer-label">keyword 粗筛 + LLM 精筛</div>
+          </div>
+          <div class="layer-info" id="info-s1">—</div>
+        </div>
+        <div class="layer-row" id="layer-s2">
+          <div class="layer-dot" style="background:var(--layer-s2);color:var(--layer-s2)"></div>
+          <div>
+            <div class="layer-name">S2 · Skill 加载</div>
+            <div class="layer-label">按需读 SKILL.md 正文</div>
+          </div>
+          <div class="layer-info" id="info-s2">—</div>
+        </div>
+        <div class="layer-row" id="layer-l4">
+          <div class="layer-dot" style="background:var(--layer-faiss);color:var(--layer-faiss)"></div>
+          <div>
+            <div class="layer-name">L4 · 混合检索</div>
+            <div class="layer-label">FAISS 0.7 + BM25 0.3</div>
+          </div>
+          <div class="layer-info" id="info-l4">—</div>
+        </div>
+        <div class="layer-row" id="layer-s3">
+          <div class="layer-dot" style="background:var(--layer-s3);color:var(--layer-s3)"></div>
+          <div>
+            <div class="layer-name">S3 · Skill 执行</div>
+            <div class="layer-label">prompt / code / workflow</div>
+          </div>
+          <div class="layer-info" id="info-s3">—</div>
+        </div>
+        <div class="layer-row" id="layer-s4">
+          <div class="layer-dot" style="background:var(--layer-s4);color:var(--layer-s4)"></div>
+          <div>
+            <div class="layer-name">S4 · 记忆写入</div>
+            <div class="layer-label">USER.md / MEMORY.md / FAISS</div>
+          </div>
+          <div class="layer-info" id="info-s4">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills 列表 -->
+    <div class="panel-section" id="skillsSection">
+      <div class="section-header" onclick="toggleSection('skillsSection')">
+        <span>🧰</span> 可用 Skills
+        <span class="chevron">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="skill-list" id="skillList">
+          <div class="empty-hint">加载中...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 记忆统计 -->
+    <div class="panel-section collapsed" id="statsSection">
+      <div class="section-header" onclick="toggleSection('statsSection')">
+        <span>📊</span> 记忆统计
+        <span class="chevron">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="stat-row"><span class="stat-label">MEMORY.md 条目</span><span class="stat-value" id="statEntries">—</span></div>
+        <div class="stat-row"><span class="stat-label">FAISS 向量条目</span><span class="stat-value" id="statFaiss">—</span></div>
+        <div class="stat-row"><span class="stat-label">FTS5 关键词条目</span><span class="stat-value" id="statFts">—</span></div>
+        <div class="stat-row"><span class="stat-label">历史会话数</span><span class="stat-value" id="statSessions">—</span></div>
+        <div class="stat-row"><span class="stat-label">当前会话消息</span><span class="stat-value" id="statMsgs">—</span></div>
+      </div>
+    </div>
+
+    <!-- USER.md -->
+    <div class="panel-section collapsed" id="userMdSection">
+      <div class="section-header" onclick="toggleSection('userMdSection')">
+        <span>👤</span> USER.md
+        <span class="chevron">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="memory-viewer" id="userMdViewer">（未加载）</div>
+      </div>
+    </div>
+
+    <!-- MEMORY.md -->
+    <div class="panel-section collapsed" id="memoryMdSection">
+      <div class="section-header" onclick="toggleSection('memoryMdSection')">
+        <span>🗃️</span> MEMORY.md
+        <span class="chevron">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="memory-viewer" id="memoryMdViewer">（未加载）</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+let currentSessionId = null;
+let usedSkillsThisSession = new Set();
+let messageCount = 0;
+
+// ── 工具 ──────────────────────────────────────────────────────────────────────
+
+function toggleSection(id) {
+  document.getElementById(id).classList.toggle('collapsed');
+}
+function fillExample(btn) {
+  document.getElementById('inputBox').value = btn.textContent;
+  document.getElementById('inputBox').focus();
+}
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+function scrollToBottom() {
+  const el = document.getElementById('chatMessages');
+  el.scrollTop = el.scrollHeight;
+}
+function setLoading(on) {
+  document.getElementById('sendBtn').disabled = on;
+  document.getElementById('inputBox').disabled = on;
+}
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── 添加消息气泡 ──────────────────────────────────────────────────────────────
+
+function addMessage(role, text, streaming = false) {
+  const container = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const avatarChar = role === 'user' ? '你' : '⚡';
+  div.innerHTML = `
+    <div class="avatar">${avatarChar}</div>
+    <div class="bubble${streaming ? ' streaming' : ''}">${escHtml(text)}</div>
+  `;
+  container.appendChild(div);
+  scrollToBottom();
+  return div.querySelector('.bubble');
+}
+
+// ── Trace 事件卡 ──────────────────────────────────────────────────────────────
+
+function addTrace(layer, label, summary, detail = '') {
+  const container = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'trace-event';
+  div.setAttribute('data-layer', layer.toLowerCase().replace('layer_', ''));
+  div.innerHTML = `
+    <div class="trace-head">
+      <span class="trace-layer" style="background:${layerColor(layer)};color:#000">${label}</span>
+      <span class="trace-summary">${escHtml(summary)}</span>
+    </div>
+    ${detail ? `<div class="trace-detail">${escHtml(detail)}</div>` : ''}
+  `;
+  container.appendChild(div);
+  scrollToBottom();
+}
+
+function layerColor(layer) {
+  return {
+    'layer3_load': 'var(--layer-soul)',
+    'layer_s0_registry': 'var(--layer-s0)',
+    'layer_s1_decision': 'var(--layer-s1)',
+    'layer_s2_load': 'var(--layer-s2)',
+    'layer4_semantic_search': 'var(--layer-faiss)',
+    'layer_s3_skill_execution_start': 'var(--layer-s3)',
+    'layer_s3_skill_execution_done': 'var(--layer-s3)',
+  }[layer] || 'var(--accent)';
+}
+
+// ── 六层指示灯 ────────────────────────────────────────────────────────────────
+
+function lightLayer(layerKey, info) {
+  const row = document.getElementById(`layer-${layerKey}`);
+  const dot = row?.querySelector('.layer-dot');
+  const infoEl = document.getElementById(`info-${layerKey}`);
+  if (row) row.classList.add('lit');
+  if (dot) dot.classList.add('lit');
+  if (infoEl && info) infoEl.textContent = info;
+}
+function resetLayers() {
+  ['l3','s0','s1','s2','l4','s3','s4'].forEach(k => {
+    const row = document.getElementById(`layer-${k}`);
+    const dot = row?.querySelector('.layer-dot');
+    if (row) row.classList.remove('lit');
+    if (dot) dot.classList.remove('lit');
+    const info = document.getElementById(`info-${k}`);
+    if (info) info.textContent = '—';
+  });
+  usedSkillsThisSession.clear();
+  document.querySelectorAll('.skill-card.used').forEach(c => c.classList.remove('used'));
+}
+
+// ── 发送消息 ──────────────────────────────────────────────────────────────────
+
+async function sendMessage() {
+  const input = document.getElementById('inputBox');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  if (text === '/help') {
+    addMessage('assistant',
+      '可用命令：\n/skills — 展开 Skills 列表\n/memory — 展开 USER/MEMORY.md\n/new — 新会话\n/reset — 出厂重置'
+    );
+    return;
+  }
+
+  setLoading(true);
+  resetLayers();
+
+  addMessage('user', text);
+  const assistantBubble = addMessage('assistant', '', true);
+
+  let responseText = '';
+
+  try {
+    const resp = await fetch('/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, session_id: currentSessionId }),
+    });
+
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop();
+
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const data = JSON.parse(line.slice(6));
+
+        if (data.type === 'layer3_load') {
+          const totalChars = data.total_chars || 0;
+          const layerCount = (data.layers || []).length;
+          lightLayer('l3', `${totalChars} 字符 · ${layerCount} 层`);
+          addTrace('layer3_load', 'Layer 3', `加载 ${layerCount} 个 .md 文件（共 ${totalChars} 字符）`);
+        }
+        else if (data.type === 'layer_s0_registry') {
+          const fm = data.frontmatter_total_chars || 0;
+          const body = data.body_total_chars || 0;
+          const count = data.skill_count || 0;
+          lightLayer('s0', `${count} 个 · ${fm} 字符`);
+          addTrace('layer_s0_registry', 'S0 注册表',
+            `已索引 ${count} 个 skill（仅 frontmatter）`,
+            `启动成本：${fm} 字符 frontmatter / 正文共 ${body} 字符待按需加载`
+          );
+        }
+        else if (data.type === 'layer_s1_decision') {
+          const action = data.action;
+          const conf = Math.round((data.confidence || 0) * 100);
+          if (action === 'direct_answer') {
+            lightLayer('s1', `直接回答 ${conf}%`);
+            addTrace('layer_s1_decision', 'S1 决策',
+              `direct_answer（置信度 ${conf}%）`,
+              data.direct_reason || ''
+            );
+          } else {
+            const skills = data.skills || [];
+            const cands = (data.candidates || []).join(', ') || '（无）';
+            lightLayer('s1', `${action} · ${skills.length} 个`);
+            addTrace('layer_s1_decision', `S1 决策 · ${action.toUpperCase()}`,
+              `命中 ${skills.length} 个 skill（候选 ${data.candidates.length} 个，跳过 ${data.skipped_candidates.length} 个）`,
+              `候选：${cands}\n命中：${skills.map(s => `${s.name} — ${s.reason || ''}`).join('\n')}`
+            );
+          }
+        }
+        else if (data.type === 'layer_s2_load') {
+          const hit = data.cache_hit ? '命中缓存' : `${data.body_chars} 字符 / ${(data.load_time_ms||0).toFixed(1)}ms`;
+          lightLayer('s2', `${data.skill_name}`);
+          markSkillUsed(data.skill_name);
+          addTrace('layer_s2_load', `S2 加载 · ${data.skill_name}`,
+            `${data.execution} 型 · ${hit}`,
+            `参数：${JSON.stringify(data.params || {})}${data.params_missing?.length ? `\n缺失：${data.params_missing.join(', ')}` : ''}\nhash=${data.content_hash}`
+          );
+        }
+        else if (data.type === 'layer_s2_load_failed') {
+          addTrace('layer_s2_load', 'S2 加载失败',
+            `❌ ${data.skill_name}`, data.reason || '');
+        }
+        else if (data.type === 'layer_s3_skill_execution_start') {
+          lightLayer('s3', `${data.skill_name} 执行中`);
+          addTrace('layer_s3_skill_execution_start', `S3 执行开始`,
+            `${data.skill_name} (${data.execution})`);
+        }
+        else if (data.type === 'layer_s3_skill_execution_done') {
+          const status = data.success ? '✓' : '✗';
+          addTrace('layer_s3_skill_execution_done', `S3 执行完成`,
+            `${status} ${data.skill_name} · ${(data.duration_ms||0).toFixed(0)}ms · ~${data.tokens_streamed||0} token`,
+            data.error ? `错误：${data.error}` : (data.output_preview || '')
+          );
+        }
+        else if (data.type === 'layer4_semantic_search') {
+          const n = (data.results || []).length;
+          lightLayer('l4', n > 0 ? `${n} 条命中` : '无命中');
+          if (n > 0) {
+            addTrace('layer4_semantic_search', 'L4 混合检索',
+              `命中 ${n} 条历史记忆`,
+              data.results.slice(0, 3).map(r => `[${r.category||'?'}] ${r.title} · ${Math.round(r.score*100)}%`).join('\n')
+            );
+          }
+        }
+        else if (data.type === 'token') {
+          responseText += data.text;
+          assistantBubble.textContent = responseText;
+          scrollToBottom();
+        }
+        else if (data.type === 'done') {
+          assistantBubble.classList.remove('streaming');
+          currentSessionId = data.session_id;
+          messageCount = data.message_count;
+          document.getElementById('statMsgs').textContent = messageCount;
+          lightLayer('s4', '已写入');
+          // 重新加载记忆面板
+          loadMemories();
+          loadSkills();
+        }
+        else if (data.type === 'error') {
+          assistantBubble.classList.remove('streaming');
+          assistantBubble.textContent = '❌ ' + (data.message || '未知错误');
+        }
+      }
+    }
+  } catch (e) {
+    assistantBubble.classList.remove('streaming');
+    assistantBubble.textContent = '连接失败：' + e.message;
+  }
+  setLoading(false);
+}
+
+// ── Skills 列表 ───────────────────────────────────────────────────────────────
+
+function markSkillUsed(name) {
+  usedSkillsThisSession.add(name);
+  document.querySelectorAll('.skill-card').forEach(c => {
+    if (c.dataset.name === name) c.classList.add('used');
+  });
+}
+
+async function loadSkills() {
+  try {
+    const resp = await fetch('/skills');
+    const skills = await resp.json();
+    const el = document.getElementById('skillList');
+    document.getElementById('skillCountBadge').textContent = `${skills.length} skill`;
+    if (!skills.length) {
+      el.innerHTML = '<div class="empty-hint">无 skill</div>';
+      return;
+    }
+    el.innerHTML = skills.map(s => `
+      <div class="skill-card" data-name="${escHtml(s.name)}">
+        <div class="sc-head">
+          <span class="sc-name">${escHtml(s.name)}</span>
+          <span class="sc-tag">${escHtml(s.execution)} · ${s.body_chars}字</span>
+        </div>
+        <div class="sc-desc">${escHtml(s.description)}</div>
+        <div class="sc-keywords">${(s.keywords||[]).slice(0,5).map(k=>`<span>${escHtml(k)}</span>`).join('')}</div>
+      </div>
+    `).join('');
+  } catch (e) {}
+}
+
+// ── 记忆 ──────────────────────────────────────────────────────────────────────
+
+async function loadMemories() {
+  try {
+    const resp = await fetch('/memories');
+    const data = await resp.json();
+    document.getElementById('statEntries').textContent = data.entry_count;
+    document.getElementById('statFaiss').textContent = data.faiss_total;
+    document.getElementById('statFts').textContent = data.fts_total + (data.fts_available ? '' : '（BM25不可用）');
+    document.getElementById('statSessions').textContent = data.recent_sessions.length;
+    document.getElementById('userMdViewer').textContent = data.user_md || '（空）';
+    document.getElementById('memoryMdViewer').textContent = data.memory_md || '（空）';
+  } catch (e) {
+    document.getElementById('statusBadge').textContent = '● 连接失败';
+    document.getElementById('statusBadge').classList.remove('online');
+  }
+}
+
+// ── 新会话 / 重置 ──────────────────────────────────────────────────────────────
+
+async function newSession() {
+  if (!confirm('开始新会话？')) return;
+  try {
+    const resp = await fetch('/session/new', { method: 'POST' });
+    const data = await resp.json();
+    currentSessionId = data.session_id;
+    messageCount = 0;
+    document.getElementById('chatMessages').innerHTML = `
+      <div style="text-align:center;padding:25px 0;color:var(--muted);font-size:13px;">
+        新会话 #${currentSessionId} 已开始。<br>记忆从上次会话恢复。
+      </div>`;
+    resetLayers();
+    document.getElementById('statMsgs').textContent = '0';
+    await loadMemories();
+  } catch (e) { alert('新会话失败：' + e.message); }
+}
+
+async function factoryReset() {
+  if (!confirm('⚠️ 确认回到出厂初始态？将清空所有记忆、Skill 调用历史。')) return;
+  setLoading(true);
+  try {
+    const resp = await fetch('/reset', { method: 'POST' });
+    const data = await resp.json();
+    currentSessionId = data.session_id;
+    messageCount = 0;
+    document.getElementById('chatMessages').innerHTML = `
+      <div style="text-align:center;padding:30px 0;color:var(--muted);font-size:13px;">
+        <div style="font-size:28px;margin-bottom:8px;">🔄</div>
+        已回到出厂初始态。新会话 #${currentSessionId} 已开始。
+      </div>`;
+    resetLayers();
+    await loadMemories();
+  } catch (e) { alert('重置失败：' + e.message); }
+  setLoading(false);
+}
+
+async function reloadSkills() {
+  try {
+    const resp = await fetch('/skills/reload', { method: 'POST' });
+    const data = await resp.json();
+    await loadSkills();
+    addMessage('assistant', `↻ 已重载注册表，共 ${data.skill_count} 个 skill。`);
+  } catch (e) { alert('重载失败：' + e.message); }
+}
+
+// ── 初始化 ────────────────────────────────────────────────────────────────────
+
+(async function init() {
+  try {
+    const resp = await fetch('/health');
+    const data = await resp.json();
+    currentSessionId = data.session_id;
+    document.getElementById('statusBadge').textContent = '● 运行中';
+    if (data.model) document.getElementById('modelBadge').textContent = data.model.display;
+    document.getElementById('skillCountBadge').textContent = `${data.skill_count} skill`;
+    // 默认点亮 S0（启动时已完成）
+    lightLayer('s0', `${data.skill_count} 个 · ${data.registry_summary.frontmatter_total_chars} 字符`);
+    await loadSkills();
+    await loadMemories();
+  } catch (e) {
+    document.getElementById('statusBadge').textContent = '● 服务未启动';
+    document.getElementById('statusBadge').classList.remove('online');
+  }
+})();
+</script>
+</body>
+</html>

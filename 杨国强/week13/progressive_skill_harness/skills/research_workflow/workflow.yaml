@@ -1,0 +1,22 @@
+# research_workflow 的工作流定义
+# 字段说明：
+#   skill:    子 skill 名（必须在 registry 中存在）
+#   params:   传给子 skill 的参数
+#             - "$user_query" 会被 harness 自动替换为用户的原始问题
+#   required: 子 skill 失败时是否中止整个 workflow（默认 true）
+name: research_workflow
+
+steps:
+  - skill: web_search
+    required: true
+    params:
+      query: "$user_query"
+      recency: week
+      sources: general
+
+  - skill: summarize
+    required: true
+    params:
+      text: "请基于上面 web_search 的搜索结果进行综合"
+      length: standard
+      focus: general
