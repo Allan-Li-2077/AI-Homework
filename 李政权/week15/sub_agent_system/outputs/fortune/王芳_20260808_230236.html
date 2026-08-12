@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>王芳 · 易经运势简札</title>
+<style>
+:root {
+  --ink: #14241c;
+  --muted: #3d5c4a;
+  --paper: #e8efe6;
+  --card: rgba(248, 252, 248, 0.88);
+  --line: rgba(26, 58, 42, 0.18);
+  --accent: #1f6b4a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh;
+  font-family: "Source Han Serif SC", "Noto Serif SC", "Songti SC",
+               "SimSun", Georgia, serif;
+  color: var(--ink);
+  background: radial-gradient(ellipse at 30% 20%, #f3f7f2 0%, var(--paper) 55%, #d5e0d6 100%);
+}
+.bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 1;
+}
+.bg svg { width: min(92vmin, 820px); height: min(92vmin, 820px); }
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 720px; margin: 0 auto; padding: 2.5rem 1.25rem 3rem;
+}
+header {
+  text-align: center; margin-bottom: 1.75rem;
+}
+header .seal {
+  display: inline-block; font-size: 0.75rem; letter-spacing: 0.25em;
+  color: var(--accent); border: 1px solid var(--accent);
+  padding: 0.2rem 0.6rem; margin-bottom: 0.75rem;
+}
+h1 {
+  font-weight: 600; font-size: 1.75rem; margin: 0.2rem 0;
+  letter-spacing: 0.08em;
+}
+.sub { color: var(--muted); font-size: 0.95rem; margin: 0.4rem 0 0; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(2px);
+  padding: 1.25rem 1.35rem;
+  margin-bottom: 1rem;
+}
+.card h2 {
+  margin: 0 0 0.75rem; font-size: 1.05rem; color: var(--accent);
+  letter-spacing: 0.12em; font-weight: 600;
+}
+.gua-row {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+}
+.gua-box {
+  flex: 1; min-width: 200px;
+  border: 1px dashed var(--line); padding: 0.9rem 1rem; text-align: center;
+}
+.gua-box .sym { font-size: 2rem; line-height: 1.2; }
+.gua-box .name { font-size: 1.15rem; margin-top: 0.35rem; }
+.gua-box .kw { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
+.meta { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+.reading p {
+  margin: 0 0 0.85rem; line-height: 1.85; font-size: 0.98rem;
+  text-align: justify;
+}
+.metrics {
+  font-size: 0.8rem; color: var(--muted); line-height: 1.6;
+  font-family: ui-monospace, Consolas, monospace;
+}
+footer {
+  margin-top: 1.5rem; text-align: center;
+  font-size: 0.78rem; color: var(--muted);
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><circle cx="50" cy="50" r="46" fill="none" stroke="#1a3a2a" stroke-width="0.4" opacity="0.35"/><circle cx="50" cy="50" r="30" fill="none" stroke="#1a3a2a" stroke-width="0.3" opacity="0.25"/><text x="50" y="53" text-anchor="middle" font-size="8" fill="#1a3a2a" opacity="0.2" font-family="serif">太极</text><text x="50" y="12" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☰</text><text x="50" y="17" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">乾</text><text x="78" y="22" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☴</text><text x="78" y="27" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">巽</text><text x="88" y="50" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☵</text><text x="88" y="55" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">坎</text><text x="78" y="78" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☶</text><text x="78" y="83" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">艮</text><text x="50" y="88" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☷</text><text x="50" y="93" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">坤</text><text x="22" y="78" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☳</text><text x="22" y="83" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">震</text><text x="12" y="50" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☲</text><text x="12" y="55" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">离</text><text x="22" y="22" text-anchor="middle" font-size="7" fill="#1a3a2a" opacity="0.28" font-family="serif">☱</text><text x="22" y="27" text-anchor="middle" font-size="3" fill="#1a3a2a" opacity="0.22" font-family="serif">兑</text></svg></div>
+<main class="wrap">
+  <header>
+    <div class="seal">易经运势 · 动态简札</div>
+    <h1>王芳 · 运势简札</h1>
+    <p class="sub">女 · 1995-03-08 · 午时 · 生成于 2026-08-08 23:02:36</p>
+  </header>
+
+  <section class="card">
+    <h2>本卦 · 变卦</h2>
+    <div class="gua-row">
+      <div class="gua-box">
+        <div class="sym">☶☵</div>
+        <div class="name">本卦 · 山水蒙</div>
+        <div class="kw">启蒙求教</div>
+      </div>
+      <div class="gua-box">
+        <div class="sym">☷☵</div>
+        <div class="name">变卦 · 地水师</div>
+        <div class="kw">众志成城</div>
+      </div>
+    </div>
+    <p class="meta" style="margin-top:0.9rem">
+      动爻：上爻<br/>
+      上卦推算：(12+3+8)%8 → 7 艮<br/>
+      下卦推算：(12+3+8+7)%8 → 6 坎<br/>
+      动爻推算：(12+3+8+7)%6 → 6
+    </p>
+  </section>
+
+  <section class="card reading">
+    <h2>解读</h2>
+    <p>王芳，你好。根据你的出生信息推算，得本卦**山水蒙**，因上爻动，变卦为**地水师**。这是你当前人生阶段的缩影，也是一段从内心混沌走向行动整合的过程。蒙卦是求知的起点，师卦则是成熟谋略的开端，两者之间有着承前启后的关系。</p><p>## 一、命局提要</p><p>山水蒙，上艮为山，下坎为水，山中出泉，尚未成江河。水在山中，看不见，只靠渗透，象征人在摸索期，知识和经验的养料尚未贯通。蒙卦的意义不在混沌本身，而在“启蒙”的状态。爻辞说“童蒙求我”，提醒你，人生这个阶段最重要的不是急着去证明什么，而是学会向合适的老师和机会发出诚心的求问。</p><p>六爻动，在蒙卦中称之为“击蒙”。此爻辞原文是“击蒙，不利为寇，利御寇”。“击”有当头警醒之意，但并非打击，而是唤醒。就像山上击鼓，提醒在迷雾中行走的人，方向要调整了，防卫意识要有，但没有必要由此变得攻击性或者害怕一切。</p><p>动爻由阴变阳，以本卦“蒙”之精神来到变卦“师”，就像山中之泉，汇成低地，流动汇聚为众川之势。</p><p>## 二、本卦：山水蒙</p><p>蒙卦的结构是上艮下坎。艮是山，是静止、停顿；坎是水，是风险、流动。山势停留，水下暗涌，直观地看，仿佛一个还未成型的人，面对周围复杂情境，既想向前，又会迟疑。这显示你性格中有多思的一面，心思重，不容易轻易交出自己。但同时你内心并不空，更不是麻木，相反，你有一种想突破、想在自身里找到答案的冲动，只是因为各种原因——也许是外界的评价、家庭的期待、自己的完美主义——一直不敢真正迈出那一步。</p><p>蒙卦给我们的智慧是：“山下出泉，君子以果行育德”。就是说，教育不只是读书学习，更是果决的行动在成就品格。泉水未来时只是水汽，出来就是涓涓细流。因此你现在的不确定感，并不代表你不行，恰恰说明你正站在酝酿能力的时节。许多事不须等万事俱备再启程，真正的“学识”往往来自你迈出第一步后发现错、修正、再走的过程。</p><p>## 三、变卦：地水师</p><p>上六变，下卦坎不变，上卦由艮转坤，卦变地水师。坤为地，为顺，为师，是大众、组织、承载与秩序。而坎为水，在师卦中对应众人之兵，师卦就是统导之卦，象征集结力量、运用资源的能力。</p><p>从蒙到师，是小众的个人修炼，走向了一种与外界的协同。也就是说，你在上一个阶段学到的东西、摸索出的答案，是将被“用出来”的，而且不只是你自己用，你还可能成为别人的组织者、协助者，或者成为某个群体的重要角色。这不一定指真正带兵打仗，而是说，你需要开始拥有“系统思维”，学会搭框架、定秩序、建规则，把个人经验变成一种可共同协作的办法。</p><p>师卦爻辞有“在师中吉，承天宠也”的说法，强调在集体中与他人共事、处得其道，让大势为你加持。所以，你未来最重要的是建立信任和合作，而非孤军奋战。</p><p>## 四、性格与课题</p><p>根据你的基本信息，看这个卦，你的性格比较理想化，又兼具谨慎。你有很强的领悟力，习惯观察、思考，也很容易被情绪或外界氛围影响。当环境不清晰，你容易陷入反复的琢磨，甚至希望找到一个绝对正确的路径再开始。这正是蒙卦中“山下出泉”之缓慢感的来源——不是因为你不行，而是因为你太认真，总想求得安稳。</p><p>你要面对的核心课题，是学会在不确定中仍然行动。很多事你已具备足够的知识、判断力，问题在于你是否信任自己。艮卦的山，既是边界也是象征，它提醒你：最高的稳定，不是躲避变化，而是以稳固的自我作为底座，去与风浪共处。</p><p>第二课题是在师卦中显现的：你也许在理想里只愿意当一个参与者的角色，但现实将推动你走向更核心的位置。这不是让你把自己变成野心驱动的人，而是学会在需要做决定、分配任务、承担责任时，不退缩、不慌乱。</p><p>## 五、运势走势</p><p>**近一年：趋势上，处在“静中求动”的阶段。**</p><p>爻在上六，位置极高，对应你生活中可能存在某种“最后一刻的警醒”，比如工作、学习或某段关系中，旧有的方式会被一件小事触发而带来重新审视。这个阶段阻力与动力并存，建议你稳当地沉住气，把自己带入“学习者”的角色，允许自己不懂和试错。不要急于在表面出成绩，先把体质、心境、逻辑力梳理好。</p><p>**近三年：从“克己”走向“统众”。**</p><p>地水师卦显示，集体事项会在三到五年中更为明显，例如工作项目、团队变动，甚至是家庭事务的决策权转移到你手中。这段时期有利于你脱离“等待指令”的心态，转向主动设计。同时，水在地中，也暗示你有一些未被使用的资源——可能是旧识、长辈关系、过往的技术积累，会在关键时刻替你的路打开一扇门。提醒你的是，师卦强调纪律和分工，越是在好心好意时，也需守住清晰界限，不要把大家的事全部揽到自己身上。</p><p>**五到十年：成果会逐渐物化，稳定性变强。**</p><p>师卦是上下结构之分，此时你已经从“学”过渡到“建”。即便中途仍有换领域的可能，也多半是平行移动，不会从零开始。地水师所对应的坤土，利于做积累型的行业或岗位，如空间管理、教育培训、咨询类、组织运营、文化传承等。潜在事业或生活重心的收获期大约在五到八年之间。前提是你要在此前储备足够多的人脉与合作经验。</p><p>## 六、开运建议</p><p>**一是以水为友。**</p><p>坎水是你的下卦，代表情绪与潜意识。建议用有常规性的活动来引导心绪，如散步、写日记、游泳、黄昏时喝水晒太阳。保持身体的流动性，就是对运势最好的促进。</p><p>**二是以“击蒙”为镜。**</p><p>上六是当头一击的时刻，建议你每隔数月做一次“自我复盘”，不问“我做得好不好”，而问“我从中看到了自己哪个盲点”。记录自己习惯逃避的事，然后挑最小的一件事做一次主动挑战。</p><p>**三是以师为岗。**</p><p>在你最重要的工作或学习领域，尝试多承担统筹、组织、带新人的任务。你不是只能做执行者，你能看见全局与细节之间的差异，这正是师卦最珍贵的能力。让自己多在协作中站出来，运势自然会像水一样找到沟渠，流向平原。</p><p>**四是避免刚愎与过度防御。**</p><p>艮山上限过重容易显得固执，师卦也是兵者，代表有时为了“对”会牺牲柔韧。请给自己设一条心理规则：遇冲突先讲述自己的感受，不要急着断定谁错谁对。这在未来会挡掉很多不该有的争锋。</p><p>## 七、免责声明</p><p>以上解读是基于传统易经卦象逻辑给出的人生参考，旨在启发自我觉察，不构成对具体事业、财务、健康、婚恋等事务的绝对指引。人生之路变化万千，命与运又紧紧相连，请把这里的内容当作一面镜子，最终选择依然来自你自己真实的心境与理性判断。愿你以山中泉水之心拓路，以大地载物之量成事，渐进、不惧、从容向前。</p>
+  </section>
+
+  <section class="card">
+    <h2>本次 Skill 指标</h2>
+    <div class="metrics">
+      elapsed_s: 28.9027<br/>
+      prompt_tokens: 292<br/>
+      completion_tokens: 2072<br/>
+      total_tokens: 2364<br/>
+      model: deepseek-v4-flash
+    </div>
+  </section>
+
+  <footer>传统文化趣味咨询 · 非科学预测 · 每次运行动态生成 · 无外网依赖</footer>
+</main>
+</body>
+</html>
