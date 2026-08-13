@@ -1,4 +1,0 @@
-# Subagent 并行调研系统依赖
-openai>=1.40.0
-fastapi>=0.110.0
-uvicorn>=0.27.0
