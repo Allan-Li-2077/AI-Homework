@@ -1,0 +1,11 @@
+# ── 图编排 Supervisor 项目运行时依赖 ──────────────────────────────
+# LLM 走 OpenAI 兼容接口
+openai>=1.40.0
+
+# HTTP 服务 + SSE
+fastapi>=0.110.0
+uvicorn>=0.27.0
+
+# 无其他依赖：确定性路由 / ReAct 引擎 / ThreadPool 并行 / 拓扑可视化均为手写
+# 联网搜索用 Tavily（标准库 urllib 调用，无需 SDK），可选：未设置 TAVILY_API_KEY
+# 时研究员自动降级为「基于知识作答」模式，系统仍可完整演示
