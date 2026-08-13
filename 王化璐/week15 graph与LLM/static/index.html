@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>求职公司调研 · Subagent 并行 + 知识图谱沉淀</title>
+<style>
+  /* ====== 主流程 UI 样式（教学关注这里）====== */
+  body { font-family: "Microsoft YaHei", Calibri, sans-serif; margin:0; background:#f5f7fa; color:#2D2D2D; }
+  .wrap { max-width:1200px; margin:0 auto; padding:18px; }
+  h1 { color:#1E3A5F; margin:0 0 4px; font-size:22px; }
+  .sub { color:#666; font-size:13px; margin-bottom:14px; }
+  .card { background:#fff; border:1px solid #dedede; border-radius:8px; padding:14px; margin-bottom:12px; }
+  h3 { color:#1E3A5F; margin:0 0 10px; font-size:16px; }
+  .row { display:flex; gap:12px; flex-wrap:wrap; }
+  .row > * { flex:1 1 320px; }
+  input, textarea { width:100%; box-sizing:border-box; border:1px solid #ccc; border-radius:6px; padding:10px; font-size:14px; }
+  textarea { resize:vertical; }
+  label { font-size:12px; color:#666; display:block; margin-bottom:4px; }
+  .ctrl { display:flex; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap; }
+  button { background:#2E86AB; color:#fff; border:none; border-radius:6px; padding:8px 16px; cursor:pointer; font-size:13px; }
+  button:hover { background:#1E3A5F; }
+  button:disabled { background:#aaa; cursor:default; }
+  .ex { background:#EBF4FA; color:#1E3A5F; border:1px solid #2E86AB; }
+  .ex:hover { background:#D6EAF8; }
+  .ghost { background:#fff; color:#2E86AB; border:1px solid #2E86AB; }
+  .ghost:hover { background:#EBF4FA; }
+  .spinner { width:16px; height:16px; border:3px solid #ddd; border-top:#2E86AB; border-radius:50%;
+             animation:spin 1s linear infinite; display:none; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* step 折叠卡片 */
+  .step { border-left:4px solid #2E86AB; background:#fafafa; margin:8px 0; border-radius:4px; }
+  .step.main { border-left-color:#1E3A5F; }
+  .step.sub { border-left-color:#D4720A; }
+  .step.graph { border-left-color:#217B45; }
+  .step.dispatch { border-left-color:#884EA0; }
+  .step.ans { border-left-color:#C0392B; }
+  .step-h { padding:8px 12px; cursor:pointer; font-weight:bold; font-size:13px; display:flex; justify-content:space-between; user-select:none; }
+  .step-h .arrow { transition:transform .2s; }
+  .step.open .arrow { transform:rotate(90deg); }
+  .step-b { padding:10px 12px; border-top:1px solid #eee; font-size:13px; display:none; white-space:pre-wrap; word-break:break-word; }
+  .step.open .step-b { display:block; }
+
+  canvas { background:#fff; border:1px solid #eee; border-radius:6px; display:block; }
+  .ans { font-size:15px; line-height:1.75; white-space:pre-wrap; }
+  .badge { display:inline-block; background:#1E3A5F; color:#fff; border-radius:10px; padding:1px 8px; font-size:11px; margin-left:6px; }
+  .badge.hit { background:#217B45; }
+  .badge.miss { background:#D4720A; }
+  .badge.err { background:#C0392B; }
+  .err { color:#C0392B; }
+
+  /* 统计卡片区 */
+  .stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:10px; margin-top:10px; }
+  .stat { background:#FAFBFD; border:1px solid #E3E8EF; border-radius:6px; padding:10px 12px; }
+  .stat .k { font-size:12px; color:#666; }
+  .stat .v { font-size:22px; font-weight:bold; color:#1E3A5F; margin-top:4px; }
+  .stat .v.g { color:#217B45; }
+  .stat .v.o { color:#D4720A; }
+
+  .kpi-row { display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; }
+  .kpi { background:#F0F3F8; border-radius:4px; padding:2px 8px; font-size:12px; color:#333; }
+  .kpi b { color:#1E3A5F; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>求职公司调研 · Subagent 并行 + 知识图谱沉淀</h1>
+  <div class="sub">
+    主 Agent 自主路由：单事实直搜 / 多侧面派发 5 个 Subagent 并行调研 / 调研完成自动抽三元组存入 Neo4j
+    <br>第二次问相同公司 → 直接图谱命中（1s 返回，对比第一次 30s+ 演示复用价值）
+  </div>
+
+  <!-- ── 顶部输入区 ── -->
+  <div class="card">
+    <div class="row">
+      <div>
+        <label>公司名（支持别名：字节跳动/抖音集团/ByteDance 都会自动归一）</label>
+        <input id="company" placeholder="例如：字节跳动、商汤科技、科大讯飞、百度…" value="字节跳动">
+      </div>
+      <div>
+        <label>问题 / 调研维度（2 个以上维度会自动派 Subagent 并行）</label>
+        <input id="question" placeholder="例如：业务、薪资、技术栈、面试流程、行业前景" value="业务板块、薪资待遇（校招）、技术栈、面试流程、行业前景与口碑">
+      </div>
+    </div>
+    <div class="ctrl">
+      <button id="askBtn" onclick="ask()">▶ 开始调研（先查图，没命中再并行调研并存图）</button>
+      <button class="ghost" onclick="loadGraph()">📊 查看图谱当前状态 / 重绘此公司子图</button>
+      <button class="ghost" onclick="healthCheck()">🔌 健康检查</button>
+      <div id="spin" class="spinner"></div>
+    </div>
+    <div class="ctrl" style="margin-top:8px">
+      <span style="font-size:12px;color:#666">一键示例：</span>
+      <button class="ex" onclick="fill('字节跳动','业务、薪资、技术栈、面试、前景')">字节跳动</button>
+      <button class="ex" onclick="fill('商汤科技','主营业务、薪资、技术栈、面试流程、员工评价')">商汤科技</button>
+      <button class="ex" onclick="fill('科大讯飞','研发投入、AI技术栈、薪资、面试、前景')">科大讯飞</button>
+      <button class="ex" onclick="fill('百度','搜索/文心/自动驾驶三板块、薪资、技术栈、面试经验')">百度</button>
+    </div>
+  </div>
+
+  <!-- ── 图谱状态 & 子图可视化 ── -->
+  <div class="card">
+    <h3>知识图谱 <span id="graphBadge" class="badge">待连接</span></h3>
+    <div class="row">
+      <div>
+        <canvas id="graphCanvas" width="580" height="380"></canvas>
+      </div>
+      <div>
+        <div id="graphStats"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 加速比统计卡片 ── -->
+  <div id="statsCard" class="card" style="display:none">
+    <h3>本次运行指标</h3>
+    <div class="stats" id="statsBox"></div>
+  </div>
+
+  <!-- ── 流水线步骤卡片 ── -->
+  <div class="card">
+    <h3>运行全链路 Trace（可点击折叠）</h3>
+    <div id="steps"></div>
+  </div>
+
+  <!-- ── 最终答案 ── -->
+  <div class="card" id="ansCard" style="display:none">
+    <h3>最终报告 <span id="ansBadge" class="badge"></span></h3>
+    <div id="ans" class="ans"></div>
+  </div>
+</div>
+
+<script src="/static/viz/force_graph.js"></script>
+<script>
+let forceGraph = null;
+
+// ==================== 工具函数 ====================
+function fill(company, q) {
+  document.getElementById('company').value = company;
+  document.getElementById('question').value = q;
+}
+function card(cls, title, body, open) {
+  const d = document.createElement('div');
+  d.className = 'step ' + cls + (open ? ' open' : '');
+  d.innerHTML = `<div class="step-h"><span>${title}</span><span class="arrow">▶</span></div>
+                 <div class="step-b"></div>`;
+  d.querySelector('.step-h').onclick = () => d.classList.toggle('open');
+  const box = d.querySelector('.step-b');
+  if (typeof body === 'string') box.textContent = body;
+  else if (body instanceof HTMLElement) box.appendChild(body);
+  else if (body) box.textContent = JSON.stringify(body, null, 2);
+  return d;
+}
+function renderMainSteps(mainSteps, box) {
+  mainSteps.forEach((s, i) => {
+    let title = `[主Agent 第${s.step_index||(i+1)}步]`;
+    if (s.action) title += ` Action = ${s.action}`;
+    if (s.final_answer) title += ' 👉 Final Answer';
+    let bodyText = '';
+    if (s.thought)       bodyText += `【Thought】\n${s.thought}\n\n`;
+    if (s.action_input)  bodyText += `【Action Input】\n${s.action_input}\n\n`;
+    if (s.observation)   bodyText += `【Observation】\n${s.observation}`;
+    bodyText += `\n\n(本步耗时 ${(s.elapsed_ms||0)} ms)`;
+    box.appendChild(card('main', title, bodyText, s.action === 'dispatch_subagents' || s.action === 'store_to_graph'));
+  });
+}
+function renderSubResults(subResults, box) {
+  subResults.forEach(sr => {
+    const title = `[Subagent] ${sr.name || 'sub'}  ·  ${sr.step_count||0} 步  ·  耗时 ${sr.total_ms||0}ms`;
+    const body = (sr.final_answer || '') + '\n\n--- 步骤回读 ---\n' +
+      (sr.steps||[]).map((st, i) => `步${i+1}: ${st.thought ? 'Thought='+st.thought.slice(0,60) : ''} ${st.action ? '| Action='+st.action : ''}`).join('\n');
+    box.appendChild(card('sub', title, body, false));
+  });
+}
+function renderStatsBox(trace) {
+  const host = document.getElementById('statsBox');
+  host.innerHTML = '';
+  const add = (k, v, cls) => {
+    const d = document.createElement('div'); d.className = 'stat';
+    d.innerHTML = `<div class="k">${k}</div><div class="v ${cls||''}">${v}</div>`;
+    host.appendChild(d);
+  };
+  add('总耗时', (trace.total_ms/1000).toFixed(1)+' s');
+  if (trace.parallel && trace.parallel.speedup_x) {
+    add('dispatch段加速', trace.parallel.speedup_x.toFixed(2)+' x', 'o');
+    add('dispatch墙钟 / 串行和', `${(trace.parallel.wall_ms/1000).toFixed(1)} / ${(trace.parallel.serial_sum_ms/1000).toFixed(1)} s`);
+  }
+  if (trace.graph_info && trace.graph_info.from_graph) {
+    add('图谱复用加速', ((trace.total_ms<1?1:trace.total_ms)/(trace.graph_info.elapsed_ms||1)).toFixed(1)+' x', 'g');
+    add('子图三元组', trace.graph_info.subgraph_triples || 0);
+  }
+  document.getElementById('statsCard').style.display = 'block';
+}
+
+// ==================== 核心：发起调研 ====================
+async function ask() {
+  const company = document.getElementById('company').value.trim();
+  const question = document.getElementById('question').value.trim();
+  if (!company || !question) return;
+  const btn = document.getElementById('askBtn');
+  const spin = document.getElementById('spin');
+  btn.disabled = true; spin.style.display = 'inline-block';
+  document.getElementById('ansCard').style.display = 'none';
+  document.getElementById('statsCard').style.display = 'none';
+  const stepsBox = document.getElementById('steps');
+  stepsBox.innerHTML = '';
+
+  try {
+    const resp = await fetch(`/run?company=${encodeURIComponent(company)}&question=${encodeURIComponent(question)}`);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const trace = await resp.json();
+    console.log('[TRACE]', trace);
+
+    // 1) 图谱命中提示
+    if (trace.graph_info && trace.graph_info.from_graph) {
+      stepsBox.appendChild(card('graph', '📚 知识图谱命中 → 直接 Local Search 合成（不派 Subagent）',
+        `图谱子图 ${trace.graph_info.subgraph_triples||0} 条三元组，耗时 ${trace.graph_info.elapsed_ms||0} ms\n\n【图检索合成的答案上下文会在最终答案里体现】`, true));
+      // 画子图：尝试拉 2 跳子图 JSON
+      try { renderCompanySubgraph(company); } catch(e){}
+    }
+
+    // 2) 主 Agent 步骤
+    if (trace.main_steps && trace.main_steps.length) {
+      renderMainSteps(trace.main_steps, stepsBox);
+    }
+
+    // 3) dispatch + subagent 汇总
+    if (trace.sub_results && trace.sub_results.length) {
+      const dsp = trace.parallel || {};
+      stepsBox.appendChild(card('dispatch',
+        `🚀 Subagent 并行派发完成 · 加速比 ${(dsp.speedup_x||0).toFixed(2)}x`,
+        `并行墙钟: ${(dsp.wall_ms||0)} ms\n串行总和: ${(dsp.serial_sum_ms||0)} ms\n子调研员数量: ${trace.sub_results.length}`, true));
+      renderSubResults(trace.sub_results, stepsBox);
+    }
+
+    // 4) 最终答案
+    document.getElementById('ans').textContent = trace.final_answer || '(空)';
+    const badge = document.getElementById('ansBadge');
+    if (trace.graph_info && trace.graph_info.from_graph) {
+      badge.textContent = '知识图谱命中 · '+((trace.total_ms/1000).toFixed(2))+'s';
+      badge.className = 'badge hit';
+    } else {
+      badge.textContent = '新调研并存图 · '+((trace.total_ms/1000).toFixed(2))+'s';
+      badge.className = 'badge miss';
+    }
+    document.getElementById('ansCard').style.display = 'block';
+
+    // 5) 统计卡
+    renderStatsBox(trace);
+
+    // 6) 刷新图谱规模
+    healthCheck();
+  } catch (e) {
+    stepsBox.innerHTML = '<div class="card err">请求失败：'+e+'<br>请确认 serve.py 已启动，端口 8000 可访问。</div>';
+  } finally {
+    btn.disabled = false; spin.style.display = 'none';
+  }
+}
+
+// ==================== 健康检查 + 图谱统计 ====================
+async function healthCheck() {
+  try {
+    const r = await fetch('/health');
+    const d = await r.json();
+    const b = document.getElementById('graphBadge');
+    if (d.neo4j_nodes != null) {
+      b.textContent = `✔ Neo4j 已连 · ${d.neo4j_nodes} 节点 / ${d.neo4j_edges} 边`;
+      b.className = 'badge hit';
+    } else {
+      b.textContent = '⚠ Neo4j 未连接';
+      b.className = 'badge err';
+    }
+    // 顺便拉详细 stats 渲染
+    try { const r2 = await fetch('/graph/stats'); renderGraphStats(await r2.json()); } catch(e){}
+    return d;
+  } catch (e) {
+    document.getElementById('graphBadge').textContent = '❌ 服务未启动';
+    document.getElementById('graphBadge').className = 'badge err';
+  }
+}
+
+async function renderGraphStats(d) {
+  const host = document.getElementById('graphStats');
+  if (!d || d.error) { host.innerHTML = '<div style="color:#C0392B">Neo4j 未连接：'+(d&&d.error)+'</div>'; return; }
+  let html = `<div class="kpi-row">
+    <span class="kpi">总节点 <b>${d.nodes||0}</b></span>
+    <span class="kpi">总边 <b>${d.edges||0}</b></span>
+  </div>`;
+  html += `<div style="margin-top:10px"><b>按实体类型：</b><div class="kpi-row">`;
+  (d.by_label||[]).forEach(l => html += `<span class="kpi">${l.lbl||'?'} <b>${l.c||0}</b></span>`);
+  html += `</div></div>`;
+  html += `<div style="margin-top:10px"><b>按关系类型：</b><div class="kpi-row">`;
+  (d.by_relation||[]).forEach(t => html += `<span class="kpi">${t.t||'?'} <b>${t.c||0}</b></span>`);
+  html += `</div></div>`;
+  if (d.last_build) {
+    html += `<div style="margin-top:12px;font-size:12px;color:#666">最近 build_graph：${d.last_build.timestamp||''}<br>
+      合并节点 ${d.last_build.merged_nodes||0}，合并边 ${d.last_build.merged_edges||0}，耗时 ${d.last_build.elapsed_ms||0}ms</div>`;
+  }
+  host.innerHTML = html;
+}
+
+// ==================== 画某公司 2 跳子图 ====================
+async function loadGraph() {
+  await healthCheck();
+  const company = document.getElementById('company').value.trim();
+  if (company) await renderCompanySubgraph(company);
+}
+async function renderCompanySubgraph(company) {
+  // 用同步 /run 的方式其实拿不到子图节点数组（retrieve.py 只返回字符串），
+  // 所以我们通过 /graph/stats 拿到规模，再用一个"全图谱采样 + 过滤高亮公司"的简化方式渲染：
+  // 简化版：所有 Company 节点 + 它们的直接邻居，构建 nodes/edges 数组给 ForceGraph
+  try {
+    const r = await fetch('/graph/stats');
+    const d = await r.json();
+    if (d.error || !d.nodes) return;
+  } catch(e){}
+  // 直接调一个后门：我们临时用 Cypher 通过 /graph/subgraph 接口（如果没实现，就降级）
+  try {
+    const resp = await fetch('/graph/subgraph?company=' + encodeURIComponent(company));
+    if (!resp.ok) throw new Error('');
+    const sg = await resp.json();
+    drawForce(sg.nodes || [], sg.edges || []);
+    return;
+  } catch(e) { /* fallback，下面退化 */ }
+  // Fallback：画空图并提示"请以 research_or_query 触发存图后再看"
+  drawForce([], []);
+  const cv = document.getElementById('graphCanvas');
+  const ctx = cv.getContext('2d');
+  ctx.font = '14px "Microsoft YaHei"';
+  ctx.fillStyle = '#666';
+  ctx.textAlign = 'center';
+  ctx.fillText('先运行一次调研存图后，再点这里重绘子图', cv.width/2, cv.height/2);
+}
+
+function drawForce(nodes, edges) {
+  const cv = document.getElementById('graphCanvas');
+  if (!forceGraph) forceGraph = new ForceGraph(cv);
+  else { forceGraph.canvas = cv; forceGraph.ctx = cv.getContext('2d'); forceGraph.clear(); }
+  forceGraph.setData(nodes || [], edges || []);
+  if ((nodes||[]).length) forceGraph.start();
+}
+
+// ==================== 页面一打开先跑健康检查 ====================
+window.addEventListener('DOMContentLoaded', healthCheck);
+</script>
+</body>
+</html>
