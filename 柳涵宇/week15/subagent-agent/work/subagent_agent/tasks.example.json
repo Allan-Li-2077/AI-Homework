@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Investigate requirements",
+    "kind": "research",
+    "description": "Clarify the user goal and collect constraints."
+  },
+  {
+    "title": "Implement feature",
+    "kind": "code",
+    "description": "Make the smallest useful version of the requested system."
+  },
+  {
+    "title": "Review implementation",
+    "kind": "review",
+    "description": "Find defects, missing tests, and failure modes."
+  },
+  {
+    "title": "Prepare delivery notes",
+    "kind": "write",
+    "description": "Summarize outputs from all subagents."
+  }
+]
