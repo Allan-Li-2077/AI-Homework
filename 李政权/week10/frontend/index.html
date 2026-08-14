@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>白酒年报智能客服</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <p class="brand">酱香智询</p>
+        <h1>白酒年报智能客服</h1>
+        <p class="sub">覆盖贵州茅台、五粮液、泸州老窖、习酒 2022–2025 年报知识库</p>
+      </div>
+    </header>
+
+    <main class="chat-shell">
+      <aside class="side">
+        <h2>快捷提问</h2>
+        <button type="button" class="chip" data-q="贵州茅台2023年营业收入是多少？">茅台2023营收</button>
+        <button type="button" class="chip" data-q="五粮液2023年净利润是多少？">五粮液2023净利润</button>
+        <button type="button" class="chip" data-q="泸州老窖2022年分红情况如何？">老窖2022分红</button>
+        <button type="button" class="chip" data-q="习酒2024年经营概况是什么？">习酒2024概况</button>
+        <button type="button" class="chip" data-q="洋河股份2023年报净利润是多少？">洋河年报（应拒答）</button>
+        <button type="button" class="chip" data-q="用一句话介绍酱香型白酒">闲聊：酱香白酒</button>
+        <div class="legend">
+          <span><i class="dot rag"></i>知识库</span>
+          <span><i class="dot llm"></i>通用回答</span>
+          <span><i class="dot none"></i>无相关知识</span>
+        </div>
+      </aside>
+
+      <section class="chat">
+        <div id="messages" class="messages" aria-live="polite"></div>
+        <form id="form" class="composer">
+          <textarea id="input" rows="2" placeholder="请输入问题，例如：贵州茅台2023年营业收入是多少？" required></textarea>
+          <button type="submit" id="send">发送</button>
+        </form>
+      </section>
+    </main>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

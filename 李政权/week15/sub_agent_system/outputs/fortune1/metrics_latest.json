@@ -1,0 +1,20 @@
+{
+  "skill": "yijing-sizhu-gua1",
+  "mode": "llm_html",
+  "fallback": true,
+  "input": {
+    "name": "李明",
+    "gender": "男",
+    "birth": "1990-08-15",
+    "shichen": "亥"
+  },
+  "ben_gua": "水泽节",
+  "bian_gua": "风泽中孚",
+  "elapsed_s": 46.4346,
+  "prompt_tokens": 417,
+  "completion_tokens": 6000,
+  "total_tokens": 6417,
+  "model": "deepseek-v4-flash",
+  "output_path": "D:\\workspace\\ai\\hub-ZOgH\\李政权\\week14\\agent_memory_system\\outputs\\fortune1\\李明_20260808_234107.html",
+  "generated_at": "2026-08-08 23:41:07"
+}
