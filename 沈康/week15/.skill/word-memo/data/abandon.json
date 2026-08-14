@@ -1,0 +1,28 @@
+{
+  "word": "abandon",
+  "phonetic": "/əˈbændən/",
+  "pos": "v. / n.",
+  "definition": "放弃，抛弃；离弃（某人）；n. 放纵，尽情",
+  "root_analysis": "a-(朝向) + bandon(控制权) → 交出控制权 → 放弃、抛弃。核心记 ban(管辖)。",
+  "derivatives": [
+    {"word": "abandoned", "pos": "adj.", "meaning": "被遗弃的；放荡的"},
+    {"word": "abandonment", "pos": "n.", "meaning": "放弃；遗弃"},
+    {"word": "abandoner", "pos": "n.", "meaning": "抛弃者"},
+    {"word": "self-abandonment", "pos": "n.", "meaning": "自我放纵"}
+  ],
+  "mnemonics": [
+    "谐音：'额，不能都'——东西太多，只好放弃一部分。",
+    "画面：把满满行李全扔在月台，头也不回地离开。",
+    "故事：想象一个国王放弃了王位，去追求自由的生活。"
+  ],
+  "associations": {
+    "synonyms": ["desert", "forsake", "give up"],
+    "antonyms": ["keep", "retain", "maintain"],
+    "theme": ["quit", "discard", "surrender"]
+  },
+  "examples": [
+    {"en": "They had to abandon the sinking ship.", "zh": "他们不得不弃船逃生。"},
+    {"en": "She danced with wild abandon.", "zh": "她纵情地跳舞。"},
+    {"en": "He abandoned his car and walked home.", "zh": "他弃车步行回家。"}
+  ]
+}

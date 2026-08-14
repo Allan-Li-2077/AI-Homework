@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hello - Word Memo</title>
+<style>
+  :root {
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --ink: #1f2937;
+    --muted: #6b7280;
+    --accent: #0d9488;
+    --accent2: #6366f1;
+    --accent-soft: #e6fffb;
+    --border: #e5e7eb;
+    --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Microsoft YaHei", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 20px;
+  }
+  .card {
+    width: 100%;
+    max-width: 760px;
+    background: var(--card);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .header {
+    padding: 32px 36px 26px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    color: #fff;
+  }
+  .word { margin: 0; font-size: 46px; font-weight: 700; letter-spacing: -0.5px; }
+  .phonetic { margin-top: 8px; font-size: 18px; opacity: 0.92; font-style: italic; }
+  .body { padding: 28px 36px 36px; }
+  .definition {
+    font-size: 20px; line-height: 1.6; padding: 14px 16px;
+    background: var(--accent-soft); border-left: 4px solid var(--accent);
+    border-radius: 8px;
+  }
+  .definition .pos { color: var(--accent); font-weight: 600; margin-right: 6px; }
+  h2 {
+    margin: 30px 0 14px; font-size: 15px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .root {
+    padding: 14px 16px; background: #fffbea; border: 1px dashed #f0c000;
+    border-radius: 10px; font-size: 16px; line-height: 1.6;
+  }
+  table.deriv { width: 100%; border-collapse: collapse; font-size: 15px; }
+  table.deriv th, table.deriv td {
+    text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border);
+  }
+  table.deriv th { color: var(--muted); font-weight: 600; font-size: 13px; }
+  table.deriv td.w { font-weight: 600; color: var(--accent2); }
+  table.deriv td.p { color: var(--accent); white-space: nowrap; }
+  .mnemonics { list-style: none; padding: 0; margin: 0; }
+  .mnemonics li {
+    padding: 12px 16px; margin-bottom: 10px; background: #fdf2f8;
+    border: 1px solid #fbcfe8; border-radius: 10px; line-height: 1.6;
+  }
+  .assoc-group { margin-bottom: 12px; }
+  .assoc-label { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tags .tag {
+    padding: 5px 12px; border-radius: 999px; font-size: 14px; font-weight: 500;
+    background: var(--accent-soft); color: var(--accent);
+  }
+  .tags .tag.ant { background: #fee2e2; color: #dc2626; }
+  .tags .tag.theme { background: #eef2ff; color: var(--accent2); }
+  .examples { list-style: none; padding: 0; margin: 0; }
+  .examples li {
+    padding: 14px 16px; margin-bottom: 10px; background: #fafafa;
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+  .examples .en { font-size: 17px; line-height: 1.55; }
+  .examples .zh { margin-top: 6px; font-size: 14px; color: var(--muted); line-height: 1.55; }
+  .footer {
+    margin-top: 30px; padding-top: 16px; border-top: 1px dashed var(--border);
+    font-size: 12px; color: var(--muted); text-align: center;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1 class="word">hello</h1>
+      <div class="phonetic">/həˈloʊ/</div>
+    </div>
+    <div class="body">
+      <div class="definition">
+        <span class="pos">int. / n.</span>喂；你好；表示问候；打招呼；喊叫以引起注意
+      </div>
+
+      <h2>词根词缀</h2>
+      <div class="root">无明显词根词缀，为独立词汇</div>
+
+      <h2>派生词</h2>
+      <table class="deriv"><thead><tr><th>派生词</th><th>词性</th><th>释义</th></tr></thead><tbody>
+        <tr><td class="w">hello</td><td class="p">n.</td><td>表示问候的声音或手势</td></tr>
+        <tr><td class="w">hellos</td><td class="p">n.</td><td>问候的复数形式</td></tr>
+        <tr><td class="w">helloer</td><td class="p">n.</td><td>发出问候的人</td></tr>
+      </tbody></table>
+
+      <h2>联想记忆</h2>
+      <ul class="mnemonics">
+        <li>想象你在电话里说&#x27;Hello&#x27;时，手在做着打电话的手势。</li>
+        <li>将&#x27;Hello&#x27;联想成&#x27; Heller牛 &#x27;，想象一头会说人话的牛向你问好。</li>
+      </ul>
+
+      <h2>关联词</h2>
+      <div class="assoc-group"><div class="assoc-label">近义词</div><div class="tags"><span class="tag ">hi</span><span class="tag ">hey</span><span class="tag ">greetings</span></div></div><div class="assoc-group"><div class="assoc-label">反义词</div><div class="tags"><span class="tag ant">goodbye</span><span class="tag ant">farewell</span></div></div><div class="assoc-group"><div class="assoc-label">同主题</div><div class="tags"><span class="tag theme">greeting</span><span class="tag theme">salutation</span></div></div>
+
+      <h2>例句</h2>
+      <ul class="examples">
+        <li><div class="en">Hello, how are you?</div><div class="zh">你好，你好吗？</div></li>
+        <li><div class="en">She said hello to everyone.</div><div class="zh">她向每个人问好。</div></li>
+        <li><div class="en">A hello and a smile can make someone&#x27;s day.</div><div class="zh">一句问候和一个微笑可以让人开心一整天。</div></li>
+        <li><div class="en">He gave her a little wave and a cheery hello.</div><div class="zh">他朝她挥了挥手，并愉快地打了声招呼。</div></li>
+      </ul>
+
+      <div class="footer">Word Memo · 拆词根 · 记派生 · 巧联想</div>
+    </div>
+  </div>
+</body>
+</html>
