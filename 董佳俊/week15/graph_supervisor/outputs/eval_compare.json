@@ -1,0 +1,73 @@
+{
+  "summary": {
+    "avg_parallel_s": 18.66,
+    "avg_serial_s": 23.19,
+    "avg_fanout_speedup": 1.35,
+    "avg_e2e_speedup": 1.24
+  },
+  "details": [
+    {
+      "question": "帮我调研一下中国咖啡市场现状，算一算近三年市场规模（2021年3817亿元、2022年4856亿元、2023年6188亿元）的年均增速，再写一篇 800 字左右的公众号推文，面向想开店创业的人",
+      "parallel": {
+        "wall": 20.3,
+        "task_type": "dag",
+        "n_nodes": 3,
+        "fanout_wall": 12.05,
+        "fanout_serial": 19.45,
+        "fanout_speedup": 1.61,
+        "total_speedup": 1.36
+      },
+      "serial": {
+        "wall": 29.88,
+        "task_type": "dag",
+        "n_nodes": 3,
+        "fanout_wall": 20.7,
+        "fanout_serial": 20.69,
+        "fanout_speedup": 1.0,
+        "total_speedup": 1.0
+      }
+    },
+    {
+      "question": "调研中国扫地机器人行业的市场规模与竞争格局；已知 2021-2023 年市场规模为 108/124/141 亿元，用工具计算同比增速和 CAGR",
+      "parallel": {
+        "wall": 17.29,
+        "task_type": "dag",
+        "n_nodes": 2,
+        "fanout_wall": 10.76,
+        "fanout_serial": 15.41,
+        "fanout_speedup": 1.43,
+        "total_speedup": 1.27
+      },
+      "serial": {
+        "wall": 21.92,
+        "task_type": "dag",
+        "n_nodes": 2,
+        "fanout_wall": 13.8,
+        "fanout_serial": 13.8,
+        "fanout_speedup": 1.0,
+        "total_speedup": 1.0
+      }
+    },
+    {
+      "question": "写一篇新能源汽车行业科普推文，先调研行业现状",
+      "parallel": {
+        "wall": 18.38,
+        "task_type": "dag",
+        "n_nodes": 2,
+        "fanout_wall": 11.02,
+        "fanout_serial": 11.01,
+        "fanout_speedup": 1.0,
+        "total_speedup": 1.0
+      },
+      "serial": {
+        "wall": 17.78,
+        "task_type": "dag",
+        "n_nodes": 2,
+        "fanout_wall": 9.08,
+        "fanout_serial": 9.08,
+        "fanout_speedup": 1.0,
+        "total_speedup": 1.0
+      }
+    }
+  ]
+}
