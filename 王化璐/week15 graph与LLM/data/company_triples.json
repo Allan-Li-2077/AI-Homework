@@ -1,0 +1,3896 @@
+[
+  {
+    "source": "字节跳动_字节跳动 主营业务与业务板块",
+    "entities": [
+      {
+        "name": "字节跳动",
+        "type": "Company"
+      },
+      {
+        "name": "抖音板块",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "大力教育板块",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "飞书板块",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "火山引擎板块",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "朝夕光年板块",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "TikTok板块",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "梁汝波",
+        "type": "Person"
+      },
+      {
+        "name": "张一鸣",
+        "type": "Person"
+      },
+      {
+        "name": "周受资",
+        "type": "Person"
+      },
+      {
+        "name": "今日头条",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "西瓜视频",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "搜索",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "百科",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "国内垂直服务业务",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "智慧学习",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "成人教育",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "智能硬件",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "校园合作",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "飞书",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "EE（企业效率部门）",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "EA（企业应用部门）",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "企业协作与管理服务",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "企业级技术服务云平台",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "中台技术能力",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "云计算",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "AI",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "大数据",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "游戏研发与发行",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "沐瞳科技",
+        "type": "Company"
+      },
+      {
+        "name": "无尽对决",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "TikTok平台业务",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "广告收入",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "抖音",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "今日头条",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "国内广告收入",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "对外投资",
+        "type": "BusinessSegment"
+      }
+    ],
+    "relations": [
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "抖音板块",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "大力教育板块",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "飞书板块",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "火山引擎板块",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "朝夕光年板块",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "TikTok板块",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "梁汝波",
+        "subject_type": "Person",
+        "relation": "SERVES_AS",
+        "object": "字节跳动",
+        "object_type": "Company",
+        "attributes": {
+          "role": "CEO"
+        }
+      },
+      {
+        "subject": "张一鸣",
+        "subject_type": "Person",
+        "relation": "SERVES_AS",
+        "object": "字节跳动",
+        "object_type": "Company",
+        "attributes": {
+          "role": "前任CEO"
+        }
+      },
+      {
+        "subject": "周受资",
+        "subject_type": "Person",
+        "relation": "SERVES_AS",
+        "object": "TikTok板块",
+        "object_type": "BusinessSegment",
+        "attributes": {
+          "role": "CEO"
+        }
+      },
+      {
+        "subject": "抖音板块",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "字节跳动",
+        "object_type": "Company",
+        "attributes": {}
+      },
+      {
+        "subject": "大力教育板块",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "字节跳动",
+        "object_type": "Company",
+        "attributes": {}
+      },
+      {
+        "subject": "飞书板块",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "字节跳动",
+        "object_type": "Company",
+        "attributes": {}
+      },
+      {
+        "subject": "火山引擎板块",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "字节跳动",
+        "object_type": "Company",
+        "attributes": {}
+      },
+      {
+        "subject": "朝夕光年板块",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "字节跳动",
+        "object_type": "Company",
+        "attributes": {}
+      },
+      {
+        "subject": "TikTok板块",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "字节跳动",
+        "object_type": "Company",
+        "attributes": {}
+      },
+      {
+        "subject": "抖音板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "今日头条",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "抖音板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "西瓜视频",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "抖音板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "搜索",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "抖音板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "百科",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "抖音板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "国内垂直服务业务",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "大力教育板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "智慧学习",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "大力教育板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "成人教育",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "大力教育板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "智能硬件",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "大力教育板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "校园合作",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "飞书板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "飞书",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "飞书板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "EE（企业效率部门）",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "飞书板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "EA（企业应用部门）",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "飞书板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "企业协作与管理服务",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "火山引擎板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "企业级技术服务云平台",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "火山引擎板块",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "云计算",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "火山引擎板块",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "AI",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "火山引擎板块",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "大数据",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "朝夕光年板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "游戏研发与发行",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "朝夕光年板块",
+        "subject_type": "BusinessSegment",
+        "relation": "HAS_PERSON",
+        "object": "沐瞳科技",
+        "object_type": "Company",
+        "attributes": {
+          "relation": "全资收购"
+        }
+      },
+      {
+        "subject": "沐瞳科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "无尽对决",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "TikTok板块",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "TikTok平台业务",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "广告收入",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "抖音",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "今日头条",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "国内广告收入",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "对外投资",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      }
+    ],
+    "raw_text_len": 765,
+    "llm_calls": 1,
+    "elapsed_ms": 10826
+  },
+  {
+    "source": "字节跳动_字节跳动 薪资待遇与福利（看准网/脉脉2",
+    "entities": [
+      {
+        "name": "字节跳动",
+        "type": "Company"
+      },
+      {
+        "name": "看准网",
+        "type": "Company"
+      },
+      {
+        "name": "脉脉",
+        "type": "Company"
+      },
+      {
+        "name": "中国证券报",
+        "type": "Company"
+      },
+      {
+        "name": "36氪",
+        "type": "Company"
+      },
+      {
+        "name": "九派财经",
+        "type": "Company"
+      },
+      {
+        "name": "阿里",
+        "type": "Company"
+      },
+      {
+        "name": "腾讯",
+        "type": "Company"
+      },
+      {
+        "name": "研发/技术岗",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "销售岗",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "AI相关岗位",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "豆包AI应用工程师",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "Seed大模型数据工程师",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "T2.1级别研发工程师",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "2024年字节跳动研发工程师月薪均值31000元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年字节跳动研发工程师年终奖98000元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年豆包AI应用工程师月薪最高70000元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年Seed大模型数据工程师月薪最高90000元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年字节跳动销售岗平均月薪16000元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年字节跳动销售岗薪资分布8K-14K占比52%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年字节跳动销售岗薪资分布14K-20K",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年字节跳动年终奖最高3个月月薪",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年字节跳动期权回购在职员工价170.81美元/股",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年字节跳动期权回购离职员工价145.19美元/股",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年字节跳动春节红包288-3688元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年字节跳动被动离职员工社保补贴最高7.2万元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年字节跳动期权归属比例20%-25%-25%-30%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年字节跳动绩效期权额外增发约10%股数",
+        "type": "SalaryIndicator"
+      }
+    ],
+    "relations": [
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "研发/技术岗",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "销售岗",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "AI相关岗位",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "豆包AI应用工程师",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "Seed大模型数据工程师",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "T2.1级别研发工程师",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PERSON",
+        "object": "看准网",
+        "object_type": "Company",
+        "attributes": {
+          "source": "看准网薪资统计"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PERSON",
+        "object": "脉脉",
+        "object_type": "Company",
+        "attributes": {
+          "source": "脉脉职得去公司榜"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PERSON",
+        "object": "中国证券报",
+        "object_type": "Company",
+        "attributes": {
+          "source": "期权回购"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PERSON",
+        "object": "36氪",
+        "object_type": "Company",
+        "attributes": {
+          "source": "激励调整"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PERSON",
+        "object": "九派财经",
+        "object_type": "Company",
+        "attributes": {
+          "source": "福利调整"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "阿里",
+        "object_type": "Company",
+        "attributes": {
+          "note": "脉脉榜单对比"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "腾讯",
+        "object_type": "Company",
+        "attributes": {
+          "note": "脉脉榜单对比"
+        }
+      },
+      {
+        "subject": "T2.1级别研发工程师",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "2024年字节跳动研发工程师月薪均值31000元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024,
+          "role": "研发工程师"
+        }
+      },
+      {
+        "subject": "T2.1级别研发工程师",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "2024年字节跳动研发工程师年终奖98000元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024,
+          "role": "研发工程师"
+        }
+      },
+      {
+        "subject": "豆包AI应用工程师",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "2024年豆包AI应用工程师月薪最高70000元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024,
+          "role": "AI应用工程师"
+        }
+      },
+      {
+        "subject": "Seed大模型数据工程师",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "2024年Seed大模型数据工程师月薪最高90000元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024,
+          "role": "数据工程师"
+        }
+      },
+      {
+        "subject": "销售岗",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "2024年字节跳动销售岗平均月薪16000元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024,
+          "role": "销售"
+        }
+      },
+      {
+        "subject": "销售岗",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "2024年字节跳动销售岗薪资分布8K-14K占比52%",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024,
+          "role": "销售"
+        }
+      },
+      {
+        "subject": "销售岗",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "2024年字节跳动销售岗薪资分布14K-20K",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024,
+          "role": "销售"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "2024年字节跳动年终奖最高3个月月薪",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "2024年字节跳动期权回购在职员工价170.81美元/股",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024,
+          "type": "期权回购"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "2024年字节跳动期权回购离职员工价145.19美元/股",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024,
+          "type": "期权回购"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "2024年字节跳动春节红包288-3688元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024,
+          "type": "福利"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "2024年字节跳动被动离职员工社保补贴最高7.2万元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024,
+          "type": "离职补贴"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "2024年字节跳动期权归属比例20%-25%-25%-30%",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024,
+          "type": "期权归属"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "2025年字节跳动绩效期权额外增发约10%股数",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2025,
+          "type": "绩效期权"
+        }
+      }
+    ],
+    "raw_text_len": 871,
+    "llm_calls": 1,
+    "elapsed_ms": 10792
+  },
+  {
+    "source": "字节跳动_字节跳动 技术栈与工程文化",
+    "entities": [
+      {
+        "name": "字节跳动",
+        "type": "Company"
+      },
+      {
+        "name": "React",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Node.js",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Rspack",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Modern.js",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Rspress",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Rstack",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Midscene.js",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "CloudFS",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Iceberg",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "HDFS",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Kafka",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "BMQ",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Spark",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Flink",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "YARN",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "K8s",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "飞书",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "西瓜视频",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "懂车帝",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "火山引擎",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "张一鸣",
+        "type": "Person"
+      },
+      {
+        "name": "Context, not Control",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "双月OKR制度",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "数据驱动与快速试错",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "开源文化",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "ByteStyle价值观",
+        "type": "InterviewProcess"
+      }
+    ],
+    "relations": [
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "React",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "前端/Web领域"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "Node.js",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "前端/Web领域"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "Rspack",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "自研开源"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "Modern.js",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "自研开源"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "Rspress",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "自研开源"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "Rstack",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "统一工具链"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "Midscene.js",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "AI-first视角"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "CloudFS",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "存储层"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "Iceberg",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "存储层"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "HDFS",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "存储层"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "Kafka",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "中间件"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "BMQ",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "中间件"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "Spark",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "计算引擎"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "Flink",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "计算引擎"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "YARN",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "资源调度"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "K8s",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "资源调度"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "飞书",
+        "object_type": "TechnologyStack",
+        "attributes": {
+          "source": "OKR协作"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "西瓜视频",
+        "object_type": "BusinessSegment",
+        "attributes": {
+          "source": "内部孵化"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "懂车帝",
+        "object_type": "BusinessSegment",
+        "attributes": {
+          "source": "内部孵化"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "飞书",
+        "object_type": "BusinessSegment",
+        "attributes": {
+          "source": "内部孵化"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "火山引擎",
+        "object_type": "BusinessSegment",
+        "attributes": {
+          "source": "云产品"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PERSON",
+        "object": "张一鸣",
+        "object_type": "Person",
+        "attributes": {
+          "role": "创始人"
+        }
+      },
+      {
+        "subject": "张一鸣",
+        "subject_type": "Person",
+        "relation": "SERVES_AS",
+        "object": "字节跳动",
+        "object_type": "Company",
+        "attributes": {
+          "role": "创始人"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "Context, not Control",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 1,
+          "source": "工程文化"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "双月OKR制度",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 2,
+          "source": "工程文化"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "数据驱动与快速试错",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 3,
+          "source": "工程文化"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "开源文化",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 4,
+          "source": "工程文化"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "ByteStyle价值观",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 5,
+          "source": "工程文化"
+        }
+      }
+    ],
+    "raw_text_len": 1121,
+    "llm_calls": 1,
+    "elapsed_ms": 8771
+  },
+  {
+    "source": "字节跳动_字节跳动 面试流程经验与面经（牛客）",
+    "entities": [
+      {
+        "name": "字节跳动",
+        "type": "Company"
+      },
+      {
+        "name": "简历投递/内推",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "笔试",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "技术面试",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "HR面",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "一面",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "二面",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "三面",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "牛客网",
+        "type": "Company"
+      },
+      {
+        "name": "帅地玩编程",
+        "type": "Person"
+      },
+      {
+        "name": "LeetCode",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "TCP/IP",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "操作系统",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "MySQL",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Redis",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "前端",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "后端",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "算法",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "客户端",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "测开",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "数据平台",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "商业化数分",
+        "type": "BusinessSegment"
+      }
+    ],
+    "relations": [
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "简历投递/内推",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 1
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "笔试",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 2
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "技术面试",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 3
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "HR面",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 4
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "一面",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 1
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "二面",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 2
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "三面",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 3
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "前端",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "后端",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "算法",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "客户端",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "测开",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "数据平台",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "商业化数分",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "TCP/IP",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "操作系统",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "MySQL",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "Redis",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "牛客网",
+        "subject_type": "Company",
+        "relation": "HAS_PERSON",
+        "object": "帅地玩编程",
+        "object_type": "Person",
+        "attributes": {}
+      },
+      {
+        "subject": "帅地玩编程",
+        "subject_type": "Person",
+        "relation": "SERVES_AS",
+        "object": "前端",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "牛客网",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "LeetCode",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      }
+    ],
+    "raw_text_len": 1019,
+    "llm_calls": 1,
+    "elapsed_ms": 6092
+  },
+  {
+    "source": "字节跳动_字节跳动 发展前景行业口碑与员工评价",
+    "entities": [
+      {
+        "name": "字节跳动",
+        "type": "Company"
+      },
+      {
+        "name": "抖音",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "TikTok Shop",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "红果短剧",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "豆包AI",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "AI",
+        "type": "Industry"
+      },
+      {
+        "name": "电商",
+        "type": "Industry"
+      },
+      {
+        "name": "短剧",
+        "type": "Industry"
+      },
+      {
+        "name": "公有云",
+        "type": "Industry"
+      },
+      {
+        "name": "李亮",
+        "type": "Person"
+      },
+      {
+        "name": "2025年全年营收预计从2024年的1,550亿美元增至约1,860亿美元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年国内营收同比增长约20%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年海外营收同比增长近50%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年全年净利润同比下降超70%，从2024年约330亿美元降至约90多亿美元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年全年绩效奖金投入提升35%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "调薪投入提升1.5倍",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "大小周期间加班费为日薪2倍",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "取消后部分员工收入预计降低15%-25%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "绩效'M'及以上员工激励月数上限提高1.5-3.5个月",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "早10晚10",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "凌晨三点开会加班",
+        "type": "InterviewProcess"
+      }
+    ],
+    "relations": [
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "抖音",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "TikTok Shop",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "红果短剧",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "豆包AI",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "AI",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "电商",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "短剧",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "公有云",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PERSON",
+        "object": "李亮",
+        "object_type": "Person",
+        "attributes": {
+          "role": "抖音集团副总裁"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "早10晚10",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 1,
+          "source": "牛客网员工分享"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "凌晨三点开会加班",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 2,
+          "source": "牛客网员工分享"
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "2025年全年营收预计从2024年的1,550亿美元增至约1,860亿美元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2025
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "2025年国内营收同比增长约20%",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2025
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "2025年海外营收同比增长近50%",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2025
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "2025年全年净利润同比下降超70%，从2024年约330亿美元降至约90多亿美元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2025
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "2025年全年绩效奖金投入提升35%",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2025
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "调薪投入提升1.5倍",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2025
+        }
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "大小周期间加班费为日薪2倍",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "取消后部分员工收入预计降低15%-25%",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "字节跳动",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "绩效'M'及以上员工激励月数上限提高1.5-3.5个月",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2025
+        }
+      }
+    ],
+    "raw_text_len": 1308,
+    "llm_calls": 1,
+    "elapsed_ms": 6966
+  },
+  {
+    "source": "商汤科技_商汤科技 主营业务与业务板块",
+    "entities": [
+      {
+        "name": "商汤科技",
+        "type": "Company"
+      },
+      {
+        "name": "生成式AI",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "视觉AI",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "智能汽车",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "绝影",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "家庭机器人",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "元萝卜",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "智慧医疗",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "智慧零售",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "智能营销",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "互联网",
+        "type": "Industry"
+      },
+      {
+        "name": "金融",
+        "type": "Industry"
+      },
+      {
+        "name": "医疗",
+        "type": "Industry"
+      },
+      {
+        "name": "智慧城市",
+        "type": "Industry"
+      },
+      {
+        "name": "安防",
+        "type": "Industry"
+      },
+      {
+        "name": "银河机器人",
+        "type": "Company"
+      },
+      {
+        "name": "智象未来",
+        "type": "Company"
+      },
+      {
+        "name": "分子之心",
+        "type": "Company"
+      },
+      {
+        "name": "多模态大模型",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "数字人",
+        "type": "TechnologyStack"
+      }
+    ],
+    "relations": [
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "生成式AI",
+        "object_type": "BusinessSegment",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "视觉AI",
+        "object_type": "BusinessSegment",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "智能汽车",
+        "object_type": "BusinessSegment",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "家庭机器人",
+        "object_type": "BusinessSegment",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "智慧医疗",
+        "object_type": "BusinessSegment",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "智慧零售",
+        "object_type": "BusinessSegment",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "智能营销",
+        "object_type": "BusinessSegment",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "智能汽车",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "绝影",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "家庭机器人",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "元萝卜",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "生成式AI",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "互联网",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "生成式AI",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "金融",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "生成式AI",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "医疗",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "视觉AI",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "智慧城市",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "视觉AI",
+        "subject_type": "BusinessSegment",
+        "relation": "OPERATES_IN",
+        "object": "安防",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "生成式AI",
+        "subject_type": "BusinessSegment",
+        "relation": "HAS_PERSON",
+        "object": "银河机器人",
+        "object_type": "Company",
+        "attributes": {}
+      },
+      {
+        "subject": "生成式AI",
+        "subject_type": "BusinessSegment",
+        "relation": "HAS_PERSON",
+        "object": "智象未来",
+        "object_type": "Company",
+        "attributes": {}
+      },
+      {
+        "subject": "生成式AI",
+        "subject_type": "BusinessSegment",
+        "relation": "HAS_PERSON",
+        "object": "分子之心",
+        "object_type": "Company",
+        "attributes": {}
+      },
+      {
+        "subject": "智能营销",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "多模态大模型",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "智能营销",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "数字人",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      }
+    ],
+    "raw_text_len": 731,
+    "llm_calls": 1,
+    "elapsed_ms": 5808
+  },
+  {
+    "source": "商汤科技_商汤科技 薪资待遇与福利（看准网/脉脉2",
+    "entities": [
+      {
+        "name": "商汤科技",
+        "type": "Company"
+      },
+      {
+        "name": "2024年平均工资约34.2K/月",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2023年平均工资36.1K/月",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2021年平均工资35.4K/月",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2022年平均工资36.3K/月",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "基本工资按15薪发放",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "算法岗最高可达60万税前总包",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "开发岗最高55万+",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "产品岗最高33万+",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "L5-L12",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "技术岗应届生一般L6起",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "优秀博士可直冲L8（年薪可达百万）",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "五险一金",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "补充医疗保险",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "年度体检",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "生育补贴",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "子女福利",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "餐饮补贴",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "交通补贴",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "住房补贴",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "午餐补助",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "休闲餐点",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "弹性工作",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "周末双休",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "带薪年假",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "定期体检",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "节日礼物",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "团队聚餐",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "技能培训",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "岗位晋升机制",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "OKR考核",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "末位劝退机制",
+        "type": "InterviewProcess"
+      }
+    ],
+    "relations": [
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PERSON",
+        "object": "算法岗",
+        "object_type": "Person",
+        "attributes": {
+          "role": "校招"
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PERSON",
+        "object": "开发岗",
+        "object_type": "Person",
+        "attributes": {
+          "role": "校招"
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PERSON",
+        "object": "产品岗",
+        "object_type": "Person",
+        "attributes": {
+          "role": "校招"
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "OKR考核",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 1
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "末位劝退机制",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 2
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "AI行业",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "北京",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "OKR",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "股票期权",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "限制性股票（RSU）",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "AI行业",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "SERVES_AS",
+        "object": "算法岗",
+        "object_type": "Person",
+        "attributes": {
+          "role": "校招"
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "SERVES_AS",
+        "object": "开发岗",
+        "object_type": "Person",
+        "attributes": {
+          "role": "校招"
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "SERVES_AS",
+        "object": "产品岗",
+        "object_type": "Person",
+        "attributes": {
+          "role": "校招"
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2024年平均工资约34.2K/月",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2023年平均工资36.1K/月",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2023
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2021年平均工资35.4K/月",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2021
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2022年平均工资36.3K/月",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2022
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "基本工资按15薪发放",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "算法岗最高可达60万税前总包",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "role": "算法岗"
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "开发岗最高55万+",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "role": "开发岗"
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "产品岗最高33万+",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "role": "产品岗"
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "L5-L12",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "技术岗应届生一般L6起",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "优秀博士可直冲L8（年薪可达百万）",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "五险一金",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "补充医疗保险",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "年度体检",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "生育补贴",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "子女福利",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "餐饮补贴",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "交通补贴",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "住房补贴",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "午餐补助",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "休闲餐点",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "弹性工作",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "周末双休",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "带薪年假",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "定期体检",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "节日礼物",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "团队聚餐",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "技能培训",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "岗位晋升机制",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      }
+    ],
+    "raw_text_len": 759,
+    "llm_calls": 1,
+    "elapsed_ms": 11648
+  },
+  {
+    "source": "商汤科技_商汤科技 面试流程经验与面经（牛客）",
+    "entities": [
+      {
+        "name": "商汤科技",
+        "type": "Company"
+      },
+      {
+        "name": "算法岗",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "测开岗",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "后端开发岗",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "笔试",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "一面（技术面）",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "二面（技术面/综合面）",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "三面（综合面/HR面）",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "HR面",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "技术一面",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "技术二面",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "技术三面",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "综合面",
+        "type": "InterviewProcess"
+      },
+      {
+        "name": "LoRA",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Self-Attention",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "PPO",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "RLHF",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "ZeRO-1/2/3",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "RAG",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Docker",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "K8S",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Transformer",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Attention",
+        "type": "TechnologyStack"
+      }
+    ],
+    "relations": [
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "笔试",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 1
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "一面（技术面）",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 2
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "二面（技术面/综合面）",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 3
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "三面（综合面/HR面）",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 4
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "HR面",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 5
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "技术一面",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 1,
+          "role": "测开岗"
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "技术二面",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 2,
+          "role": "测开岗"
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "技术三面",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 3,
+          "role": "测开岗"
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "综合面",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 3,
+          "role": "算法岗"
+        }
+      },
+      {
+        "subject": "算法岗",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "商汤科技",
+        "object_type": "Company",
+        "attributes": {}
+      },
+      {
+        "subject": "测开岗",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "商汤科技",
+        "object_type": "Company",
+        "attributes": {}
+      },
+      {
+        "subject": "后端开发岗",
+        "subject_type": "BusinessSegment",
+        "relation": "BELONGS_TO",
+        "object": "商汤科技",
+        "object_type": "Company",
+        "attributes": {}
+      },
+      {
+        "subject": "算法岗",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "LoRA",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "算法岗",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "Self-Attention",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "算法岗",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "PPO",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "算法岗",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "RLHF",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "算法岗",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "ZeRO-1/2/3",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "算法岗",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "RAG",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "测开岗",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "Docker",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "测开岗",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "K8S",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "后端开发岗",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "Docker",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "后端开发岗",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "Transformer",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "后端开发岗",
+        "subject_type": "BusinessSegment",
+        "relation": "USES_TECH",
+        "object": "Attention",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      }
+    ],
+    "raw_text_len": 807,
+    "llm_calls": 1,
+    "elapsed_ms": 6853
+  },
+  {
+    "source": "商汤科技_商汤科技 技术栈与工程文化",
+    "entities": [
+      {
+        "name": "商汤科技",
+        "type": "Company"
+      },
+      {
+        "name": "SenseCore AI大装置",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "日日新SenseNova大模型",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "商量",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "秒画",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "如影",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "小浣熊家族",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Python",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "C++",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "PyTorch",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "mmdetection",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "PySOT",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "OpenMMLab",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "商汤大装置万象",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "SenseMAP",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "商汤学院",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "AI",
+        "type": "Industry"
+      },
+      {
+        "name": "计算机视觉",
+        "type": "Industry"
+      },
+      {
+        "name": "大模型",
+        "type": "Industry"
+      }
+    ],
+    "relations": [
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "SenseCore AI大装置",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "日日新SenseNova大模型",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "日日新SenseNova大模型",
+        "subject_type": "TechnologyStack",
+        "relation": "BELONGS_TO",
+        "object": "商汤科技",
+        "object_type": "Company",
+        "attributes": {}
+      },
+      {
+        "subject": "商量",
+        "subject_type": "TechnologyStack",
+        "relation": "BELONGS_TO",
+        "object": "日日新SenseNova大模型",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "秒画",
+        "subject_type": "TechnologyStack",
+        "relation": "BELONGS_TO",
+        "object": "日日新SenseNova大模型",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "如影",
+        "subject_type": "TechnologyStack",
+        "relation": "BELONGS_TO",
+        "object": "日日新SenseNova大模型",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "小浣熊家族",
+        "subject_type": "TechnologyStack",
+        "relation": "BELONGS_TO",
+        "object": "日日新SenseNova大模型",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "Python",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "C++",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "PyTorch",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "mmdetection",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "PySOT",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "OpenMMLab",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "商汤大装置万象",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "SenseMAP",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "AI",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "计算机视觉",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "大模型",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PERSON",
+        "object": "商汤学院",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      }
+    ],
+    "raw_text_len": 1121,
+    "llm_calls": 1,
+    "elapsed_ms": 5601
+  },
+  {
+    "source": "商汤科技_商汤科技 发展前景行业口碑与员工评价",
+    "entities": [
+      {
+        "name": "商汤科技",
+        "type": "Company"
+      },
+      {
+        "name": "生成式AI",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "视觉AI",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "智能汽车",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "绝影",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "家庭机器人",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "元萝卜",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "智慧医疗",
+        "type": "BusinessSegment"
+      },
+      {
+        "name": "AI云",
+        "type": "Industry"
+      },
+      {
+        "name": "MaaS",
+        "type": "Industry"
+      },
+      {
+        "name": "云服务",
+        "type": "Industry"
+      },
+      {
+        "name": "大模型",
+        "type": "Industry"
+      },
+      {
+        "name": "多模态大模型",
+        "type": "Industry"
+      },
+      {
+        "name": "日日新",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "SenseNova",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "MOE架构",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "SuperCLUE",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "Gemini 3.0 Pro",
+        "type": "TechnologyStack"
+      },
+      {
+        "name": "阿里云",
+        "type": "Company"
+      },
+      {
+        "name": "火山引擎",
+        "type": "Company"
+      },
+      {
+        "name": "华为云",
+        "type": "Company"
+      },
+      {
+        "name": "智谱",
+        "type": "Company"
+      },
+      {
+        "name": "MiniMax",
+        "type": "Company"
+      },
+      {
+        "name": "DeepSeek",
+        "type": "Company"
+      },
+      {
+        "name": "宇树",
+        "type": "Company"
+      },
+      {
+        "name": "2024年商汤科技平均月薪32.3K",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2021年商汤科技平均月薪35.4K",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年商汤科技平均月薪32.3K",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "本科实习150元/天",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年商汤科技营收37.7亿元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年上半年商汤科技收入同比增长35.6%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年生成式AI营收24.04亿元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年生成式AI营收36.30亿元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年净亏损43.07亿元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "累计亏损超546亿元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "现金储备132亿元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "AI云市场份额4.4%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "阿里云市场份额35.8%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "火山引擎市场份额14.8%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "华为云市场份额13.1%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "股价从1.50港元涨至2.11港元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "日日新V6.5 SuperCLUE得分75.35",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年视觉AI业务下滑39.5%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年智能汽车业务下滑33.2%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年12月股价1.50港元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年9月股价2.11港元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2023年4月日日新推出",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年4月日日新5.0发布",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年12月日日新V6.5发布",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2023年8月通过网信办备案",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年营收37.7亿元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年上半年收入同比增长35.6%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年生成式AI营收24.04亿元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年生成式AI营收36.30亿元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年净亏损43.07亿元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "累计亏损超546亿元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "现金储备132亿元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "AI云市场份额4.4%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "阿里云市场份额35.8%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "火山引擎市场份额14.8%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "华为云市场份额13.1%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "股价从1.50港元涨至2.11港元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "日日新V6.5 SuperCLUE得分75.35",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年视觉AI业务下滑39.5%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年智能汽车业务下滑33.2%",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年12月股价1.50港元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年9月股价2.11港元",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2023年4月日日新推出",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2024年4月日日新5.0发布",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2025年12月日日新V6.5发布",
+        "type": "SalaryIndicator"
+      },
+      {
+        "name": "2023年8月通过网信办备案",
+        "type": "SalaryIndicator"
+      }
+    ],
+    "relations": [
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "生成式AI",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "视觉AI",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "智能汽车",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "家庭机器人",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "智慧医疗",
+        "object_type": "BusinessSegment",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "AI云",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "MaaS",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "云服务",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "大模型",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "OPERATES_IN",
+        "object": "多模态大模型",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "日日新",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "USES_TECH",
+        "object": "SenseNova",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "日日新",
+        "subject_type": "TechnologyStack",
+        "relation": "USES_TECH",
+        "object": "MOE架构",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "日日新",
+        "subject_type": "TechnologyStack",
+        "relation": "USES_TECH",
+        "object": "SuperCLUE",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "日日新",
+        "subject_type": "TechnologyStack",
+        "relation": "USES_TECH",
+        "object": "Gemini 3.0 Pro",
+        "object_type": "TechnologyStack",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "AI云",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "MaaS",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "云服务",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "大模型",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "BELONGS_TO",
+        "object": "多模态大模型",
+        "object_type": "Industry",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PERSON",
+        "object": "员工",
+        "object_type": "Person",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "在线笔试",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 1
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "技术一面",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 2
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "交叉面",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 3
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "HAS_PROCESS",
+        "object": "HR谈薪",
+        "object_type": "InterviewProcess",
+        "attributes": {
+          "order": 4
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2024年商汤科技平均月薪32.3K",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2021年商汤科技平均月薪35.4K",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2021
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2025年商汤科技平均月薪32.3K",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2025
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "本科实习150元/天",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2024年商汤科技营收37.7亿元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2025年上半年商汤科技收入同比增长35.6%",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2025
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2024年生成式AI营收24.04亿元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2025年生成式AI营收36.30亿元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2025
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2024年净亏损43.07亿元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "累计亏损超546亿元",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "现金储备132亿元",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "AI云市场份额4.4%",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "阿里云",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "阿里云市场份额35.8%",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "火山引擎",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "火山引擎市场份额14.8%",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "华为云",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "华为云市场份额13.1%",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "股价从1.50港元涨至2.11港元",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "日日新",
+        "subject_type": "TechnologyStack",
+        "relation": "REPORTS",
+        "object": "日日新V6.5 SuperCLUE得分75.35",
+        "object_type": "SalaryIndicator",
+        "attributes": {}
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2024年视觉AI业务下滑39.5%",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2024年智能汽车业务下滑33.2%",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2024年12月股价1.50港元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2025年9月股价2.11港元",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2025
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2023年4月日日新推出",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2023
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2024年4月日日新5.0发布",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2024
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2025年12月日日新V6.5发布",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2025
+        }
+      },
+      {
+        "subject": "商汤科技",
+        "subject_type": "Company",
+        "relation": "REPORTS",
+        "object": "2023年8月通过网信办备案",
+        "object_type": "SalaryIndicator",
+        "attributes": {
+          "year": 2023
+        }
+      }
+    ],
+    "raw_text_len": 1513,
+    "llm_calls": 1,
+    "elapsed_ms": 17926
+  }
+]
