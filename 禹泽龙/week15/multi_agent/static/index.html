@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Multi-Agent 智能助手</title>
+<style>
+:root {
+    --bg:#060912; --panel:rgba(15,22,40,0.92); --panel-light:rgba(20,30,55,0.7);
+    --border:rgba(139,92,246,0.22); --accent:#8b5cf6; --accent2:#06b6d4;
+    --green:#10b981; --warn:#f59e0b; --red:#ef4444;
+    --text:#dde4f0; --muted:#8892a8; --dim:#4a5568;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    font-family:'Inter','Microsoft YaHei',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    display:flex; flex-direction:column;
+}
+
+/* ── 导航 ── */
+.navbar {
+    padding:14px 28px; display:flex; align-items:center;
+    justify-content:space-between;
+    background:rgba(6,9,18,0.97);
+    border-bottom:1px solid var(--border);
+    backdrop-filter:blur(20px);
+    position:sticky; top:0; z-index:100;
+}
+.nav-logo {
+    width:34px; height:34px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:17px;
+}
+.nav-title {
+    font-size:1.1rem; font-weight:700;
+    background:linear-gradient(90deg,#fff,var(--accent));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.badge {
+    padding:3px 10px; background:rgba(139,92,246,0.15);
+    border:1px solid var(--accent); border-radius:20px;
+    font-size:0.7rem; color:var(--accent);
+}
+
+/* ── 主容器 ── */
+.main {
+    display:flex; flex:1; max-width:1400px; margin:0 auto;
+    width:100%; padding:20px; gap:18px;
+}
+
+/* ── 左侧面板 ── */
+.left {
+    width:260px; flex-shrink:0; display:flex; flex-direction:column; gap:14px;
+}
+
+.card {
+    background:var(--panel); border:1px solid var(--border);
+    border-radius:14px; padding:16px; backdrop-filter:blur(16px);
+}
+
+.card-hdr { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+.card-icon {
+    width:24px; height:24px; border-radius:6px;
+    display:flex; align-items:center; justify-content:center; font-size:12px;
+}
+.card-icon.p{background:rgba(139,92,246,0.2);}
+.card-icon.g{background:rgba(16,185,129,0.2);}
+.card-icon.c{background:rgba(6,182,212,0.2);}
+.card-title {
+    font-size:0.72rem; font-weight:600; color:var(--muted);
+    text-transform:uppercase; letter-spacing:0.5px;
+}
+
+/* 拓扑 */
+.topo-svg{width:100%;height:170px;}
+.t-node{
+    fill:rgba(15,22,40,0.9); stroke:var(--accent); stroke-width:1.5;
+    transition:all 0.4s;
+}
+.t-node.main{stroke:var(--green); stroke-width:2;}
+.t-node.active{fill:var(--accent);filter:drop-shadow(0 0 7px rgba(139,92,246,0.6));}
+.t-node.done{fill:var(--green);stroke:var(--green);filter:drop-shadow(0 0 7px rgba(16,185,129,0.5));}
+.t-node.err{fill:var(--red);stroke:var(--red);filter:drop-shadow(0 0 7px rgba(239,68,68,0.5));}
+.t-text{fill:#fff;font-size:9px;text-anchor:middle;font-family:monospace;}
+.t-status{
+    margin-top:10px;padding:8px 11px;
+    background:rgba(0,0,0,0.3);border-radius:7px;
+    font-size:0.72rem;font-family:monospace;color:var(--dim);
+}
+.t-status.on{color:var(--accent2);background:rgba(6,182,212,0.07);}
+
+/* 标签页 */
+.tabs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;}
+.tab{
+    padding:4px 10px;border-radius:8px;font-size:0.72rem;
+    background:rgba(255,255,255,0.04);border:1px solid transparent;
+    color:var(--muted);cursor:pointer;transition:all 0.2s;
+}
+.tab:hover{border-color:var(--border);color:var(--text);}
+.tab.sel{
+    background:rgba(139,92,246,0.18);border-color:var(--accent);
+    color:var(--accent);font-weight:600;
+}
+.tab.sel.green{background:rgba(16,185,129,0.15);border-color:var(--green);color:var(--green);}
+.tab.sel.err{background:rgba(239,68,68,0.12);border-color:var(--red);color:var(--red);}
+
+/* 步骤流 */
+.step-list{max-height:320px;overflow-y:auto;padding-right:4px;}
+.step-list::-webkit-scrollbar{width:4px;}
+.step-list::-webkit-scrollbar-thumb{background:rgba(139,92,246,0.25);border-radius:2px;}
+
+.step-item{
+    margin-bottom:10px;padding:10px 12px;
+    background:rgba(0,0,0,0.25);border-radius:9px;
+    border-left:3px solid var(--accent);font-size:0.78rem;line-height:1.6;
+}
+.step-item.t{flex-direction:column;}
+.step-item.t{border-left-color:var(--warn);}
+.step-item.a{border-left-color:var(--accent2);}
+.step-item.o{border-left-color:var(--green);}
+.step-item.f{border-left-color:var(--green);background:rgba(16,185,129,0.05);}
+.step-item.e{border-left-color:var(--red);background:rgba(239,68,68,0.05);}
+
+.s-label{
+    font-size:0.6rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:0.7px;margin-bottom:3px;opacity:0.65;
+}
+.s-label.t{color:var(--warn);}
+.s-label.a{color:var(--accent2);}
+.s-label.o{color:var(--green);}
+.s-label.f,.s-label.e{color:var(--green);}
+.s-label.e{color:var(--red);}
+.s-content{color:var(--muted);white-space:pre-wrap;word-break:break-word;font-family:monospace;font-size:0.73rem;}
+.s-divider{text-align:center;color:var(--dim);font-size:0.62rem;margin:5px 0;}
+
+.task-row{
+    display:flex;align-items:center;gap:8px;
+    padding:8px 10px;background:rgba(0,0,0,0.2);
+    border-radius:8px;margin-bottom:6px;cursor:pointer;
+    border:1px solid transparent;transition:all 0.2s;
+}
+.task-row:last-child{margin-bottom:0;}
+.task-row.on{background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.25);}
+.task-row.done{background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.2);}
+.task-row.err{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.2);}
+.task-num{
+    width:20px;height:20px;border-radius:5px;
+    background:var(--bg);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.65rem;font-weight:700;flex-shrink:0;
+}
+.task-row.on .task-num{background:var(--accent);border-color:var(--accent);color:#fff;}
+.task-row.done .task-num{background:var(--green);border-color:var(--green);color:#fff;}
+.task-row.err .task-num{background:var(--red);border-color:var(--red);color:#fff;}
+.task-name{flex:1;font-size:0.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.task-dur{font-size:0.68rem;color:var(--dim);font-family:monospace;}
+
+/* 统计 */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.stat{padding:9px;background:rgba(0,0,0,0.2);border-radius:8px;text-align:center;}
+.sv{font-size:1.1rem;font-weight:700;color:var(--accent);font-family:monospace;}
+.sv.g{color:var(--green);}
+.sl{font-size:0.6rem;color:var(--dim);margin-top:2px;text-transform:uppercase;}
+.spup{
+    grid-column:span 2;padding:8px;
+    background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(6,182,212,0.1));
+    border:1px solid rgba(16,185,129,0.25);border-radius:8px;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.spup .sv{font-size:1.3rem;color:var(--green);}
+
+/* ── 右侧面板 ── */
+.right{flex:1;display:flex;flex-direction:column;min-width:0;}
+
+.chat-card{
+    flex:1;display:flex;flex-direction:column;
+    background:var(--panel);border:1px solid var(--border);
+    border-radius:14px;padding:16px;
+}
+.status-bar{display:flex;align-items:center;gap:7px;margin-bottom:12px;font-size:0.78rem;color:var(--dim);}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--dim);}
+.sdot.rdy{background:var(--green);}
+.sdot.pro{background:var(--accent2);animation:pulse 1.2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(6,182,212,0.4);}50%{opacity:0.7;box-shadow:0 0 0 5px transparent;}}
+
+.msgs{flex:1;overflow-y:auto;padding-right:6px;margin-bottom:14px;}
+.msgs::-webkit-scrollbar{width:4px;}
+.msgs::-webkit-scrollbar-thumb{background:rgba(139,92,246,0.2);border-radius:2px;}
+.msg{margin-bottom:18px;animation:fade 0.3s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.msg.user{text-align:right;}
+.bub{
+    display:inline-block;padding:11px 16px;border-radius:16px;
+    max-width:78%;text-align:left;font-size:0.9rem;line-height:1.65;
+}
+.bub.u{
+    background:linear-gradient(135deg,var(--accent),#7c3aed);
+    color:#fff;border-radius:16px 16px 3px 16px;
+    box-shadow:0 3px 14px rgba(139,92,246,0.3);
+}
+.bub.a{background:rgba(20,30,55,0.8);border:1px solid var(--border);border-radius:16px 16px 16px 3px;}
+.ts{font-size:0.65rem;color:var(--dim);margin-top:4px;font-family:monospace;}
+
+/* 加载 */
+.ldots{display:inline-flex;gap:4px;align-items:center;}
+.ldots span{width:5px;height:5px;background:var(--accent);border-radius:50%;animation:bd 1.3s infinite;}
+.ldots span:nth-child(2){animation-delay:.13s}
+.ldots span:nth-child(3){animation-delay:.26s}
+@keyframes bd{0%,80%,100%{transform:scale(0.5);opacity:.4}40%{transform:scale(1);opacity:1}}
+
+/* 输入 */
+.input-area{display:flex;gap:10px;align-items:center;}
+.ipt{
+    flex:1;padding:12px 18px;
+    background:rgba(10,14,28,0.8);border:1px solid var(--border);
+    border-radius:12px;color:var(--text);font-size:0.92rem;
+    outline:none;transition:all 0.3s;
+}
+.ipt:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(139,92,246,0.15);}
+.ipt::placeholder{color:var(--dim);}
+.btn{
+    padding:12px 24px;background:linear-gradient(135deg,var(--accent),#7c3aed);
+    border:none;border-radius:12px;color:#fff;font-weight:600;font-size:0.92rem;
+    cursor:pointer;transition:all 0.25s;
+    box-shadow:0 3px 12px rgba(139,92,246,0.25);
+}
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 5px 18px rgba(139,92,246,0.35);}
+.btn:disabled{opacity:0.45;cursor:not-allowed;transform:none;}
+
+/* markdown */
+.bub h1,.bub h2,.bub h3{color:#fff;margin:8px 0 4px}
+.bub h2{color:var(--accent);}
+.bub h3{color:var(--accent2);}
+.bub p{margin:5px 0}
+.bub ul,.bub ol{margin:5px 0;padding-left:18px}
+.bub li{margin:3px 0}
+.bub code{background:rgba(0,0,0,0.3);padding:1px 5px;border-radius:4px;font-family:monospace;font-size:0.85em}
+.bub pre{background:rgba(0,0,0,0.3);padding:10px;border-radius:7px;overflow-x:auto;margin:7px 0}
+.bub pre code{background:none;padding:0}
+.bub hr{border:none;border-top:1px solid var(--border);margin:10px 0}
+
+/* 标签页内容区 */
+.tab-content{min-height:200px;max-height:400px;overflow-y:auto;}
+
+/* 合成阶段 */
+.syn-badge{
+    display:inline-flex;align-items:center;gap:5px;
+    padding:3px 10px;
+    background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);
+    border-radius:20px;font-size:0.7rem;color:var(--green);margin-bottom:10px;
+}
+
+@media(max-width:900px){.main{flex-direction:column;padding:14px}.left{width:100%}.topo-svg{height:130px}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+    <div style="display:flex;align-items:center;gap:10px">
+        <div class="nav-logo">🤖</div>
+        <span class="nav-title">Multi-Agent 智能助手</span>
+    </div>
+    <span class="badge">DeepSeek + SSE</span>
+</nav>
+
+<div class="main">
+    <!-- 左侧 -->
+    <div class="left">
+        <!-- 拓扑 -->
+        <div class="card">
+            <div class="card-hdr">
+                <div class="card-icon p">◈</div>
+                <span class="card-title">执行拓扑</span>
+            </div>
+            <svg class="topo-svg" id="topoSvg">
+                <circle id="nMain" class="t-node main" cx="130" cy="24" r="18"/>
+                <text class="t-text" x="130" y="28">主Agent</text>
+            </svg>
+            <div class="t-status" id="topoStatus">待机中...</div>
+        </div>
+
+        <!-- 标签切换：主 / 各子agent -->
+        <div class="card">
+            <div class="card-hdr">
+                <div class="card-icon c">⚡</div>
+                <span class="card-title">执行详情</span>
+            </div>
+            <div class="tabs" id="agentTabs">
+                <button class="tab sel" id="tab_main" data-agent="main">主Agent</button>
+            </div>
+            <div class="tab-content" id="tabContent">
+                <div style="color:var(--dim);font-size:0.78rem;text-align:center;padding:30px 0;">
+                    等待任务下发...
+                </div>
+            </div>
+        </div>
+
+        <!-- 统计 -->
+        <div class="card" id="statsCard" style="display:none">
+            <div class="card-hdr">
+                <div class="card-icon g">📊</div>
+                <span class="card-title">并行统计</span>
+            </div>
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="sv" id="sTasks">0</div>
+                    <div class="sl">子任务</div>
+                </div>
+                <div class="stat">
+                    <div class="sv" id="sParallel">0s</div>
+                    <div class="sl">并行墙钟</div>
+                </div>
+                <div class="stat">
+                    <div class="sv" id="sSerial">0s</div>
+                    <div class="sl">串行预估</div>
+                </div>
+                <div class="spup">
+                    <span class="sl">加速比</span>
+                    <span class="sv g" id="sSpeedup">1×</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右侧聊天 -->
+    <div class="right">
+        <div class="chat-card">
+            <div class="status-bar">
+                <span class="sdot" id="sDot"></span>
+                <span id="sText">待机中</span>
+            </div>
+            <div class="msgs" id="msgs">
+                <div class="msg">
+                    <div class="bub a hint">
+                        <p>👋 你好！我是 <strong>Multi-Agent 智能助手</strong></p>
+                        <p style="margin-top:6px">我能帮你：</p>
+                        <ul style="margin:4px 0;padding-left:16px">
+                            <li>简单问题直接回答</li>
+                            <li>复杂问题自动拆解，并行执行多个子任务</li>
+                            <li>每一步操作实时可见，可切换查看各agent执行详情</li>
+                        </ul>
+                        <p style="margin-top:8px">试试问：<em>下个月想去北京玩，帮我安排行程</em></p>
+                    </div>
+                    <div class="ts">系统 · 刚上线</div>
+                </div>
+            </div>
+            <div class="input-area">
+                <input class="ipt" id="qIpt" placeholder="输入你的问题..." autocomplete="off"/>
+                <button class="btn" id="sBtn">发送</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const qIpt = document.getElementById('qIpt');
+const sBtn = document.getElementById('sBtn');
+const msgs = document.getElementById('msgs');
+const sDot = document.getElementById('sDot');
+const sText = document.getElementById('sText');
+const topoStatus = document.getElementById('topoStatus');
+const agentTabs = document.getElementById('agentTabs');
+const tabContent = document.getElementById('tabContent');
+const topoSvg = document.getElementById('topoSvg');
+const statsCard = document.getElementById('statsCard');
+
+let busy = false;
+let activeTab = 'main';
+// 每 agent 的步骤缓冲: { agentId: [stepHtml] }
+const stepBuf = {};
+// 每 agent 的最终结果: { agentId: {steps, final_answer, error, duration} }
+const agentData = {};
+let subagentIds = [];
+let pendingEvents = []; // 事件缓冲（等所有subagent注册完再按序渲染）
+let thinkingBubble = null; // 右侧聊天区的"思考中"气泡，实时更新
+
+// ── 工具 ──────────────────────────────────────────────────────────────────
+
+function fmt(s){return s||''}
+function tm(){return new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function md(s){
+    if(!s)return'';
+    return esc(s)
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g,'<em>$1</em>')
+        .replace(/`([^`]+)`/g,'<code>$1</code>')
+        .replace(/^### (.+)$/gm,'<h3>$1</h3>')
+        .replace(/^## (.+)$/gm,'<h2>$1</h2>')
+        .replace(/^# (.+)$/gm,'<h1>$1</h1>')
+        .replace(/^- (.+)$/gm,'<li>$1</li>')
+        .replace(/(<li>[\s\S]*?<\/li>)/g,'<ul>$1</ul>')
+        .replace(/^---$/gm,'<hr>')
+        .replace(/\n/g,'<br>');
+}
+function setSt(st,txt){
+    sDot.className='sdot '+(st?'pro':'rdy');
+    sText.textContent=txt;
+}
+
+// ── 添加消息 ───────────────────────────────────────────────────────────────
+
+function addMsg(role,html){
+    const d=document.createElement('div');
+    d.className='msg'+role;
+    const b=document.createElement('div');
+    b.className='bub '+role[0];
+    b.innerHTML=html||'<span style="color:var(--dim)">(空)</span>';
+    const t=document.createElement('div');
+    t.className='ts';
+    t.textContent=(role=='user'?'你':'助手')+' · '+tm();
+    d.appendChild(b);d.appendChild(t);msgs.appendChild(d);
+    msgs.scrollTop=msgs.scrollHeight;
+    return b;
+}
+
+// ── 拓扑节点 ───────────────────────────────────────────────────────────────
+
+function addSubNode(sid,topic,idx){
+    const x=38+(idx%3)*94, y=70+Math.floor(idx/3)*50;
+    const ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+    ln.setAttribute('x1','130');ln.setAttribute('y1','42');
+    ln.setAttribute('x2',x);ln.setAttribute('y2',y-14);
+    ln.setAttribute('stroke','var(--accent)').setAttribute('stroke-width','1.5');
+    ln.setAttribute('stroke-dasharray','3 2').setAttribute('opacity','0.4');
+    const cy=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    cy.setAttribute('class','t-node');cy.setAttribute('id','node_'+sid);
+    cy.setAttribute('cx',x).setAttribute('cy',y).setAttribute('r','14');
+    const tx=document.createElementNS('http://www.w3.org/2000/svg','text');
+    tx.setAttribute('class','t-text');
+    tx.setAttribute('x',x).setAttribute('y',y+3);
+    tx.textContent=topic.length>6?topic.slice(0,5)+'…':topic;
+    topoSvg.appendChild(ln);topoSvg.appendChild(cy);topoSvg.appendChild(tx);
+}
+
+function setNode(sid,st){
+    const n=document.getElementById('node_'+sid);
+    if(n){n.classList.remove('active','done','err');if(st)n.classList.add(st);}
+}
+
+// ── 标签页 ───────────────────────────────────────────────────────────────
+
+function addTab(sid,label,isError){
+    const b=document.createElement('button');
+    b.className='tab'+(sid=='main'?'':' green'+(isError?' err':''));
+    b.dataset.agent=sid;
+    b.textContent=label;
+    b.addEventListener('click',()=>switchTab(sid));
+    agentTabs.appendChild(b);
+}
+
+function switchTab(sid){
+    activeTab=sid;
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('sel'));
+    const t=document.getElementById('tab_'+sid);
+    if(t)t.classList.add('sel');
+    // 渲染
+    if(sid==='main'){
+        renderMainSteps();
+    }else{
+        renderAgentSteps(sid);
+    }
+}
+
+function renderMainSteps(){
+    const allSteps=collectMainSteps();
+    if(!allSteps.length){
+        tabContent.innerHTML='<div style="color:var(--dim);font-size:.78rem;text-align:center;padding:30px 0">等待主Agent步骤...</div>';
+        return;
+    }
+    tabContent.innerHTML='<div class="step-list">'+allSteps.join('')+'</div>';
+}
+
+function collectMainSteps(){
+    const d=agentData['main'];
+    if(!d||!d.steps)return[];
+    return d.steps.map(s=>renderStep(s));
+}
+
+function renderAgentSteps(sid){
+    const d=agentData[sid];
+    if(!d){
+        tabContent.innerHTML='<div style="color:var(--dim);font-size:.78rem;text-align:center;padding:30px 0">等待数据...</div>';
+        return;
+    }
+    const parts=['<div class="step-list">'];
+    d.steps.forEach(s=>parts.push(renderStep(s)));
+    if(d.final_answer){
+        parts.push('<div class="step-item f">'+
+            '<div class="s-label f">Final Answer</div>'+
+            '<div class="s-content">'+md(d.final_answer)+'</div></div>');
+    }
+    if(d.error){
+        parts.push('<div class="step-item e">'+
+            '<div class="s-label e">Error</div>'+
+            '<div class="s-content">'+esc(d.error)+'</div></div>');
+    }
+    parts.push('</div>');
+    tabContent.innerHTML=parts.join('');
+}
+
+function renderStep(s){
+    if(s.final||s.action==='final_answer'){
+        return '<div class="step-item f">'+
+            '<div class="s-label f">Final Answer</div>'+
+            '<div class="s-content">'+md(s.action_input||'')+'</div></div>';
+    }
+    let html='<div class="step-item">';
+    if(s.thought){
+        html+='<div class="s-label t">Thought</div><div class="s-content">'+md(s.thought)+'</div>'+
+            '<div class="s-divider">────</div>';
+    }
+    if(s.action){
+        html+='<div class="s-label a">Action</div><div class="s-content">'+esc(s.action)+' → '+esc(s.action_input||'')+'</div>';
+    }
+    if(s.observation){
+        html+='<div class="s-divider">────</div>'+
+            '<div class="s-label o">Observation</div><div class="s-content">'+md(s.observation)+'</div>';
+    }
+    html+='</div>';
+    return html;
+}
+
+// ── 事件处理 ─────────────────────────────────────────────────────────────
+
+function handleEvent(type, data){
+    console.log('[DEBUG handleEvent]', type, data);
+    switch(type){
+
+        case 'start':
+            // 重置
+            stepBuf['main']=[];
+            agentData['main']={steps:[],final_answer:'',error:null,duration:0};
+            agentData['__subs__']={};
+            subagentIds=[];
+            pendingEvents=[];
+            agentTabs.innerHTML='';
+            addTab('main','主Agent',false);
+            document.getElementById('tab_main').classList.add('sel');
+            topoSvg.querySelectorAll('.t-node:not(.main)').forEach(n=>n.remove());
+            topoSvg.querySelectorAll('line:not(#topoSvg line)').forEach(n=>n.remove());
+            // 清除 sub 节点
+            Array.from(topoSvg.querySelectorAll('circle,line,text')).forEach(el=>{
+                if(el.id&&el.id!='nMain')el.remove();
+            });
+            statsCard.style.display='none';
+            topoStatus.textContent='分析中...';topoStatus.classList.add('on');
+            const mn=document.getElementById('nMain');
+            if(mn){mn.classList.remove('done','err');mn.classList.add('active');}
+            tabContent.innerHTML='<div style="color:var(--dim);font-size:.78rem;text-align:center;padding:30px 0">主Agent 推理中...</div>';
+            setSt(1,'分析中...');
+            break;
+
+        case 'main_step':{
+            console.log('[main_step handler] thinkingBubble=', thinkingBubble, 'data=', data);
+            const s=data;
+            agentData['main'].steps.push(s);
+            // 实时刷新右侧气泡
+            if(thinkingBubble){
+                console.log('[main_step] updating bubble, action=', s.action);
+                thinkingBubble.innerHTML='<div class="step-item" style="margin:0">'+
+                    (s.thought?'<div class="s-label t">Thought</div><div class="s-content">'+md(s.thought)+'</div><div class="s-divider">────</div>':'')+
+                    '<div class="s-label a">Action</div><div class="s-content">'+esc(s.action||'')+' → '+esc(s.action_input||'')+'</div>'+
+                    (s.observation&&s.observation!=='完成'?'<div class="s-divider">────</div><div class="s-label o">Obs</div><div class="s-content">'+md(s.observation)+'</div>':'')+
+                    '</div>';
+                console.log('[main_step] bubble innerHTML updated');
+            }else{
+                console.log('[main_step] thinkingBubble is null - NOT updating bubble!');
+            }
+            if(activeTab==='main')renderMainSteps();
+            topoStatus.textContent='主Agent: '+(s.action||'思考中');
+            break;
+        }
+
+        case 'dispatch':{
+            const ids=data.subagent_ids||[];
+            const tops=data.subtopics||[];
+            subagentIds=ids;
+            // 拓扑加节点
+            ids.forEach((sid,i)=>addSubNode(sid,tops[i]||sid,i));
+            topoStatus.textContent=`派发 ${ids.length} 个子Agent...`;
+            setSt(1,`派发 ${ids.length} 个子Agent 并行执行`);
+            break;
+        }
+
+        case 'subagent_start':{
+            const sid=data.subagent_id||'';
+            const topic=data.topic||'';
+            agentData['__subs__'][sid]={steps:[],final_answer:'',error:null,duration:0,topic};
+            addTab(sid,topic.length>8?topic.slice(0,7)+'…':topic,false);
+            topoStatus.textContent=`任务: ${topic.slice(0,15)}...`;
+            setNode(sid,'active');
+            break;
+        }
+
+        case 'subagent_step':{
+            const sid=data.subagent_id||'';
+            const sub=agentData['__subs__'][sid];
+            if(sub)sub.steps.push(data);
+            if(activeTab===sid)renderAgentSteps(sid);
+            break;
+        }
+
+        case 'subagent_done':{
+            const sid=data.subagent_id||'';
+            const sub=agentData['__subs__'][sid];
+            if(sub){
+                sub.final_answer=data.final_answer||'';
+                sub.error=data.error||null;
+                sub.duration=data.duration||0;
+            }
+            const isErr=!!data.error;
+            setNode(sid,isErr?'err':'done');
+            // 更新 tab 样式
+            const tab=document.getElementById('tab_'+sid);
+            if(tab){
+                tab.classList.toggle('err',isErr);
+                if(!isErr)tab.classList.add('sel'.replace(' green',' green'));
+            }
+            topoStatus.textContent=`任务${sid} ${isErr?'失败':'完成'} (${(data.duration||0).toFixed(1)}s)`;
+            topoStatus.classList.toggle('on',!isErr);
+            topoStatus.classList.toggle('err',isErr);
+            if(activeTab===sid)renderAgentSteps(sid);
+            setSt(1,`任务完成...`);
+            break;
+        }
+
+        case 'dispatch_result':{
+            statsCard.style.display='block';
+            document.getElementById('sTasks').textContent=data.task_count||0;
+            document.getElementById('sParallel').textContent=(data.parallel_time||0).toFixed(1)+'s';
+            document.getElementById('sSerial').textContent=(data.serial_sum||0).toFixed(1)+'s';
+            document.getElementById('sSpeedup').textContent=(data.speedup||1).toFixed(2)+'×';
+            const mn=document.getElementById('nMain');
+            if(mn)mn.classList.remove('active');
+            topoStatus.textContent='所有子任务完成，正在综合...';
+            topoStatus.classList.add('on');
+            setSt(1,'综合结果...');
+            break;
+        }
+
+        case 'synthesis_start':{
+            if(activeTab==='main'){
+                const badge=document.createElement('div');
+                badge.className='syn-badge';
+                badge.innerHTML='🔄 主Agent 正在综合子调研结果...';
+                tabContent.prepend(badge);
+            }
+            const mn=document.getElementById('nMain');
+            if(mn)mn.classList.add('done');
+            setSt(1,'综合报告...');
+            break;
+        }
+
+        case 'main_done':{
+            setSt(0,'完成');
+            topoStatus.textContent='完成 ✓';topoStatus.classList.add('on');
+            thinkingBubble=null;
+            setTimeout(()=>{setSt(0,'待机中');},2500);
+            break;
+        }
+
+        case 'final_answer':
+            if(data.answer||data.content){
+                const ans=(data.answer||data.content);
+                if(thinkingBubble){
+                    thinkingBubble.innerHTML=md(ans);
+                    thinkingBubble=null;
+                }else{
+                    addMsg('a',md(ans));
+                }
+            }
+            break;
+
+        case 'error':
+            addMsg('a','<p style="color:var(--red)">错误: '+esc(data.message||'')+'</p>');
+            setSt(0,'错误');
+            topoStatus.textContent='出错 ✗';topoStatus.classList.add('err');
+            break;
+    }
+}
+
+// ── 发送 ─────────────────────────────────────────────────────────────────
+
+async function send(){
+    const q=qIpt.value.trim();
+    if(!q||busy)return;
+    busy=true;sBtn.disabled=true;qIpt.value='';
+    setSt(1,'连接中...');
+    addMsg('u',esc(q));
+    const asyBub=addMsg('a','<div class="ldots"><span></span><span></span><span></span></div> 思考中...');
+    asyBub.innerHTML='<div class="ldots"><span></span><span></span><span></span></div> 分析问题...';
+    thinkingBubble = asyBub;
+    console.log('[send] thinkingBubble set to', thinkingBubble, 'innerHTML=', thinkingBubble.innerHTML);
+
+    try{
+        const r=await fetch('/chat',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({query:q}),
+        });
+        const text=await r.text();
+        console.log('[DEBUG full response len]', text.length);
+        const lines=text.split('\n');
+        for(const raw of lines){
+            const ln=raw.trimEnd();
+            if(!ln)continue;
+            if(ln.startsWith('data: ')){
+                try{
+                    const ev=JSON.parse(ln.slice(6));
+                    console.log('[DEBUG SSE read] type=', ev.type);
+                    handleEvent(ev.type||'message',ev);
+                }catch(e){console.warn('parse err',ln.slice(6,80));}
+            }
+        }
+    }catch(e){
+        asyBub.innerHTML='<p style="color:var(--red)">请求失败: '+esc(e.message)+'</p>';
+        setSt(0,'错误');
+    }
+    busy=false;sBtn.disabled=false;
+}
+
+sBtn.addEventListener('click',send);
+qIpt.addEventListener('keypress',e=>{if(e.key==='Enter')send()});
+setSt(0,'待机中');
+</script>
+</body>
+</html>
