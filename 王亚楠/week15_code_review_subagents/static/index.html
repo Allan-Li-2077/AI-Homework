@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代码审查 Subagent 系统 — 实时并行审查可视化</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --dim: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --orange: #d2991d;
+    --red: #f85149;
+    --pink: #db61a2;
+    --purple: #a371f7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace;
+    background: var(--bg); color: var(--text);
+    height: 100vh; display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── header ── */
+  #header {
+    background: linear-gradient(135deg, #1a1f35 0%, #161b22 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px; display: flex; align-items: center; gap: 16px;
+    flex-shrink: 0;
+  }
+  #header h1 {
+    font-size: 18px;
+    background: linear-gradient(90deg, #58a6ff, #a371f7, #f85149);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    font-weight: 800; letter-spacing: -0.5px;
+  }
+  #header .tag {
+    background: rgba(88,166,255,0.12); border: 1px solid rgba(88,166,255,0.25);
+    color: var(--accent); font-size: 11px; padding: 2px 10px; border-radius: 12px;
+  }
+
+  /* ── input row ── */
+  #input-row {
+    padding: 10px 16px; display: flex; gap: 8px; flex-shrink: 0;
+    background: var(--card); border-bottom: 1px solid var(--border);
+  }
+  #input-row input {
+    flex: 1; padding: 8px 14px; border: 1px solid var(--border); border-radius: 8px;
+    background: var(--bg); color: var(--text); font-size: 14px; outline: none;
+    transition: border-color .2s;
+  }
+  #input-row input:focus { border-color: var(--accent); }
+  #input-row button {
+    padding: 8px 18px; border: none; border-radius: 8px; cursor: pointer;
+    font-weight: 600; font-size: 13px; transition: all .2s;
+  }
+  #btn-review {
+    background: linear-gradient(135deg, #58a6ff, #a371f7);
+    color: #fff;
+  }
+  #btn-review:hover { filter: brightness(1.15); transform: translateY(-1px); }
+  #btn-review:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  #btn-stop { background: var(--border); color: var(--text); }
+  #presets { font-size: 11px; color: var(--dim); }
+
+  /* ── main layout ── */
+  #main { display: flex; flex: 1; overflow: hidden; }
+
+  /* ── left: topology ── */
+  #left {
+    width: 280px; min-width: 280px; background: var(--card);
+    border-right: 1px solid var(--border); padding: 12px;
+    display: flex; flex-direction: column; overflow-y: auto;
+  }
+  #left h3 {
+    font-size: 12px; text-transform: uppercase; color: var(--dim);
+    letter-spacing: 1px; margin-bottom: 12px;
+  }
+  #topo-svg { width: 100%; flex: 1; min-height: 200px; }
+  #stats-box {
+    margin-top: 12px; padding: 10px; background: var(--bg);
+    border-radius: 8px; font-size: 12px;
+  }
+  #stats-box .stat-row { display: flex; justify-content: space-between; padding: 3px 0; }
+  #stats-box .stat-val { color: var(--accent); font-weight: 600; }
+  #stats-box .speedup { color: var(--green); font-size: 16px; font-weight: 800; }
+
+  /* ── right: trace ── */
+  #right {
+    flex: 1; display: flex; flex-direction: column;
+    padding: 12px 16px; overflow: hidden;
+  }
+  #trace-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+  #trace-header button {
+    padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px;
+    background: var(--bg); color: var(--text); cursor: pointer;
+    font-size: 11px; transition: all .15s;
+  }
+  #trace-header button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  #trace-header button:hover { border-color: var(--accent); }
+  #trace-container {
+    flex: 1; overflow-y: auto; padding-right: 8px;
+  }
+  .step-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px; margin-bottom: 8px;
+    animation: fadeIn .3s ease;
+    transition: border-color .3s;
+  }
+  .step-card.highlight { border-color: var(--accent); }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .step-badge {
+    display: inline-block; padding: 1px 8px; border-radius: 4px;
+    font-size: 10px; font-weight: 700; margin-right: 6px;
+  }
+  .badge-main { background: rgba(88,166,255,0.2); color: var(--accent); }
+  .badge-sub { background: rgba(163,113,247,0.2); color: var(--purple); }
+  .step-action {
+    font-weight: 700; margin: 6px 0 4px; display: flex; align-items: center; gap: 8px;
+  }
+  .step-action .action-name { color: var(--orange); }
+  .step-action .time { font-size: 11px; color: var(--dim); margin-left: auto; }
+  .step-thought { font-size: 12px; color: var(--dim); margin-bottom: 6px; font-style: italic; }
+  .step-obs {
+    background: var(--bg); padding: 10px; border-radius: 6px;
+    font-size: 12px; white-space: pre-wrap; max-height: 200px; overflow-y: auto;
+    border-left: 3px solid var(--border);
+  }
+  .step-obs.done { border-left-color: var(--green); }
+
+  /* ── final report ── */
+  #report-container {
+    flex-shrink: 0; max-height: 40%; overflow-y: auto;
+  }
+  .report {
+    background: linear-gradient(135deg, #161b22 0%, #1a1f35 100%);
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px; margin-top: 12px;
+  }
+  .report h2 {
+    font-size: 16px; background: linear-gradient(90deg, #58a6ff, #a371f7);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .report-content {
+    font-size: 13px; line-height: 1.7; white-space: pre-wrap;
+  }
+
+  /* ── scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ═══ Header ═══ -->
+<div id="header">
+  <h1>🔍 代码审查 Subagent 系统</h1>
+  <span class="tag">ReAct × 并行</span>
+  <span class="tag">5 维度审查员</span>
+</div>
+
+<!-- ═══ Input Row ═══ -->
+<div id="input-row">
+  <input id="question" value="请审查这个项目的代码质量：安全、性能、风格、逻辑、架构"
+         placeholder="描述审查范围（支持中英文）">
+  <button id="btn-review" onclick="startReview()">🚀 开始审查</button>
+  <button id="btn-stop" onclick="stopReview()">⏹ 停止</button>
+  <span id="presets">
+    快捷：<a href="#" onclick="setPreset('all')">全面审查</a> ·
+    <a href="#" onclick="setPreset('security')">安全检查</a> ·
+    <a href="#" onclick="setPreset('perf-logic')">性能+逻辑</a>
+  </span>
+</div>
+
+<!-- ═══ Main ═══ -->
+<div id="main">
+
+  <!-- Left: Topology -->
+  <div id="left">
+    <h3>🧭 审查拓扑</h3>
+    <svg id="topo-svg"></svg>
+    <div id="stats-box" style="display:none">
+      <div class="stat-row"><span>审查维度</span><span class="stat-val" id="stat-dims">-</span></div>
+      <div class="stat-row"><span>并行墙钟</span><span class="stat-val" id="stat-wall">-</span></div>
+      <div class="stat-row"><span>串行基线</span><span class="stat-val" id="stat-serial">-</span></div>
+      <div class="stat-row"><span>加速比</span><span class="speedup" id="stat-speedup">-</span></div>
+    </div>
+  </div>
+
+  <!-- Right: Trace -->
+  <div id="right">
+    <div id="trace-header">
+      <button id="btn-all" class="active" onclick="setFilter('all')">📋 全部实时流</button>
+      <button id="btn-main" onclick="setFilter('main')">🏠 主审查员</button>
+      <span id="sub-filter-btns"></span>
+    </div>
+    <div id="trace-container"><div style="color:var(--dim);text-align:center;padding:40px;">👆 点击「开始审查」启动并行代码审查</div></div>
+    <div id="report-container"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════════════
+// 状态管理
+// ══════════════════════════════════════════════════════════════════════════
+let evtSource = null;
+let nodes = {};        // {id: {label, type, status, x, y}}
+let edges = [];        // [{from, to}]
+let allSteps = [];     // [{nodeId, nodeLabel, ...step}]
+let activeFilter = 'all';
+let isRunning = false;
+
+// ══════════════════════════════════════════════════════════════════════════
+// 拓扑可视化
+// ══════════════════════════════════════════════════════════════════════════
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+// 颜色映射（按维度）
+const DIM_COLORS = {
+  '安全审查': '#f85149', '性能审查': '#d2991d',
+  '代码风格审查': '#3fb950', '逻辑/错误审查': '#58a6ff',
+  '架构审查': '#a371f7',
+};
+function getDimColor(label) { return DIM_COLORS[label] || '#a371f7'; }
+
+function renderTopo() {
+  const svg = document.getElementById('topo-svg');
+  svg.innerHTML = '';
+
+  // 主节点
+  const cx = 140, mainY = 50, radius = 30;
+  nodes['main'] = nodes['main'] || { label:'主审查员', type:'main', status:'idle', x:cx, y:mainY };
+
+  // Circle
+  const c = mkSvg('circle', {
+    cx: cx, cy: mainY, r: radius, fill: 'rgba(88,166,255,0.15)',
+    stroke: '#58a6ff', 'stroke-width': 2,
+    filter: 'url(#glow-blue)' });
+  svg.appendChild(c);
+
+  // Text
+  const t = mkSvg('text', { x: cx, y: mainY + 4, 'text-anchor': 'middle',
+    fill: '#c9d1d9', 'font-size': 10, 'font-weight': 600 });
+  t.textContent = '主审查员';
+  svg.appendChild(t);
+
+  // Sub nodes
+  const subIds = Object.keys(nodes).filter(k => k !== 'main');
+  const nSub = subIds.length;
+  const subYs = nSub <= 3 ? [160, 220, 280] :
+    nSub <= 4 ? [140, 200, 260, 320] : [120, 170, 220, 270, 320];
+
+  subIds.forEach((sid, i) => {
+    const n = nodes[sid];
+    const y = subYs[i] || 160 + i * 60;
+    n.x = cx; n.y = y;
+    const color = getDimColor(n.label);
+
+    // Edge
+    const edge = mkSvg('line', {
+      x1: cx, y1: mainY + radius, x2: cx, y2: y - 20,
+      stroke: n.status === 'done' ? '#3fb950' : 'rgba(255,255,255,0.2)',
+      'stroke-width': 1.5, 'stroke-dasharray': '4,3' });
+    svg.appendChild(edge);
+
+    // Node circle
+    const r = 20;
+    const c2 = mkSvg('circle', {
+      cx: cx, cy: y, r: r,
+      fill: n.status === 'done' ? 'rgba(63,185,80,0.2)' :
+            n.status === 'running' ? 'rgba(163,113,247,0.25)' :
+            'rgba(255,255,255,0.05)',
+      stroke: n.status === 'done' ? '#3fb950' :
+              n.status === 'running' ? color : 'rgba(255,255,255,0.15)',
+      'stroke-width': n.status === 'running' ? 2.5 : 1.5,
+    });
+    if (n.status === 'running') {
+      c2.classList.add('pulse');
+      c2.setAttribute('filter', 'url(#glow-purple)');
+    }
+    svg.appendChild(c2);
+
+    // Text
+    const t2 = mkSvg('text', { x: cx, y: y + 4, 'text-anchor': 'middle',
+      fill: '#c9d1d9', 'font-size': 9, 'font-weight': 500 });
+    t2.textContent = n.label.length > 5 ? n.label.slice(0, 5) + '..' : n.label;
+    svg.appendChild(t2);
+
+    // Checkmark if done
+    if (n.status === 'done') {
+      const chk = mkSvg('text', { x: cx + 12, y: y - 12,
+        fill: '#3fb950', 'font-size': 14, 'font-weight': 700,
+        'text-anchor': 'middle' });
+      chk.textContent = '✓';
+      svg.appendChild(chk);
+    }
+  });
+
+  // Defs
+  const defs = mkSvg('defs', {});
+  defs.innerHTML = `
+    <filter id="glow-blue"><feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glow-purple"><feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+  svg.insertBefore(defs, svg.firstChild);
+}
+
+function mkSvg(tag, attrs) {
+  const el = document.createElementNS(SVG_NS, tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  return el;
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// SSE 事件处理
+// ══════════════════════════════════════════════════════════════════════════
+function startReview() {
+  if (isRunning) return;
+  const q = document.getElementById('question').value.trim();
+  if (!q) return;
+
+  isRunning = true;
+  document.getElementById('btn-review').disabled = true;
+  document.getElementById('trace-container').innerHTML = '';
+  document.getElementById('report-container').innerHTML = '';
+  document.getElementById('stats-box').style.display = 'none';
+  nodes = {}; allSteps = [];
+  renderTopo();
+
+  const url = '/review';
+  evtSource = new EventSource(url, { method: 'POST', body: JSON.stringify({ question: q }) });
+
+  // ⚠️ 注意：EventSource 不支持 POST body，实际需要用 fetch + ReadableStream
+  // 这里改用 fetch-based SSE
+  evtSource?.close();
+  fetchSSE(q);
+}
+
+async function fetchSSE(question) {
+  const resp = await fetch('/review', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ question }),
+  });
+  const reader = resp.body.getReader();
+  const decoder = new TextDecoder();
+  let buf = '';
+
+  while (isRunning) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buf += decoder.decode(value, { stream: true });
+    const lines = buf.split('\n');
+    buf = lines.pop() || '';
+    for (const line of lines) {
+      if (line.startsWith('data: ')) {
+        const data = JSON.parse(line.slice(6));
+        handleEvent(data);
+      }
+    }
+  }
+}
+
+function stopReview() {
+  isRunning = false;
+  evtSource?.close();
+  document.getElementById('btn-review').disabled = false;
+}
+
+function handleEvent(ev) {
+  switch (ev.type) {
+    case 'start':
+      addStepCard({ agent: 'system', thought: `🔍 开始审查: ${ev.question}`,
+        action: ev.project ? `项目: ${ev.project}` : '', action_input: '' });
+      break;
+
+    case 'main_step':
+      nodes['main'] = { label: '主审查员', type: 'main',
+        status: ev.done ? 'done' : 'running' };
+      allSteps.push({ nodeId: 'main', nodeLabel: '主审查员', ...ev });
+      if (activeFilter === 'all' || activeFilter === 'main') {
+        addStepCard({ agent: 'main', ...ev });
+      }
+      renderTopo();
+      break;
+
+    case 'dispatch':
+      // 创建子节点
+      (ev.subagent_ids || []).forEach((sid, i) => {
+        const label = (ev.subtopics || [])[i] || sid;
+        nodes[sid] = { label, type: 'sub', status: 'pending' };
+        // 添加过滤按钮
+        addFilterBtn(sid, label);
+      });
+      renderTopo();
+      break;
+
+    case 'subagent_step':
+      if (nodes[ev.subagent_id]) {
+        nodes[ev.subagent_id].status = ev.done ? 'done' : 'running';
+      }
+      allSteps.push({
+        nodeId: ev.subagent_id,
+        nodeLabel: nodes[ev.subagent_id]?.label || ev.subagent_id,
+        ...ev,
+      });
+      if (activeFilter === 'all' || activeFilter === ev.subagent_id) {
+        addStepCard({
+          agent: nodes[ev.subagent_id]?.label || ev.subagent_id,
+          agentType: 'sub',
+          ...ev,
+        });
+      }
+      renderTopo();
+      break;
+
+    case 'subagent_done':
+      if (nodes[ev.subagent_id]) {
+        nodes[ev.subagent_id].status = 'done';
+        nodes[ev.subagent_id].duration = ev.duration;
+      }
+      renderTopo();
+      break;
+
+    case 'final':
+      document.getElementById('btn-review').disabled = false;
+      isRunning = false;
+      // 显示统计
+      const stats = document.getElementById('stats-box');
+      stats.style.display = 'block';
+      const ps = (ev.parallel_stats || [{}])[0] || {};
+      document.getElementById('stat-dims').textContent = ev.subagent_count || ps.n_subagents || '-';
+      document.getElementById('stat-wall').textContent = (ps.wall_clock || '?') + 's';
+      document.getElementById('stat-serial').textContent = (ps.serial_sum || '?') + 's';
+      document.getElementById('stat-speedup').textContent = (ps.speedup || '?') + '×';
+
+      // 显示报告
+      const reportDiv = document.getElementById('report-container');
+      reportDiv.innerHTML = `
+        <div class="report">
+          <h2>📋 代码审查报告</h2>
+          <div class="report-content">${escapeHtml(ev.answer)}</div>
+        </div>`;
+      break;
+
+    case 'error':
+      addStepCard({
+        agent: 'system', action: '错误',
+        observation: ev.message, error: true,
+      });
+      document.getElementById('btn-review').disabled = false;
+      isRunning = false;
+      break;
+
+    case 'done':
+      isRunning = false;
+      document.getElementById('btn-review').disabled = false;
+      break;
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// UI 辅助
+// ══════════════════════════════════════════════════════════════════════════
+function addStepCard(step) {
+  const container = document.getElementById('trace-container');
+  const card = document.createElement('div');
+  card.className = 'step-card';
+
+  const badgeClass = step.agentType === 'sub' ? 'badge-sub' : 'badge-main';
+  const badgeLabel = step.agentType === 'sub' ? step.agent : (step.agent || '系统');
+
+  let html = `<span class="step-badge ${badgeClass}">${badgeLabel}</span>`;
+
+  if (step.thought) {
+    html += `<div class="step-thought">💭 ${escapeHtml(step.thought)}</div>`;
+  }
+  if (step.action) {
+    html += `<div class="step-action">
+      <span class="action-name">⚡ ${escapeHtml(step.action)}</span>
+    </div>`;
+    if (step.action_input) {
+      html += `<div class="step-obs">📥 ${escapeHtml(step.action_input)}</div>`;
+    }
+  }
+  if (step.observation) {
+    html += `<div class="step-obs done">📤 ${escapeHtml(step.observation)}</div>`;
+  }
+  if (step.final) {
+    html += `<div style="color:var(--green);font-weight:700;margin-top:4px;">✅ 审查完成</div>`;
+  }
+  if (step.error) {
+    html += `<div style="color:var(--red);font-weight:700;">❌ ${escapeHtml(step.observation)}</div>`;
+  }
+
+  card.innerHTML = html;
+  container.appendChild(card);
+  container.scrollTop = container.scrollHeight;
+}
+
+function addFilterBtn(sid, label) {
+  const span = document.getElementById('sub-filter-btns');
+  if (span.querySelector(`[data-sid="${sid}"]`)) return;
+  const btn = document.createElement('button');
+  btn.textContent = label.length > 6 ? label.slice(0, 6) : label;
+  btn.setAttribute('data-sid', sid);
+  btn.onclick = () => setFilter(sid);
+  span.appendChild(btn);
+}
+
+function setFilter(filterId) {
+  activeFilter = filterId;
+  // Update button states
+  document.querySelectorAll('#trace-header button').forEach(b => b.classList.remove('active'));
+  if (filterId === 'all') document.getElementById('btn-all').classList.add('active');
+  else if (filterId === 'main') document.getElementById('btn-main').classList.add('active');
+  else {
+    const b = document.querySelector(`[data-sid="${filterId}"]`);
+    if (b) b.classList.add('active');
+  }
+  // Re-render steps
+  const container = document.getElementById('trace-container');
+  container.innerHTML = '';
+  allSteps
+    .filter(s => filterId === 'all' || s.nodeId === filterId)
+    .forEach(s => addStepCard({
+      agent: s.nodeLabel, agentType: s.nodeId === 'main' ? 'main' : 'sub', ...s,
+    }));
+}
+
+function setPreset(type) {
+  const presets = {
+    'all': '请审查这个项目的代码质量：安全、性能、风格、逻辑、架构',
+    'security': '请审查这个项目的安全性：检查安全漏洞、注入风险、密钥泄露',
+    'perf-logic': '请审查这个项目的性能和逻辑：性能瓶颈、潜在bug、错误处理',
+  };
+  document.getElementById('question').value = presets[type] || presets['all'];
+}
+
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// Init
+renderTopo();
+</script>
+</body>
+</html>
