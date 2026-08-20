@@ -1,0 +1,188 @@
+国内前沿开源大模型结构补充调研
+一、原 PPT 已覆盖的范围
+二、四个补充模型的结构特点
+1. MiniMax-01：用 Lightning Attention 把线性注意力推到百万级上下文
+2. ERNIE 4.5：异构多模态 MoE 让“共享”与“专属”同时存在
+3. Hunyuan-A13B：把细粒度 MoE 做成 80B/13B 的实用配方
+4. Janus-Pro：用两条视觉编码路径解决理解与生成的目标冲突
+三、放回原 PPT 后，建议新增的比较维度
+四、建议新增 5 页的 PPT 编排
+五、横向判断
+六、来源
+
+
+​
+国内前沿开源大模型结构补充调研
+对应材料：​大模型结构演进.pptx​（46 页）
+调研口径：截至 2026-08-20；优先采用官方技术报告、官方 GitHub README、官方模型卡。
+目标：补充原 PPT 未覆盖、且结构路线有明确差异的国内开源模型，形成可直接拆成 PPT 页的内容。
+
+一、原 PPT 已覆盖的范围
+原稿已经系统讲过：原版 Transformer、RoPE/YaRN、RMSNorm/QK-Norm、MLA、DSA、线性注意力混合、CSA/HCA、细粒度 MoE、无辅助损失路由、LatentMoE、mHC、AttnRes、Muon、MTP，以及 DeepSeek、GLM、Kimi、Qwen 四条旗舰路线。
+
+因此，下面不再重复“又一个 MLA + MoE 模型”的参数表，而是补充四种在原稿中没有被单独展开的结构思想：
+
+模型	最值得补充的结构点	与原稿的差异
+MiniMax-01	Lightning Attention 的大规模落地	不是 KDA/GDN，而是以块内局部注意力 + 块间线性递推实现的线性注意力；每 8 层仅 1 层 softmax
+ERNIE 4.5	异构多模态 MoE	不是“视觉塔 + LLM”的简单外挂，而是共享参数与模态专属参数并存，并采用模态隔离路由
+Hunyuan-A13B	细粒度 MoE 的高性价比下放	80B 总参数、13B 激活，64 个非共享专家 + 1 个共享专家，适合讲“中等规模模型如何复用旗舰 MoE 配方”
+Janus-Pro	统一多模态中的视觉编码解耦	理解和生成各自使用不同视觉编码路径，但共享一个自回归 Transformer
+二、四个补充模型的结构特点
+1. MiniMax-01：用 Lightning Attention 把线性注意力推到百万级上下文
+模型概况
+
+MiniMax-Text-01：456B 总参数，45.9B 每 token 激活，32 个专家、Top-2 路由。
+80 层，隐藏维度 6144；每个注意力模块 64 个头、head dimension 128。
+训练上下文可到 1M token，报告中给出推理外推到 4M token 的方案。
+核心结构
+
+MiniMax 采用“7 个线性注意力块 + 1 个 softmax 注意力块”的周期结构。线性部分来自 TransNormer/Lightning Attention：
+
+块内 token 使用局部因果注意力，保证短距离关系和 Tensor Core 友好；
+块间不再计算完整的 ​QK^T​，而是递推维护固定大小的 ​K^T V​ 状态；
+每 8 层保留一层 softmax attention，专门兜底精确检索和 in-context learning。
+这不是简单的滑窗。滑窗仍然在窗口内做 softmax；Lightning Attention 的关键是把因果累加拆成块内左乘与块间右乘，从而把长序列计算降为近似线性。
+
+MoE 与稳定化配套
+
+每层的 FFN 使用 32 专家、Top-2；报告采用 token-drop 策略。
+提出 global router：在 Expert Parallel 组之间先同步各专家待处理 token 数，再做 dispatch，降低不同并行组之间的负载不均和 token 丢弃。
+使用 DeepNorm 以支撑较深的 Post-Norm 训练。
+为什么值得加入 PPT
+
+原稿已经讲了 KDA/Gated DeltaNet、DSA 和 CSA/HCA，但 MiniMax-01 提供了另一条重要证据：线性注意力并非只能停留在小模型实验，而是可以通过块化 kernel、并行策略和少量 softmax 锚点扩展到数百亿激活参数与百万上下文。它同时说明，纯线性注意力的检索弱点不能忽略，混合架构是工程折中。
+
+局限与取舍
+
+线性状态是有损压缩；如果把所有层都替换成线性注意力，精确检索能力会下降。
+7:1 的比例不是理论常数，而是速度、检索和硬件利用率之间的经验折中。
+MoE 的 global router 增加了跨 EP 组通信；系统优化是结构成立的前提。
+建议页标题：​MiniMax-01 证明线性注意力可以在大模型规模落地，但必须保留少量精确注意力​
+
+2. ERNIE 4.5：异构多模态 MoE 让“共享”与“专属”同时存在
+模型概况
+
+ERNIE 4.5 家族包含文本模型、视觉语言模型和 0.3B dense 模型。
+最大语言模型为 300B 总参数、47B 激活；最大视觉语言模型为 424B 总参数、47B 激活。
+轻量 VL 型号为 28B 总参数、3B 激活；官方 README 标注上下文窗口为 128K。
+核心结构
+
+ERNIE 4.5 的关键不是某个单独注意力公式，而是异构模态 MoE 预训练：
+
+一部分参数在文本和视觉模态之间共享，学习跨模态共性；
+另一部分参数按模态专属，避免文本和视觉梯度互相干扰；
+路由采用 modality-isolated routing，先在模态边界内进行专家选择；
+官方同时提出 router orthogonal loss 与 multimodal token-balanced loss，分别约束不同模态路由的干扰和 token 负载均衡。
+可以把它理解成“共享专家负责共同语义，专属专家负责模态特有统计规律”。这比传统的“冻结 ViT，再接一个 projector 到 LLM”更接近从预训练阶段联合建模多模态。
+
+工程配套
+
+PaddlePaddle/ERNIEKit 覆盖预训练、SFT、DPO、QAT 和多硬件部署。
+官方提出 heterogeneous hybrid parallelism、hierarchical load balancing、FP8 混合精度，以及面向 MoE 推理的多专家并行协同。
+模型与推理代码以 Apache 2.0 方式公开；具体型号、权重和硬件支持应以官方仓库和 Hugging Face 模型卡为准。
+为什么值得加入 PPT
+
+原稿的多模态部分主要讲“ViT → projector → LLM”。ERNIE 4.5 可以新增一个更前沿的层次：多模态不只发生在输入适配器处，也可以发生在 MoE 路由和参数分工处。它回答了一个重要问题：视觉数据是否会稀释语言模型能力？结构上的回答是“共享一部分、隔离一部分，并让路由器显式处理模态冲突”。
+
+局限与取舍
+
+模态隔离会带来更多路由与并行管理复杂度。
+共享/专属参数比例、路由正交约束和 token-balanced loss 都需要联合调参，复现门槛高于普通 VL 接口。
+公开 README 给出的是家族级结构；不同型号的层数、专家数和视觉编码器细节不能相互套用。
+建议页标题：​ERNIE 4.5 把多模态差异下沉到 MoE 路由，而不只停留在视觉投影器​
+
+3. Hunyuan-A13B：把细粒度 MoE 做成 80B/13B 的实用配方
+模型概况
+
+80B 总参数，13B 激活；官方称累计训练超过 20T tokens。
+32 层，隐藏维度 4096，原生 256K 上下文。
+32 个 attention heads；GQA；SwiGLU。
+核心结构
+
+Hunyuan-A13B 使用细粒度 MoE：
+
+1 个共享专家，所有 token 都经过；
+64 个非共享专家；
+Top-8 路由；
+专家隐层维度 3072。
+共享专家提供通用变换，非共享专家承载可分化的知识和能力。与“少量大专家”相比，更多、更小的专家可以用更细的粒度组合；与原稿中 256/896 专家的超大旗舰相比，Hunyuan 展示了这一思路如何下放到 80B 规模并保持较低激活量。
+
+推理与训练形态
+
+同时支持快思考和慢思考模式；这是推理策略/训练格式，不应误写成新的网络层。
+官方发布 Pretrain、Instruct、FP8 和 GPTQ-Int4 版本。
+GQA 与多种量化格式共同服务于资源受限部署。
+为什么值得加入 PPT
+
+原稿已经展示“旗舰模型总参数越来越大、激活参数越来越小”。Hunyuan-A13B 补上了工程落点：不需要 300B 以上总参数，也能用“共享专家 + 细粒度非共享专家 + Top-8”获得明显的参数/计算剪刀差。这一页适合把 MoE 从“旗舰炫技”拉回到“可部署的模型设计”。
+
+局限与取舍
+
+13B 激活并不等于单卡低成本；专家权重、通信和 KV cache 仍决定真实部署成本。
+Top-8 会提高每 token 的专家计算与通信量，不能只看总参数/激活参数比例。
+A13B 的共享专家配置不能直接推断 Hunyuan 其他系列模型。
+建议页标题：​Hunyuan-A13B 说明细粒度 MoE 不必等到万亿模型才有价值​
+
+4. Janus-Pro：用两条视觉编码路径解决理解与生成的目标冲突
+模型概况
+
+Janus-Pro-1B 和 Janus-Pro-7B 均公开；序列长度 4096。
+基本骨架是一个统一的自回归 Transformer，但视觉输入不是只经过一个通用视觉编码器。
+核心结构
+
+Janus-Pro 将视觉编码明确拆成两条路径：
+
+任务	视觉编码器	适配方式	输出形态
+多模态理解	SigLIP	understanding adaptor 映射到 LLM 输入空间	连续视觉特征序列
+视觉生成	VQ tokenizer	generation adaptor 映射 codebook embedding	离散图像 token 序列
+两类视觉特征随后拼接成多模态序列，交给同一个自回归 Transformer；除语言预测头外，生成任务另设图像 token prediction head。也就是说，共享的是语言建模主干，不共享的是视觉的输入表示和生成输出头。
+
+为什么值得加入 PPT
+
+原稿的“ViT + projector + LLM”路径默认视觉理解和视觉生成可以共用同一套视觉表示。Janus-Pro 直接把冲突拆开：
+
+理解需要高层语义、跨图文对齐和较强的空间/物体识别；
+生成需要可逆或近似可逆的离散视觉 token，以及稳定的图像 token 自回归预测。
+统一 Transformer 保留共享语义空间，双视觉编码路径则减少“一个编码器同时服务两种目标”的梯度冲突。这是多模态结构从“接入”走向“任务解耦”的代表案例。
+
+局限与取舍
+
+两套视觉路径与两个 adaptor 增加了参数、训练数据和推理流程复杂度。
+统一自回归生成图像 token 的序列较长，图像生成速度和分辨率仍是现实约束。
+理解和生成共享主干并不意味着完全没有任务冲突，仍需专门的训练策略和数据配比。
+建议页标题：​Janus-Pro 没有强迫一个视觉编码器同时理解和生成，而是共享 Transformer、分离视觉表示​
+
+三、放回原 PPT 后，建议新增的比较维度
+原稿的五条演进轴线可以扩展成七条：
+
+注意力复杂度：MHA → GQA/MLA → DSA/CSA → Lightning Attention → MFA。
+FFN 容量：Dense → 细粒度 MoE → 共享专家 + 专属专家 → 模态异构 MoE。
+残差与稳定化：LayerNorm/RMSNorm → QK-Norm → mHC/AttnRes → DeepNorm 等深层稳定化。
+位置与记忆：RoPE/partial RoPE → 线性递推状态 → 块压缩/稀疏索引。
+多模态耦合位置：输入 projector → 模态专属路由 → 理解/生成双视觉编码路径。
+硬件协同：FP8/FP4/QAT → Lightning kernel → global router → 专家并行与异构混合并行。
+模型—系统协同：把模型结构、KV cache、专家通信、prefill/decode 调度放在同一个成本函数里评估。
+四、建议新增 5 页的 PPT 编排
+页码	标题	主图/主表	讲清楚的结论
+新增 1	原有四条路线之外，还缺哪四个结构问题	“注意力、MoE、多模态、系统”四象限	不是重复模型名，而是补足结构空间
+新增 2	MiniMax-01 让线性注意力进入百万上下文	7×Lightning + 1×Softmax 周期图	线性注意力需要少量精确注意力锚点
+新增 3	ERNIE 4.5 将模态差异放进 MoE 路由	共享专家/文本专家/视觉专家/隔离路由	多模态融合可以发生在参数和路由层
+新增 4	Hunyuan-A13B 把细粒度 MoE 下放到 80B	1 shared + 64 private → Top-8	MoE 的价值不只在万亿参数模型
+新增 5	Janus-Pro 用双视觉编码路径统一理解与生成	SigLIP path / VQ path → unified AR Transformer	共享主干不等于共享所有输入表示
+五、横向判断
+追求百万级长上下文：MiniMax-01 的 Lightning Attention 路线值得重点看；它强调真正的线性复杂度和 kernel/并行实现，而不是只压缩 KV cache。
+追求多模态预训练能力：ERNIE 4.5 的异构 MoE 更值得关注，因为它把模态冲突作为路由和参数分工问题处理。
+追求可部署的 MoE 性价比：Hunyuan-A13B 的 80B/13B 结构比 1T 级模型更适合作为工程基线。
+追求统一理解与生成：Janus-Pro 的双视觉路径是比“单视觉塔接 LLM”更清晰的任务解耦方案。
+评估架构时不要只看参数量：至少同时记录激活参数、KV cache、专家通信、上下文长度、精确检索能力，以及是否需要专用 kernel/并行系统。
+六、来源
+MiniMax, MiniMax-01: Scaling Foundation Models with Lightning Attention, arXiv:2501.08313：https://arxiv.org/abs/2501.08313；HTML 全文：https://arxiv.org/html/2501.08313v1。
+MiniMax 官方组织页：https://github.com/MiniMax-AI。
+PaddlePaddle/ERNIE 官方仓库（ERNIE 4.5 README）：https://github.com/PaddlePaddle/ERNIE。
+Tencent Hunyuan 官方仓库及中文 README：https://github.com/Tencent-Hunyuan/Hunyuan-A13B/blob/main/README_CN.md；技术报告：https://github.com/Tencent-Hunyuan/Hunyuan-A13B/tree/main/report。
+DeepSeek, Janus-Pro: Unified Multimodal Understanding and Generation with Data and Model Scaling, arXiv:2501.17811：https://arxiv.org/abs/2501.17811；HTML 全文：https://arxiv.org/html/2501.17811v1。
+DeepSeek Janus 官方仓库：https://github.com/deepseek-ai/Janus。
+可选扩展：StepFun, Step-3 is Large yet Affordable: Model-system Co-design for Cost-effective Decoding, arXiv:2507.19427：https://arxiv.org/abs/2507.19427；其 MFA 原始论文：https://arxiv.org/abs/2412.19255。Step-3 适合作为“模型—系统协同”附录案例；完整权重开放状态应以 StepFun 当前官方发布为准。
+注：文中“结构特点”只陈述官方公开资料明确给出的信息；未公开的层数、专家数或训练细节没有用同系列其他型号的数据补齐。
+
+​
